@@ -6,6 +6,7 @@
     "module": "ESNext",
     "skipLibCheck": true,
 
+
     /* Bundler mode */
     "moduleResolution": "Bundler",
     "allowImportingTsExtensions": true,
@@ -13,7 +14,12 @@
     "moduleDetection": "force",
     "noEmit": true,
     "jsx": "react-jsx",
-
+    
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],  
+      "@components/*": ["src/components/*"]
+    },
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
