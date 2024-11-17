@@ -1,40 +1,178 @@
+import { BalanceState } from '@/types';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+} from '@/components/ui/form'; // Ajusta la ruta según tu proyecto
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Input } from '@/components/ui/input';
+import { FinancialInfoForm, FinancialSchema } from '@/types/financialInfo.schema';
+import DatePicker from './DatePicker';
+import { Button } from '@components/ui/button';
+import CategoryForm from './CategoryForm';
+import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
+import { format } from "date-fns";
+import { es } from 'date-fns/locale'
 
-type FormValues = {
-  category: string;
-  details: string;
-  cost: number;
-  date: Date;
-};
-
-const FinancialForm = () => {
-  const {register, handleSubmit} = useForm<FormValues>();
-  const onSubmit: SubmitHandler<FormValues> = data => {
-    alert(JSON.stringify(data));
-    console.log(data);
-  }
-
-  return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <label>
-        Categoría: 
-        <input {...register("category")}/>
-      </label>
-      <label>
-        Detalle:
-        <input {...register("details")}/>
-      </label>
-      <label>
-        Valor:
-        <input type="number" {...register("cost")}/>
-      </label>
-      <label>
-        Fecha:
-        <input type="date" {...register("date")}/>
-      </label>
-      <input type='submit' value="submit"/>
-    </form>
-  )
+interface FinancialFormInputs extends BalanceState {
+  title: string;
 }
 
-export default FinancialForm
+const FinancialForm = ({
+  title,
+  addBalanceRow,
+  categories,
+  addCategory,
+}: FinancialFormInputs) => {
+  const form = useForm<FinancialInfoForm>({
+    resolver: zodResolver(FinancialSchema),
+    defaultValues: {
+      category: '',
+      details: '',
+      value: 0,
+      currency: 'CLP',
+      date: new Date(),
+    },
+  });
+
+  const onSubmit: SubmitHandler<FinancialInfoForm> = (data) => {
+    console.log(data);
+    const dateLabel = format(data.date, 'PPP', {locale: es})
+    addBalanceRow({...data, dateLabel});
+    form.reset()
+  };
+
+  return (
+    <Card className='h-max'>
+      <CardHeader>
+        <CardTitle>{title}</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+
+            {/* Categoria */}
+            <FormLabel className="text-xm">Categoría:</FormLabel>
+            <div className='flex justify-between items-center gap-3'>
+              <FormField
+                control={form.control}
+                name="category"
+                render={({ field }) => (
+                  <FormItem className='w-full'>
+                    <Select
+                      onValueChange={field.onChange}
+                      value={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Selecciona la categoría" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {categories.map((c) => (
+                          <SelectItem key={c} value={c}>
+                            {c}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </FormItem>
+                )}
+              />
+              <CategoryForm addResult={addCategory}/>
+            </div>
+
+            {/* Details */}
+            <FormField
+              control={form.control}
+              name="details"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-xm">Detalle:</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Ingresa un detalle descriptivo"
+                      type="text"
+                      {...field}
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <div className='flex gap-3 justify-start'>
+              {/* Valor */}
+              <FormField
+                control={form.control}
+                name="value"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-xm">Valor:</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Ingresa el valor"
+                        type="number"
+                        {...field}
+                        onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+
+              {/* Divisa */}
+              <FormField
+                control={form.control}
+                name="currency"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-xm">Divisa:</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      value={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Selecciona la categoría" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value={'CLP'}>CLP - Peso chileno</SelectItem>
+                        <SelectItem value={'USD'}>
+                          USD - Dólar estadounidense
+                        </SelectItem>
+                        <SelectItem value={'EUR'}>EUR - Euro</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            {/* Fecha */}
+            <div className='py-3'>
+              <DatePicker form={form}/>
+            </div>
+            
+            <div className='flex items-center justify-between'>
+              <Button type='submit'>Guardar</Button>
+              <Button variant="outline" onClick={() => form.reset()}>Limpiar</Button>
+            </div>
+          </form>
+        </Form>
+
+      </CardContent>
+    </Card>
+  );
+};
+
+export default FinancialForm;

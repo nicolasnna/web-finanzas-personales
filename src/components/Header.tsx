@@ -1,7 +1,7 @@
-const Header = () => {
+const Header = ({text} : {text: string}) => {
   return (
-    <div>
-      <h1>Mi Plan Financiero</h1>
+    <div className="p-8">
+      <h1 className="text-4xl">{text}</h1>
     </div>
   )
 }
