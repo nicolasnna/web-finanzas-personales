@@ -1,4 +1,6 @@
 import { ColumnDef } from '@tanstack/react-table';
+import { format } from 'date-fns';
+import { es } from 'date-fns/locale';
 
 export interface BalanceInfo {
   id?: string;
@@ -7,7 +9,6 @@ export interface BalanceInfo {
   currency: string;
   value: number;
   date: Date;
-  dateLabel: string;
 }
 
 export const BalanceColumns: ColumnDef<BalanceInfo>[] = [
@@ -15,7 +16,15 @@ export const BalanceColumns: ColumnDef<BalanceInfo>[] = [
   { accessorKey: 'details', header: 'Detalle' },
   { accessorKey: 'value', header: 'Valor' },
   { accessorKey: 'currency', header: 'Divisa' },
-  { accessorKey: 'dateLabel', header: 'Fecha' },
+  {
+    accessorKey: 'date',
+    header: 'Fecha',
+    cell: ({ row }) => {
+      const date = new Date(row.getValue('date'));
+      const dateFormated = format(date, 'PPP', { locale: es });
+      return dateFormated;
+    },
+  },
 ];
 
 export function isBalanceInfo(input: object): input is BalanceInfo {

@@ -21,8 +21,6 @@ import DatePicker from './DatePicker';
 import { Button } from '@components/ui/button';
 import CategoryForm from './CategoryForm';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import { format } from "date-fns";
-import { es } from 'date-fns/locale'
 
 interface FinancialFormInputs extends BalanceState {
   title: string;
@@ -47,8 +45,7 @@ const FinancialForm = ({
 
   const onSubmit: SubmitHandler<FinancialInfoForm> = (data) => {
     console.log(data);
-    const dateLabel = format(data.date, 'PPP', {locale: es})
-    addBalanceRow({...data, dateLabel});
+    addBalanceRow(data);
     form.reset()
   };
 
