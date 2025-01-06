@@ -7,7 +7,6 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { BalanceColumns, BalanceInfo } from '@/types';
-
 import {
   flexRender,
   getCoreRowModel,
@@ -71,7 +70,7 @@ const FinancialTable = ({
                 {row.getVisibleCells().map((cell) => (
                   <TableCell
                     key={cell.id}
-                    className={cell.column.id === 'value' ? 'text-end' : ''}
+                    className={cell.column.id === 'value' ? 'text-end' : 'text-center'}
                   >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>

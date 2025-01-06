@@ -1,7 +1,8 @@
 import Header  from "@components/Header"
-import { useExpenseStore, useIncomeStore } from "./store/useExpensiveStore"
+import { useExpenseStore, useIncomeStore } from "./store/useBalanceStore"
 import FinancialTable from "@components/FinancialTable"
 import FinancialForm from "@components/FinancialForm"
+import Navbar from "./components/Navbar"
 
 function App() {
   const { balanceRows: expenseRows } = useExpenseStore()
@@ -11,6 +12,7 @@ function App() {
     <div className="bg-[#f6fdff]">
 
       <div className="flex flex-col items-center justify-center space-y-9 z-10">
+        <Navbar/>
         <Header text="Mi plan financiero"/>
         <section className="flex justify-center w-full gap-24">
           <FinancialTable title="Ingresos" content={incomeRows}/>

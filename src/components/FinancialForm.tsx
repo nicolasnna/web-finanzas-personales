@@ -16,7 +16,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
-import { FinancialInfoForm, FinancialSchema } from '@/types/financialInfo.schema';
+import { FinancialInfoForm, FinancialSchema } from '@/schemas/financialInfo.schema';
 import DatePicker from './DatePicker';
 import { Button } from '@components/ui/button';
 import CategoryForm from './CategoryForm';

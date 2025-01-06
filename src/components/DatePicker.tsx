@@ -6,7 +6,7 @@ import {
 } from '@/components/ui/form'; 
 import { Button } from '@/components/ui/button'; 
 import { Calendar } from '@/components/ui/calendar';
-import { FinancialInfoForm } from "@/types/financialInfo.schema";
+import { FinancialInfoForm } from "@/schemas/financialInfo.schema";
 import { UseFormReturn } from "react-hook-form";
 import { CalendarIcon } from "lucide-react"
 import { cn } from "@/lib/utils"

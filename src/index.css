@@ -7,7 +7,9 @@ html, body {
   padding: 0;
 }
 
-
+*, *::after, *::before {
+  box-sizing: border-box;
+}
 
 @layer base {
   :root {
