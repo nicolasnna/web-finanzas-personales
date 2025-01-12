@@ -24,8 +24,7 @@ const createBalanceStore = (
         });
       },
       setBalanceRows: (balanceRows: BalanceInfo[]) => {
-        set((state) => ({
-          ...state,
+        set(() => ({
           [balanceRowsKey]: balanceRows,
         }));
       },
