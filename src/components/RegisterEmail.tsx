@@ -67,10 +67,10 @@ const RegisterForm = () => {
       <Button variant="outline" onClick={() => setShowForm(true)}>Registrarse</Button>
 
       <AlertDialog open={showForm} onOpenChange={setShowForm}>
-        <AlertDialogContent>
+        <AlertDialogContent className="bg-blizzard-blue-100">
           <AlertDialogHeader>
-            <AlertDialogTitle className="text-2xl">Crear cuenta</AlertDialogTitle>
-            <AlertDialogDescription>Regístrate con tu correo electrónico.</AlertDialogDescription>
+            <AlertDialogTitle className="text-2xl text-orange-950">Crear cuenta</AlertDialogTitle>
+            <AlertDialogDescription className="text-base text-black">Regístrate con tu correo electrónico.</AlertDialogDescription>
           </AlertDialogHeader>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(() => {})}>
@@ -89,7 +89,7 @@ const RegisterForm = () => {
                           className={
                             form.formState.errors.email
                               ? "border-red-500"
-                              : "border-gray-300"
+                              : "border-blizzard-blue-950"
                           }
                         />
                       </FormControl>
@@ -111,7 +111,7 @@ const RegisterForm = () => {
                           className={
                             form.formState.errors.email
                               ? "border-red-500"
-                              : "border-gray-300"
+                              : "border-blizzard-blue-950"
                           }
                         />
                       </FormControl>
@@ -133,7 +133,7 @@ const RegisterForm = () => {
                           className={
                             form.formState.errors.password
                               ? "border-red-500"
-                              : "border-gray-300"
+                              : "border-blizzard-blue-950"
                           }
                         />
                       </FormControl>

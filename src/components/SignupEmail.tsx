@@ -53,11 +53,11 @@ const SignupEmail = () => {
     {createPortal(<Toaster/>, document.body)}
     <Button variant="default" onClick={() => setShowForm(true)}>Iniciar sesión</Button>
 
-    <AlertDialog open={showForm} onOpenChange={setShowForm}>
-      <AlertDialogContent>
+    <AlertDialog open={showForm} onOpenChange={setShowForm} >
+      <AlertDialogContent className="bg-blizzard-blue-100">
         <AlertDialogHeader>
-          <AlertDialogTitle className="text-2xl">Iniciar sesión</AlertDialogTitle>
-          <AlertDialogDescription>Ingresa con tu correo electrónico.</AlertDialogDescription>
+          <AlertDialogTitle className="text-2xl text-orange-950">Iniciar sesión</AlertDialogTitle>
+          <AlertDialogDescription className="text-base text-black">Ingresa con tu correo electrónico.</AlertDialogDescription>
         </AlertDialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(() => {})}>
@@ -76,7 +76,7 @@ const SignupEmail = () => {
                         className={
                           form.formState.errors.email
                             ? "border-red-500"
-                            : "border-gray-300"
+                            : "border-blizzard-blue-950"
                         }
                       />
                     </FormControl>
@@ -98,7 +98,7 @@ const SignupEmail = () => {
                         className={
                           form.formState.errors.password
                             ? "border-red-500"
-                            : "border-gray-300"
+                            : "border-blizzard-blue-950"
                         }
                       />
                     </FormControl>

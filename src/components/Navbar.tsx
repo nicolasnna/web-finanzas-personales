@@ -8,9 +8,9 @@ const Navbar = () => {
   const { user, logout } = useContext(AuthContext)
 
   return (
-    <nav className="w-full bg-[rgba(0,0,0,0.1)]">
+    <nav className="w-full bg-blizzard-blue-200 bg-opacity-50 border-b-2 border-blizzard-blue-800">
       <div className="px-4 py-3 flex items-center justify-around w-full">
-        <h2 className="text-3xl">
+        <h2 className="text-3xl text-orange-900">
           Finanzas personales
         </h2>
         {!user && <div className="space-x-5">

@@ -20,6 +20,7 @@ function App() {
           const dataExpenses = await getExpensesDb(user)
           setIncomesRows(dataIncomes)
           setExpensesRows(dataExpenses)
+        
         } catch (error) {
           console.error("Eror al obtener los ingresos y gastos: ", error)
         }
@@ -29,9 +30,9 @@ function App() {
     updateIncomes()
   }, [user, setIncomesRows, setExpensesRows])
 
-  return (
-    <div className="bg-[#f6fdff]">
 
+  return (
+    <div className="bg-white">
       <div className="flex flex-col items-center justify-center space-y-9 z-10">
         <Navbar/>
         <Header text="Mi plan financiero"/>
