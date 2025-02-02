@@ -4,33 +4,37 @@ export default {
     content: ["./index.html", "./src/**/*.{ts,tsx,js,jsx}"],
   theme: {
   	extend: {
-			animation: {
-				move: "move linear infinite",
-				moveRandom: "moveRandom 5s linear infinite",
-			},
-			keyframes: {
-				move: {
-          "0%": { transform: "translateY(-40%)" },
-          "100%": { transform: "translateY(140vh)" },
-        },
-				moveRandom: {
-          "0%": {
-            transform: "translate(0, 0)",
-          },
-          "25%": {
-            transform: "translate(-50px, 100px)",
-          },
-          "50%": {
-            transform: "translate(50px, -100px)",
-          },
-          "75%": {
-            transform: "translate(-100px, -50px)",
-          },
-          "100%": {
-            transform: "translate(0, 200px)",
-          },
-				},
-			},
+  		animation: {
+  			move: 'move linear infinite',
+  			moveRandom: 'moveRandom 5s linear infinite'
+  		},
+  		keyframes: {
+  			move: {
+  				'0%': {
+  					transform: 'translateY(-40%)'
+  				},
+  				'100%': {
+  					transform: 'translateY(140vh)'
+  				}
+  			},
+  			moveRandom: {
+  				'0%': {
+  					transform: 'translate(0, 0)'
+  				},
+  				'25%': {
+  					transform: 'translate(-100px, 200px)'
+  				},
+  				'50%': {
+  					transform: 'translate(100px, -200px)'
+  				},
+  				'75%': {
+  					transform: 'translate(-200px, -100px)'
+  				},
+  				'100%': {
+  					transform: 'translate(0, 400px)'
+  				}
+  			}
+  		},
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
@@ -77,21 +81,31 @@ export default {
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
   			},
-				'text-1': '187 100% 10.6%',
-				'text-2': '24 100% 15.6%',
-				'blizzard-blue': {
-          '50': '#ebfeff',
-          '100': '#cdf8ff',
-          '200': '#99eeff',
-          '300': '#62e2fe',
-          '400': '#1bcaf5',
-          '500': '#00addb',
-          '600': '#0289b8',
-          '700': '#0a6e94',
-          '800': '#125a78',
-          '900': '#134a66',
-          '950': '#063046',
-        },
+  			'text-1': '187 100% 10.6%',
+  			'text-2': '24 100% 15.6%',
+  			'blizzard-blue': {
+  				'50': '#ebfeff',
+  				'100': '#cdf8ff',
+  				'200': '#99eeff',
+  				'300': '#62e2fe',
+  				'400': '#1bcaf5',
+  				'500': '#00addb',
+  				'600': '#0289b8',
+  				'700': '#0a6e94',
+  				'800': '#125a78',
+  				'900': '#134a66',
+  				'950': '#063046'
+  			},
+  			sidebar: {
+  				DEFAULT: 'hsl(var(--sidebar-background))',
+  				foreground: 'hsl(var(--sidebar-foreground))',
+  				primary: 'hsl(var(--sidebar-primary))',
+  				'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
+  				accent: 'hsl(var(--sidebar-accent))',
+  				'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
+  				border: 'hsl(var(--sidebar-border))',
+  				ring: 'hsl(var(--sidebar-ring))'
+  			}
   		}
   	}
   },
