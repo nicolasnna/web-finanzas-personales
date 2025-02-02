@@ -20,6 +20,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       const userData = await loginEmailUser(email, password)
       setUser(userData.token)
       localStorage.setItem("auth", userData.token)
+      console.log("Login exitoso")
       return userData
     } catch {
       console.error("Error al intentar el login")
@@ -27,10 +28,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }
 
   const logout = async () => {
-    localStorage.removeItem("auth")
+    await localStorage.removeItem("auth")
+    console.log("Logout exitoso")
     setIncomes([])
     setExpenses([])
-    setUser("")
+    setUser(null)
   }
 
   return (

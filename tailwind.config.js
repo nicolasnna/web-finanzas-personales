@@ -4,6 +4,33 @@ export default {
     content: ["./index.html", "./src/**/*.{ts,tsx,js,jsx}"],
   theme: {
   	extend: {
+			animation: {
+				move: "move linear infinite",
+				moveRandom: "moveRandom 5s linear infinite",
+			},
+			keyframes: {
+				move: {
+          "0%": { transform: "translateY(-40%)" },
+          "100%": { transform: "translateY(140vh)" },
+        },
+				moveRandom: {
+          "0%": {
+            transform: "translate(0, 0)",
+          },
+          "25%": {
+            transform: "translate(-50px, 100px)",
+          },
+          "50%": {
+            transform: "translate(50px, -100px)",
+          },
+          "75%": {
+            transform: "translate(-100px, -50px)",
+          },
+          "100%": {
+            transform: "translate(0, 200px)",
+          },
+				},
+			},
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',

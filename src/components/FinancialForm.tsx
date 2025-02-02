@@ -60,7 +60,7 @@ const FinancialForm = ({
   };
 
   return (
-    <Card className='h-max'>
+    <Card className='h-max z-10'>
       <CardHeader>
         <CardTitle>{title}</CardTitle>
       </CardHeader>

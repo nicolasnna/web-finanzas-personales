@@ -39,7 +39,11 @@ const FinancialTable = ({
   return (
     <div className="w-[700px] z-10">
       <div className="p-4">
-        <h2 className="text-2xl font-semibold ">{title}</h2>
+        <h2 className="text-3xl font-semibold"
+          style={{
+            textShadow: "1px 1px 0px #fdba74"
+          }}
+        >{title}</h2>
       </div>
       <Table className="border-collapse border border-gray-300 bg-white">
         <TableHeader>

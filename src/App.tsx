@@ -6,23 +6,31 @@ import Navbar from "./components/Navbar"
 import { addExpenseDb, addIncomeDb, getExpensesDb, getIncomesDb } from "./services/dbService"
 import { useContext, useEffect } from "react"
 import { AuthContext } from "./context/authContext"
+import BackgroundNumbers from "./components/BackgroundNumbers"
 
 function App() {
   const { balanceRows: expenseRows, setBalanceRows: setExpensesRows } = useExpenseStore()
   const { balanceRows: incomeRows, setBalanceRows: setIncomesRows } = useIncomeStore()
-  const {user} = useContext(AuthContext)
+  const {user, logout} = useContext(AuthContext)
   
   useEffect(() => {
     const updateIncomes = async () => {
+      console.log("User: ", user)
       if (user) {
+        let dataIncomes = null
+        let dataExpenses = null
         try {
-          const dataIncomes = await getIncomesDb(user)
-          const dataExpenses = await getExpensesDb(user)
+          dataIncomes = await getIncomesDb(user)
+          dataExpenses = await getExpensesDb(user)
           setIncomesRows(dataIncomes)
           setExpensesRows(dataExpenses)
         
         } catch (error) {
           console.error("Eror al obtener los ingresos y gastos: ", error)
+        } finally{
+          if (!dataIncomes || !dataExpenses) {
+            logout()
+          }
         }
       }
     }
@@ -32,8 +40,9 @@ function App() {
 
 
   return (
-    <div className="bg-white">
-      <div className="flex flex-col items-center justify-center space-y-9 z-10">
+    <div className="bg-white relative">
+      <BackgroundNumbers/>
+      <div className="flex flex-col items-center justify-center space-y-9">
         <Navbar/>
         <Header text="Mi plan financiero"/>
         <section className="flex justify-center w-full gap-24">
