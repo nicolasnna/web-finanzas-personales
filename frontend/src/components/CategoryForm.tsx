@@ -15,6 +15,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
+import { category } from "@/types"
 
 const CategorySchema = z.object({
   category: z.string().min(2, {message: 'Debe tener un mínimo de 3 letras'}).trim()
@@ -22,7 +23,7 @@ const CategorySchema = z.object({
 
 type CategoryForm = z.infer<typeof CategorySchema>
 
-const CategoryForm = ({addResult} : {addResult: (category: string) => void}) => {
+const CategoryForm = ({addResult} : {addResult: (category: category) => void}) => {
   const [showForm, setShowForm] = useState(false)
   const form = useForm<CategoryForm>({
     resolver: zodResolver(CategorySchema),
@@ -31,8 +32,8 @@ const CategoryForm = ({addResult} : {addResult: (category: string) => void}) => 
     }
   })
   
-  const onSubmit: SubmitHandler<CategoryForm> = (data) => {
-    addResult(data.category)
+  const onSubmit: SubmitHandler<CategoryForm> = async (data) => {
+    await addResult({category: data.category})
     setShowForm(false)
   }
 

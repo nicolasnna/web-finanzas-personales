@@ -38,8 +38,8 @@ const SignupEmail = () => {
 
   const onSubmit: SubmitHandler<SignupType> = async data => {
     try {
-      const info = await login(data.email, data.password);
-      console.log(info)
+      await login(data.email, data.password);
+      // console.log(info)
       setShowForm(false)
       toast.success(`Se ha iniciado sesión con exito - ${data.email} `)
     
@@ -54,7 +54,7 @@ const SignupEmail = () => {
     <Button variant="default" onClick={() => setShowForm(true)}>Iniciar sesión</Button>
 
     <AlertDialog open={showForm} onOpenChange={setShowForm} >
-      <AlertDialogContent className="bg-blizzard-blue-100">
+      <AlertDialogContent className="bg-blizzard-blue-100 z-[101]">
         <AlertDialogHeader>
           <AlertDialogTitle className="text-2xl text-orange-950">Iniciar sesión</AlertDialogTitle>
           <AlertDialogDescription className="text-base text-black">Ingresa con tu correo electrónico.</AlertDialogDescription>

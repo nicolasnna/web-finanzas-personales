@@ -55,6 +55,7 @@ const FinancialForm = ({
       addBalanceRow(data)
     } else {
       console.error('User is null');
+      addBalanceRow(data)
     }
     form.reset()
   };
@@ -87,8 +88,8 @@ const FinancialForm = ({
                       </FormControl>
                       <SelectContent>
                         {categories.map((c) => (
-                          <SelectItem key={c} value={c}>
-                            {c}
+                          <SelectItem key={c.category} value={c.category}>
+                            {c.category}
                           </SelectItem>
                         ))}
                       </SelectContent>

@@ -1,4 +1,5 @@
-import { BalanceInfo, BalanceState } from "@/types";
+import { BalanceInfo, BalanceState, category } from "@/types";
+import { defaultCategoryExpense, defaultCategoryIncome } from "@/utils/constants";
 import { create } from "zustand";
 
 const generateId = () => `${Date.now()}-${Math.random().toString(16).slice(2)}`;
@@ -6,7 +7,7 @@ const generateId = () => `${Date.now()}-${Math.random().toString(16).slice(2)}`;
 const createBalanceStore = (
   balanceRowsKey: "balanceRows",
   categoryKey: "categories",
-  initialCategory: string[]
+  initialCategory: category[]
 ) =>
   create<BalanceState>((set) => {
     const store: BalanceState = {
@@ -28,10 +29,10 @@ const createBalanceStore = (
           [balanceRowsKey]: balanceRows,
         }));
       },
-      addCategory: (category: string) => {
+      addCategory: (category: category) => {
         set((state) => {
           const categories = state[categoryKey];
-          if (!categories.every(c => c.toLowerCase() === category.toLowerCase())) {
+          if (!categories.every(c => c.category.toLowerCase() === category.category.toLowerCase())) {
             return {
               ...state,
               [categoryKey]: [...categories, category],
@@ -40,7 +41,7 @@ const createBalanceStore = (
           return state
         });
       },
-      setCategories: (categories: string[]) => {
+      setCategories: (categories: category[]) => {
         set((state) => ({
           ...state,
           [categoryKey]: categories,
@@ -51,5 +52,5 @@ const createBalanceStore = (
     return store;
   });
 
-export const useExpenseStore = createBalanceStore("balanceRows", "categories", ["Alquiler", "Facturas", "Transporte"]);
-export const useIncomeStore = createBalanceStore("balanceRows", "categories", ["Salario"]);
+export const useExpenseStore = createBalanceStore("balanceRows", "categories", defaultCategoryExpense);
+export const useIncomeStore = createBalanceStore("balanceRows", "categories", defaultCategoryIncome);

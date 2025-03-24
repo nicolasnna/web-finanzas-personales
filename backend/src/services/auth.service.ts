@@ -80,7 +80,7 @@ export const signupUserWithEmailService = async (
       password
     );
     const token = generateToken({ uid: userCredentials.user.uid, email: userCredentials.user.email})
-    console.log(token)
+    // console.log(token)
     return {
       token
     };

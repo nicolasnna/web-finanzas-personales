@@ -35,7 +35,7 @@ const BackgroundNumbers = () => {
   }, []);
 
   return (
-    <div className="absolute inset-0 z-10 overflow-hidden h-full w-full">
+    <div className="fixed inset-0 z-0 h- w-full overflow-hidden">
       {numbers.map(({ id, value, top, left, rotate, size}) => (
         <div
           key={id} 

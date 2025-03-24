@@ -14,11 +14,11 @@ const Layout = ({ children }: LayoutProps) => {
       style={{"--sidebar-width": "230px"} as React.CSSProperties}
     > 
       <AppSideBar/>
+      <BackgroundNumbers/>
       <main className="flex flex-col h-full  w-full">
-        <BackgroundNumbers/>
         <Navbar/>
         <div className="absolute z-10 p-1">
-          <SidebarTrigger  className="size-12 [&_svg]:size-9 flex items-center justify-center"/> 
+          <SidebarTrigger  className="size-12 [&_svg]:size-9 flex items-center justify-center z-100"/> 
         </div>
         {children}
       </main>

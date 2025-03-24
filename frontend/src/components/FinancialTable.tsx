@@ -12,6 +12,8 @@ import {
   getCoreRowModel,
   useReactTable,
   getPaginationRowModel,
+  SortingState,
+  getSortedRowModel,
 } from '@tanstack/react-table';
 import { Button } from './ui/button';
 import { useState } from 'react';
@@ -23,6 +25,8 @@ const FinancialTable = ({
   title: string;
   content: BalanceInfo[];
 }) => {
+  const [sorting, setSorting] = useState<SortingState>([]);
+
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 6, // Número de filas por página
@@ -32,8 +36,10 @@ const FinancialTable = ({
     columns: BalanceColumns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    state: { pagination },
+    getSortedRowModel: getSortedRowModel(),
+    state: { pagination, sorting },
     onPaginationChange: setPagination,
+    onSortingChange: setSorting
   });
 
   return (
@@ -51,7 +57,7 @@ const FinancialTable = ({
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
                 return (
-                  <TableHead key={header.id} className='text-center'>
+                  <TableHead key={header.id} className='text-center cursor-pointer select-none' onClick={header.column.getToggleSortingHandler()}>
                     {header.isPlaceholder
                       ? null
                       : flexRender(
