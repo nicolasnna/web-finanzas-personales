@@ -15,4 +15,6 @@ export const defaultCategoryExpense = [
   { category: 'Transporte' },
 ];
 
+export const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+
 export const defaultCategoryIncome = [{ category: 'Salario' }];

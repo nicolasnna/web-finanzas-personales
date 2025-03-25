@@ -40,8 +40,10 @@ function App() {
           }
           dataCategoriesIncomes = await getCategoryIncomeDb(user)
           dataCategoriesExpenses = await getCategoryExpenseDb(user)
-          setIncomesRows(dataIncomes)
-          setExpensesRows(dataExpenses)
+          if (Array.isArray(dataIncomes))
+            setIncomesRows(dataIncomes)
+          if (Array.isArray(dataExpenses))
+            setExpensesRows(dataExpenses)
           if (Array.isArray(dataCategoriesIncomes))
             setIncomesCategory(dataCategoriesIncomes)
           if (Array.isArray(dataCategoriesExpenses))

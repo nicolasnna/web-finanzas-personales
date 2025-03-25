@@ -3,7 +3,16 @@ export interface resumeForCategoryInterface {
   category: string;
 }
 
+export interface resumeForMonth {
+  [month: string]: number
+}
+
+export interface resumeForYearMonth {
+  [year: number]: resumeForMonth
+}
+
 export interface resumeBalanceInterface {
   total: number;
   resumeForCategory: resumeForCategoryInterface[]
+  resumeForYearMonth: resumeForYearMonth
 }
