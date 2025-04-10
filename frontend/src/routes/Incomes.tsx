@@ -1,3 +1,4 @@
+import CardInfo from '@/components/CardInfo';
 import FinancialChartBar from '@/components/FinancialChartBar';
 import FinancialChartPie from '@/components/FinancialChartPie';
 import FinancialForm from '@/components/FinancialForm';
@@ -21,6 +22,10 @@ const Incomes = () => {
   return (
     <div className="flex flex-col items-center justify-center space-y-9 box-border px-3">
       <Header text="Registro de ingresos" />
+      <div className='z-20'>
+        <CardInfo/>
+      </div>
+
       <div className='flex w-full flex-wrap justify-center items-center gap-10 px-4 z-10'>
         <div className='w-[60%]'>
           <FinancialChartBar data={resume} />

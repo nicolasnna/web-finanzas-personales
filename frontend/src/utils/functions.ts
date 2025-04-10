@@ -37,19 +37,6 @@ export const resumeBalance = (
   return {total, resumeForCategory, resumeForYearMonth}
 };
 
-interface addCategoryWithDbInterface {
-  addCategory: (category: string) => void;
-  token: string;
-  addCategoryService: <T>(category: string, token: string) => Promise<T>;
-  category: string;
+export const formatNumber = (value: number, currency: string) => {
+  return new Intl.NumberFormat('es-CL', { style: 'currency', currency: currency}).format(value);
 }
-
-export const addCategoryWithDb = async ({
-  addCategory,
-  token,
-  addCategoryService,
-  category,
-}: addCategoryWithDbInterface) => {
-  await addCategoryService(category, token)
-  addCategory(category)
-};
