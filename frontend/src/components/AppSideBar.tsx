@@ -23,11 +23,11 @@ const items = [
 const AppSideBar = () => {
 
   return (
-    <Sidebar className="z-50">
+    <Sidebar className="z-50" >
       <SidebarHeader className="p-4">
         <h1 className="text-2xl font-bold text-orange-950">Menu</h1>
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent >
         <SidebarMenu>
           {items.map((item, index) => (
             <SidebarMenuItem key={index} className="px-3 ">

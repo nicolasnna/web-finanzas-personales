@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { z } from "zod"
 import { Button } from "./ui/button"
@@ -16,6 +16,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
 import { category } from "@/types"
+import { AuthContext } from "@/context/authContext"
 
 const CategorySchema = z.object({
   category: z.string().min(2, {message: 'Debe tener un mínimo de 3 letras'}).trim()
@@ -23,7 +24,8 @@ const CategorySchema = z.object({
 
 type CategoryForm = z.infer<typeof CategorySchema>
 
-const CategoryForm = ({addResult} : {addResult: (category: category) => void}) => {
+const CategoryForm = ({addResult, addDb} : {addResult: (category: category) => void, addDb: (category: category, token: string) =>  void}) => {
+  const {user} = useContext(AuthContext)
   const [showForm, setShowForm] = useState(false)
   const form = useForm<CategoryForm>({
     resolver: zodResolver(CategorySchema),
@@ -34,6 +36,8 @@ const CategoryForm = ({addResult} : {addResult: (category: category) => void}) =
   
   const onSubmit: SubmitHandler<CategoryForm> = async (data) => {
     await addResult({category: data.category})
+    if (user)
+      await addDb({category: data.category}, user)
     setShowForm(false)
   }
 
@@ -43,7 +47,7 @@ const CategoryForm = ({addResult} : {addResult: (category: category) => void}) =
       <Button onClick={() => setShowForm(true)}>Crear categoría</Button>
       
       <AlertDialog open={showForm} onOpenChange={setShowForm}>
-        <AlertDialogContent>
+        <AlertDialogContent className="bg-blizzard-blue-100">
           <AlertDialogHeader>
             <AlertDialogTitle>Crear categoría</AlertDialogTitle>
             <AlertDialogDescription>Crea una nueva categoría para el formularío.</AlertDialogDescription>
