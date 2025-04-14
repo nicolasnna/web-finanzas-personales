@@ -18,6 +18,6 @@ export const authenticateToken = (req: RequestUser, res: Response, next: NextFun
     return res.status(401).json({ success: false, message: "Token inválido" });
   }
 
-  req.user = decoded
+  req.user = decoded as Object
   next()
 }

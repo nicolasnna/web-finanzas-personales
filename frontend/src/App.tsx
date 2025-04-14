@@ -16,7 +16,7 @@ function App() {
   const setIncomesRows = useIncomeStore(state => state.setBalanceRows)
   const setExpensesCategory = useExpenseStore(s => s.setCategories)
   const setIncomesCategory = useIncomeStore(s => s.setCategories)
-  const {user, logout} = useContext(AuthContext)
+  const {user, updateToken} = useContext(AuthContext)
   
   useEffect(() => {
     const updateIncomes = async () => {
@@ -50,11 +50,9 @@ function App() {
             setExpensesCategory(dataCategoriesExpenses)
         } catch (error) {
           console.error("Eror al obtener los ingresos y gastos: ", error)
-        } finally{
-          if (!dataIncomes || !dataExpenses) {
-            logout()
-          }
-        }
+          await updateToken()
+
+        } 
       }
     }
 

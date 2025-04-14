@@ -5,6 +5,8 @@ import {
 } from "firebase/auth";
 import { auth } from "./firebase";
 import { sign, verify } from "jsonwebtoken"
+import { infoTokenProps, uidTokenProps } from "@/types/generateToken.interface";
+import { User } from "@/types/user.interface";
 
 const JWT_SECRET = process.env.JWT_SECRET || "FINANZA_PERSONAL"
 const JWT_EXPIRATION = "30m"
@@ -14,21 +16,33 @@ const JWT_EXPIRATION = "30m"
  * @param {Object} info - Información del usuario uid y tiempo de conexion }
  * @returns {string} Token JWT
  */
-const generateToken = (info: object): string => {
+const generateToken = (info: infoTokenProps): string => {
   return sign(info, JWT_SECRET, { expiresIn: JWT_EXPIRATION });
 }
+
+
+/**
+ * Genera un token de actualización para el usuario
+ * @param {object} user - Información del usuario uid y tiempo de conexion
+ * @returns {string} Token de actualización
+ */
+const generateRefreshToken = (user: uidTokenProps): string => {
+  return sign(user, JWT_SECRET)
+}
+
 
 /**
  * Verifica y decodifica un token JWT
  * @param {string} token - Token JWT
- * @returns {Object|null} Payload decodificado o null si no es válido
+ * @returns {Object| string | null} Payload decodificado o null si no es válido
  */
-export const verifyToken = (token: string): object | null => {
+export const verifyToken = (token: string): User | null => {
   try {
     const decoded = verify(token, JWT_SECRET);
-    if (typeof decoded === 'string') {
+    if (typeof decoded === "string") {
       return null;
     }
+
     return decoded;
   } catch (error: any) {
     console.error("Token inválido:", error.message);
@@ -36,6 +50,24 @@ export const verifyToken = (token: string): object | null => {
   }
 }
 
+export const refreshTokenService = (token: string, refreshToken: string) => {
+  const decoded = verifyToken(token)
+  console.log(token)
+  if (!decoded) {
+    throw new Error("Token inválido")
+  }
+  const { uid, email } = decoded as { uid: string, email: string }
+  const refreshDecoded = verifyToken(refreshToken)
+  if (!refreshDecoded) {
+    throw new Error("Token de actualización inválido")
+  }
+  if (refreshDecoded.uid !== uid) {
+    throw new Error("Token de actualización no coincide con el usuario")
+  }
+
+  const newToken = generateToken({ uid: uid, email: email })
+  return newToken
+}
 
 /**
  * Crea usuario con email y contraseña en Firebase Auth
@@ -80,9 +112,11 @@ export const signupUserWithEmailService = async (
       password
     );
     const token = generateToken({ uid: userCredentials.user.uid, email: userCredentials.user.email})
-    // console.log(token)
+    const refreshToken = generateRefreshToken({uid: userCredentials.user.uid})
+
     return {
-      token
+      token,
+      refreshToken
     };
   } catch (error: any) {
     throw new Error(mapFirebaseAuthError(error));

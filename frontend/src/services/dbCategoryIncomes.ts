@@ -29,7 +29,7 @@ export const addCategoryIncomeDb = async (category: category, token: string) => 
     return data
     // eslint-disable-next-line 
   } catch (error: any) {
-    return {error: error.message}
+    throw new Error(error.message || "Error al obtener la categoria de ingresos")
   }
 }
 
@@ -57,6 +57,6 @@ export const getCategoryIncomeDb = async (token: string) : Promise<category[] | 
     return data
     //eslint-disable-next-line
   } catch (error: any) {
-    return {error: error.message}
+    throw new Error(error.message || "Error al obtener la categoria de ingresos")
   }
 }

@@ -39,7 +39,7 @@ export const registerEmailUser = async (email: string, password: string) => {
  * ingresar cuenta con el usuario
  * @param email - Correo registgrado
  * @param password - Contraseña
- * @returns - token, uid, email
+ * @returns - [token, refreshToken]
 */
 export const loginEmailUser = async (email: string, password: string) => {
   const endpoint = `${BACKEND_URL}/auth/signup-email`
@@ -67,5 +67,35 @@ export const loginEmailUser = async (email: string, password: string) => {
       console.error("Error inesperado:", error);
       throw new Error("Error inesperado al iniciar sesión");
     }
+  }
+}
+
+/**
+ * Refresca el token de acceso
+ * @param token - Token de acceso
+ * @param refreshToken - Token de refresco
+ * @returns - nuevo token de acceso
+*/
+export const refreshTokenService = async (token: string) => {
+  const endpoint = `${BACKEND_URL}/auth/refresh-token`
+
+  try {
+    const res = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ token }),
+      credentials: "include",
+    })
+
+    if (!res.ok) {
+      const errorData = await res.json()
+      throw new Error(errorData.message || "Error al refrescar el token")
+    }
+
+    return await res.json()
+  } catch (error: unknown) {
+    console.error("Error al refrescar el token:", error);
   }
 }

@@ -1,4 +1,4 @@
-import { registerUserWithEmailController, signupUserWithEmailController } from "@/controller/auth.controller";
+import { refreshTokenController, registerUserWithEmailController, signupUserWithEmailController } from "@/controller/auth.controller";
 import { Router } from "express";
 
 const authRouter = Router()
@@ -8,5 +8,9 @@ const authRouter = Router()
  */
 authRouter.post("/register-email", registerUserWithEmailController)
 authRouter.post("/signup-email", signupUserWithEmailController)
+authRouter.post("/refresh-token", refreshTokenController)
+
+
+
 
 export default authRouter

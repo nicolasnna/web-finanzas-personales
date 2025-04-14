@@ -1,4 +1,4 @@
-import { loginEmailUser } from '@/services/authService'
+import { loginEmailUser, refreshTokenService } from '@/services/authService'
 import { useState, useEffect } from 'react'
 import { AuthContext } from './authContext'
 import { useExpenseStore, useIncomeStore } from '@/store/useBalanceStore'
@@ -20,15 +20,27 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       const userData = await loginEmailUser(email, password)
       setUser(userData.token)
       localStorage.setItem("auth", userData.token)
-      console.log("Login exitoso")
       return userData
     } catch {
-      console.error("Error al intentar el login")
+      throw new Error("Error al intentar el login")
     }
   }
 
-  const logout = async () => {
-    await localStorage.removeItem("auth")
+  const updateToken = async () => {
+    if (user) {
+      const res = await refreshTokenService(user)
+      console.log("Token actualizado", res)
+      if (res.token) {
+        setUser(res.token)
+        localStorage.setItem("auth", res.token)
+      } else {
+        throw new Error("Error al refrescar el token")
+      }
+    }
+  }
+
+  const logout = () => {
+    localStorage.removeItem("auth")
     console.log("Logout exitoso")
     setIncomes([])
     setExpenses([])
@@ -36,7 +48,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }
 
   return (
-    <AuthContext.Provider value={{user, login, logout}}>
+    <AuthContext.Provider value={{user, login, logout, updateToken}}>
       {children}
     </AuthContext.Provider>
   )

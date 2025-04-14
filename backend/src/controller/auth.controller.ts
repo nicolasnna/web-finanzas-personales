@@ -1,4 +1,4 @@
-import { registerUserWithEmailService, signupUserWithEmailService } from "@/services/auth.service";
+import { refreshTokenService, registerUserWithEmailService, signupUserWithEmailService } from "@/services/auth.service";
 import { Request, Response } from "express";
 
 interface RegisterUserRequest {
@@ -42,8 +42,32 @@ export const signupUserWithEmailController = async ( req: Request, res: Response
   }
 
   try {
-    const user = await signupUserWithEmailService(email, password)
-    res.status(200).json({ message: "Usuario iniciado con exito.", ...user})
+    const {token, refreshToken} = await signupUserWithEmailService(email, password)
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict", 
+      path: "/",
+      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 días
+    })
+    res.status(200).json({ message: "Usuario iniciado con exito.", token, refreshToken})
+  } catch (error: any) {
+    res.status(401).json({ message: error.message });
+  }
+}
+
+export const refreshTokenController = async ( req: Request, res: Response): Promise<any> => {
+  const refreshToken = req.cookies.refreshToken
+  const tokenOld = req.body.token
+  if (!refreshToken || !tokenOld) {
+    return res
+      .status(400)
+      .json({ message: "Refresh token y token son requeridos." });
+  } 
+
+  try {
+    const token = refreshTokenService(tokenOld, refreshToken)
+    res.status(200).json({ message: "Token actualizado con exito.", token })
   } catch (error: any) {
     res.status(401).json({ message: error.message });
   }
