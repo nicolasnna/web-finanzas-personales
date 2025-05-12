@@ -12,7 +12,7 @@ interface CardInfoProps {
 const CardInfo = ({className, title, value, currency = "", info =""}: CardInfoProps) => {
 
   return (
-    <Card className={`flex flex-col ${className}`}>
+    <Card className={`flex flex-col ${className} select-none`}>
       <CardHeader>
         <CardTitle className='uppercase w-full text-center'>{title}</CardTitle>
       </CardHeader>
@@ -21,7 +21,7 @@ const CardInfo = ({className, title, value, currency = "", info =""}: CardInfoPr
           {formatNumber(value, currency)} {currency}
         </p>  
       </CardContent>
-      <CardFooter className='flex justify-end items-center text-xl  font-semibold'>
+      <CardFooter className='flex justify-end items-center text-xl font-semibold'>
         {info}
       </CardFooter>
     </Card>

@@ -13,6 +13,8 @@ export interface resumeForYearMonth {
 
 export interface resumeBalanceInterface {
   total: number;
-  resumeForCategory: resumeForCategoryInterface[]
-  resumeForYearMonth: resumeForYearMonth
+  resumeForCategory: resumeForCategoryInterface[];
+  resumeForYearMonth: resumeForYearMonth;
+  lastYear: number;
+  lastMonth: string;
 }

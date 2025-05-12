@@ -31,16 +31,23 @@ const Incomes = () => {
   const higherCategory = useMemo(() => {
     const topValue = [...resume.resumeForCategory]
     topValue.sort(sortValueForCategory)
-    console.log(topValue)
     return topValue[0]
+  }, [resume])
+
+  const lastMonthYear = useMemo(() => {
+    if (resume.lastYear && resume.lastMonth) {
+      return resume.resumeForYearMonth[resume.lastYear][resume.lastMonth]
+    } 
+    return 0
   }, [resume])
 
   return (
     <div className="flex flex-col items-center justify-center space-y-9 box-border px-3">
       <Header text="Registro de ingresos" />
-      <section className='z-20 flex gap-4'>
+      <section className='z-20 flex gap-4 flex-wrap'>
         <CardInfo title='Total de ingresos' value={resume.total} currency='CLP'/>
-        <CardInfo title='Categoría mayor' value={higherCategory.value} currency='CLP' info={higherCategory.category}/>
+        <CardInfo title='Categoría destacada' value={higherCategory.value} currency='CLP' info={higherCategory.category}/>
+        <CardInfo title='Último mes' value={lastMonthYear} currency='CLP' info={`${resume.lastMonth} del ${resume.lastYear}`}/>
       </section>
 
       <div className='flex w-full flex-wrap justify-center items-center gap-10 px-4 z-10'>

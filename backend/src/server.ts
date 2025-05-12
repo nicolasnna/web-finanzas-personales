@@ -16,8 +16,8 @@ app.use(cors({
   credentials: true,
 }))
 
-app.use("/auth", authRouter)
-app.use("/db", dbRouter)
+app.use("/api/auth", authRouter)
+app.use("/api/db", dbRouter)
 
 app.get("/", (req, res) => {
   res.cookie("refreshToken", "token")

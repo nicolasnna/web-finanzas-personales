@@ -1,4 +1,6 @@
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:4000'
+import { URLS } from "@/utils/constants";
+
+const BACKEND_URL = URLS.API_URL
 
 /** 
  * Registrar usuario a partir de email

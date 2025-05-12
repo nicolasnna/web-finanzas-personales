@@ -12,11 +12,17 @@ export const resumeBalance = (
 
   const resumeForYearMonth: resumeForYearMonth = {}
   let total = 0
-  
+  let lastYear = 0
+  let lastMonth = 0
   for (const c of balanceRows) {
     const date = new Date(c.date)
     const year = date.getFullYear()
-    const month = months[date.getMonth()]
+    const monthNro = date.getMonth()
+    lastYear = lastYear < year ? year : lastYear
+    if (lastYear <= year && lastMonth < monthNro) {
+      lastMonth = monthNro
+    }
+    const month = months[monthNro]
     /* Checkear si existe */
     if (!resumeForYearMonth[year]) {
       resumeForYearMonth[year] = {};
@@ -34,8 +40,8 @@ export const resumeBalance = (
     });
     total += c.value
   }
-  console.log({total, resumeForCategory, resumeForYearMonth})
-  return {total, resumeForCategory, resumeForYearMonth}
+  const lastMonthText = months[lastMonth]
+  return {total, resumeForCategory, resumeForYearMonth, lastYear: lastYear, lastMonth: lastMonthText}
 };
 
 export const formatNumber = (value: number, currency: string) => {
