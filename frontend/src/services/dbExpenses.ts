@@ -30,7 +30,7 @@ export const addExpenseDb = async (expenseData: BalanceInfo, token: string) => {
     return data
     //eslint-disable-next-line
   } catch (error: any) {
-    console.error("Error al añadir el gasto: ", error.message)
+    throw new Error(`Error al añadir los egresos: ${error.message}`)
   }
 }
 
@@ -58,7 +58,7 @@ export const getExpensesDb = async (token: string) => {
     return data
     //eslint-disable-next-line
   } catch (error: any) {
-    console.error("Error al obtener los gastos:", error.message)
+    throw new Error(`Error al obtener los egresos: ${error.message}`)
   }
 }
 

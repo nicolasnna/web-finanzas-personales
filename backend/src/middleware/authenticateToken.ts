@@ -19,5 +19,6 @@ export const authenticateToken = (req: RequestUser, res: Response, next: NextFun
   }
 
   req.user = decoded as Object
+
   next()
 }

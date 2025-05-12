@@ -48,10 +48,8 @@ function App() {
             setIncomesCategory(dataCategoriesIncomes)
           if (Array.isArray(dataCategoriesExpenses))
             setExpensesCategory(dataCategoriesExpenses)
-        } catch (error) {
-          console.error("Eror al obtener los ingresos y gastos: ", error)
+        } catch {
           await updateToken()
-
         } 
       }
     }

@@ -29,7 +29,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const updateToken = async () => {
     if (user) {
       const res = await refreshTokenService(user)
-      console.log("Token actualizado", res)
       if (res?.token) {
         setUser(res.token)
         localStorage.setItem("auth", res.token)

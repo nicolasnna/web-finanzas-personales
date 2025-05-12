@@ -30,7 +30,7 @@ export const addIncomeDb = async (incomeData: BalanceInfo, token: string) => {
     return data
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any ) {
-    console.error("Error al añadir el ingreso: ", error.message)
+    throw new Error(`Error al añadir los ingresos: ${error.message}`)
   }
 }
 
@@ -58,6 +58,6 @@ export const getIncomesDb = async (token: string) => {
     return data
     //eslint-disable-next-line
   } catch (error: any) {
-    console.error("Error al obtener los ingresos:", error.message)
+    throw new Error(`Error al obtener los ingresos: ${error.message}`)
   }
 }

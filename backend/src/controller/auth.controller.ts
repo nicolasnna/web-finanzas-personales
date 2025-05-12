@@ -43,7 +43,7 @@ export const signupUserWithEmailController = async ( req: Request, res: Response
 
   try {
     const {token, refreshToken} = await signupUserWithEmailService(email, password)
-    res.cookie("refreshToken2", refreshToken, {sameSite: "lax"})
+    res.cookie("refreshToken", refreshToken, {sameSite: "lax"})
     res.status(200).json({ message: "Usuario iniciado con exito.", token, refreshToken})
   } catch (error: any) {
     res.status(401).json({ message: error.message });

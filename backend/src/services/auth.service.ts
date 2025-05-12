@@ -9,7 +9,7 @@ import { infoTokenProps, uidTokenProps } from "@/types/generateToken.interface";
 import { User } from "@/types/user.interface";
 
 const JWT_SECRET = process.env.JWT_SECRET || "FINANZA_PERSONAL"
-const JWT_EXPIRATION = "5m"
+const JWT_EXPIRATION = "1m"
 
 /**
  * Genera un token JWT con la información del usuario
@@ -45,19 +45,32 @@ export const verifyToken = (token: string): User | null => {
 
     return decoded;
   } catch (error: any) {
-    console.error("Token inválido:", error.message);
+    //console.error("Token inválido:", error.message);
+    return null;
+  }
+}
+
+export const decodeIgnoringExpiration = (token: string) => {
+  try {
+    // true: no falla aunque el token haya caducado
+    return verify(token, JWT_SECRET, { ignoreExpiration: true });
+  } catch {
     return null;
   }
 }
 
 export const refreshTokenService = (token: string, refreshToken: string) => {
-  const decoded = verifyToken(token)
-  console.log(token)
+  const decoded = decodeIgnoringExpiration(token)
+  
   if (!decoded) {
     throw new Error("Token inválido")
   }
+
   const { uid, email } = decoded as { uid: string, email: string }
+  
+
   const refreshDecoded = verifyToken(refreshToken)
+
   if (!refreshDecoded) {
     throw new Error("Token de actualización inválido")
   }
