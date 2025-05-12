@@ -34,6 +34,7 @@ export const resumeBalance = (
     });
     total += c.value
   }
+  console.log({total, resumeForCategory, resumeForYearMonth})
   return {total, resumeForCategory, resumeForYearMonth}
 };
 

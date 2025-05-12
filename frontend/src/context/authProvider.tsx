@@ -30,11 +30,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     if (user) {
       const res = await refreshTokenService(user)
       console.log("Token actualizado", res)
-      if (res.token) {
+      if (res?.token) {
         setUser(res.token)
         localStorage.setItem("auth", res.token)
       } else {
-        throw new Error("Error al refrescar el token")
+        logout()
+        throw new Error("Error al refrescar el token. Cerrando sesión.")
       }
     }
   }

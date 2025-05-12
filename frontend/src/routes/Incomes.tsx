@@ -18,23 +18,24 @@ const Incomes = () => {
     return resumeBalance(incomeRows, categories);
   }, [incomeRows, categories]);
 
+  // const higherCategory
 
   return (
     <div className="flex flex-col items-center justify-center space-y-9 box-border px-3">
       <Header text="Registro de ingresos" />
       <div className='z-20'>
-        <CardInfo/>
+        <CardInfo title='Total de ingresos' value={resume.total} currency='CLP'/>
       </div>
 
       <div className='flex w-full flex-wrap justify-center items-center gap-10 px-4 z-10'>
-        <div className='w-[60%]'>
+        <div className='w-[700px]'>
           <FinancialChartBar data={resume} />
         </div>
-        <div className='w-[30%]'>
+        <div className='w-[400px]'>
           <FinancialChartPie data={resume} />
         </div>
       </div>
-      <section className="flex justify-center w-full gap-24">
+      <section className="flex justify-center w-full gap-10 flex-wrap px-5">
         <FinancialTable title="Lista de ingresos" content={incomeRows} />
         <FinancialForm
           title="Añade un nuevo ingreso"

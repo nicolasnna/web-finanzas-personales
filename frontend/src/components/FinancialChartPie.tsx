@@ -33,8 +33,8 @@ const FinancialChartPie = ({ data }: { data: resumeBalanceInterface }) => {
 
   return (
     <Card className="flex flex-col z-20">
-      <CardHeader className='b-0 m-0'>
-        <CardTitle>Porcentaje de ingreso por categoría</CardTitle>
+      <CardHeader className='b-0 m-0 pb-0'>
+        <CardTitle className='text-4xl'>Porcentaje de ingreso por categoría</CardTitle>
       </CardHeader>
       <CardContent className="flex-1 pb-0 ">
         <ChartContainer config={chartConfig} className="aspect-square">
@@ -48,7 +48,7 @@ const FinancialChartPie = ({ data }: { data: resumeBalanceInterface }) => {
               dataKey="value"
               nameKey="category"
               fill="#8884d8"
-              innerRadius={60}
+              innerRadius={50}
               cx="50%" cy="50%" 
             >
               {percentajesResume.map((_, index) => (
@@ -61,7 +61,7 @@ const FinancialChartPie = ({ data }: { data: resumeBalanceInterface }) => {
             </Pie>
             <ChartLegend
               content={<ChartLegendContent nameKey="category" />}
-              className="-translate-y-2 flex-wrap gap-2 [&>*]:basis-1/4 [&>*]:justify-center text-xl"
+              className="-translate-y-2 flex-wrap gap-2 [&>*]:basis-1/4 [&>*]:justify-center text-2xl"
             />
           </PieChart>
         </ChartContainer>
