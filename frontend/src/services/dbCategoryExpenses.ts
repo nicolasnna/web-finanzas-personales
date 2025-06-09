@@ -9,7 +9,7 @@ const BACKEND_URL = URLS.API_URL
  * @param token
  */
 export const addCategoryExpenseDb = async (category: category, token: string) => {
-  const endpoint = `${BACKEND_URL}/db/add-category-expense`
+  const endpoint = `${BACKEND_URL}/db/categories/expenses`
   try {
     const response = await fetch(endpoint, {
       method: "POST",
@@ -38,7 +38,7 @@ export const addCategoryExpenseDb = async (category: category, token: string) =>
  * @param token
  */
 export const getCategoryExpenseDb = async (token: string) : Promise<category[] | error > => {
-  const endpoint = `${BACKEND_URL}/db/get-category-expense`
+  const endpoint = `${BACKEND_URL}/db/categories/expenses`
   try {
     const res = await fetch(endpoint, {
       method: "GET",

@@ -10,7 +10,7 @@ const BACKEND_URL = URLS.API_URL
  * @returns Respuesta del servidor
  */
 export const addIncomeDb = async (incomeData: BalanceInfo, token: string) => {
-  const endpoint = `${BACKEND_URL}/db/add-income`
+  const endpoint = `${BACKEND_URL}/db/incomes`
   try {
     const response = await fetch(endpoint, {
       method: "POST",
@@ -40,7 +40,7 @@ export const addIncomeDb = async (incomeData: BalanceInfo, token: string) => {
  * @returns - Retorna los ingresos del usuario desde la base de datos
  */
 export const getIncomesDb = async (token: string) => {
-  const endpoint = `${BACKEND_URL}/db/get-incomes`
+  const endpoint = `${BACKEND_URL}/db/incomes`
   try {
     const response = await fetch(endpoint, {
       method: "GET",

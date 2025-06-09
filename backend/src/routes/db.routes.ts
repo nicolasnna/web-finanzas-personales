@@ -14,30 +14,31 @@ import { Router } from "express";
 const dbRouter = Router();
 
 /* Endpoints para el manejo de la base de datos en firebase */
-dbRouter.post("/add-income", authenticateToken, createIncomeController);
-dbRouter.post("/add-expense", authenticateToken, createExpenseController);
+dbRouter.post("/incomes", authenticateToken, createIncomeController);
+dbRouter.post("/expenses", authenticateToken, createExpenseController);
+
+dbRouter.get("/incomes", authenticateToken, getIncomesController);
+dbRouter.get("/expenses", authenticateToken, getExpensesController);
+
 
 dbRouter.post(
-  "/add-category-income",
+  "/categories/incomes",
   authenticateToken,
   createCategoryIncomeController
 );
 dbRouter.post(
-  "/add-category-expense",
+  "/categories/expenses",
   authenticateToken,
   createCategoryExpenseController
 );
 
-dbRouter.get("/get-incomes", authenticateToken, getIncomesController);
-dbRouter.get("/get-expenses", authenticateToken, getExpensesController);
-
 dbRouter.get(
-  "/get-category-income",
+  "/categories/incomes",
   authenticateToken,
   getCategoryIncomesController
 );
 dbRouter.get(
-  "/get-category-expense",
+  "/categories/expenses",
   authenticateToken,
   getCategoryExpensesController
 );

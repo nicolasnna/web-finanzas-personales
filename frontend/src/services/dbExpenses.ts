@@ -10,7 +10,7 @@ const BACKEND_URL = URLS.API_URL
  * @returns - Retorna respuesta del servidor
  */
 export const addExpenseDb = async (expenseData: BalanceInfo, token: string) => {
-  const endpoint = `${BACKEND_URL}/db/add-expense`
+  const endpoint = `${BACKEND_URL}/db/expenses`
   try {
     const response = await fetch(endpoint, {
       method: "POST",
@@ -40,7 +40,7 @@ export const addExpenseDb = async (expenseData: BalanceInfo, token: string) => {
  * @returns - Gastos del usuario
  */
 export const getExpensesDb = async (token: string) => {
-  const endpoint = `${BACKEND_URL}/db/get-expenses`
+  const endpoint = `${BACKEND_URL}/db/expenses`
   try {
     const response = await fetch(endpoint, {
       method: "GET",
