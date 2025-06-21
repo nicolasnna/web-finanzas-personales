@@ -1,4 +1,9 @@
-import { createCategoryExpenseController, getCategoryExpensesController, updateCategoryExpensesController } from "@/controller/categoriesExpenses.controller";
+import {
+  createCategoryExpenseController,
+  deleteCategoryExpensesController,
+  getCategoryExpensesController,
+  updateCategoryExpensesController,
+} from "@/controller/categoriesExpenses.controller";
 import { authenticateToken } from "@/middleware/authenticateToken";
 import { Router } from "express";
 
@@ -12,10 +17,20 @@ categoryExpensesRouter.post(
 
 categoryExpensesRouter.get(
   "/categories/expenses",
-  authenticateToken,  
+  authenticateToken,
   getCategoryExpensesController
 );
 
-categoryExpensesRouter.put('/categories/expenses/:docId', authenticateToken, updateCategoryExpensesController)
+categoryExpensesRouter.put(
+  "/categories/expenses/:docId",
+  authenticateToken,
+  updateCategoryExpensesController
+);
+
+categoryExpensesRouter.delete(
+  "/categories/expenses/:docId",
+  authenticateToken,
+  deleteCategoryExpensesController
+);
 
 export default categoryExpensesRouter;

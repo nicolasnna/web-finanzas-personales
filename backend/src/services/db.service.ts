@@ -46,10 +46,12 @@ export const updateService = async <T>(uid: string, collectionName: string, docI
     const documentRef = doc(db, 'users', uid, collectionName, docId)
 
     const { id, ...payload } = data as { id?: string } & Partial<T>;
+    
+    await updateDoc(documentRef, payload);
 
-    const collectionUpdate = await updateDoc(documentRef, payload);
+    const newDocument = await getDoc(documentRef)
 
-    return collectionUpdate;
+    return newDocument;
   } catch (e: any) {
     throw e;
   }
