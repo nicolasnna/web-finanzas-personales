@@ -1,0 +1,107 @@
+paths:
+  /api/categories/incomes:
+    get:
+      tags:
+        - Categorías
+      summary: Obtiene todas las categorías de ingresos
+      description: Obtiene todas las categorías de ingresos del usuario.
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Devuelve todas las categorías de ingresos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: ID de la categoría
+                    name:
+                      type: string
+                      description: Nombre de la categoría
+        '401':
+          description: No autorizado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "No autorizado"
+        '500':
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Error interno del servidor"
+    post:
+      tags:
+        - Categorías
+      summary: Crea una nueva categoría de ingresos
+      description: Crea una nueva categoría de ingresos para el usuario.
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Nombre de la categoría
+                  example: "Salario"
+      responses:
+        '201':
+          description: Categoría creada exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: ID de la nueva categoría
+                  name:
+                    type: string
+                    description: Nombre de la nueva categoría
+        '400':
+          description: Solicitud incorrecta
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Solicitud incorrecta"
+        '401':
+          description: No autorizado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "No autorizado"
+        '500':
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Error interno del servidor"

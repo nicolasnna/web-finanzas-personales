@@ -1,0 +1,106 @@
+paths:
+  /api/categories/expenses:
+    get:
+      tags:
+        - Categorías
+      summary: Obtiene todas las categorías de gastos
+      description: Obtiene todas las categorías de gastos del usuario.
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Devuelve todas las categorías de gastos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: ID de la categoría
+                    name:
+                      type: string
+                      description: Nombre de la categoría
+        '401':
+          description: No autorizado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "No autorizado"
+        '500':
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Error interno del servidor"
+    post:
+      tags:
+        - Categorías
+      summary: Crea una nueva categoría de gastos
+      description: Crea una nueva categoría de gastos para el usuario.
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Nombre de la categoría
+      responses:
+        '201':
+          description: Categoría creada exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: ID de la categoría creada
+                  name:
+                    type: string
+                    description: Nombre de la categoría creada
+        '400':
+          description: Faltan datos en el body de la solicitud
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Datos requeridos."
+        '401':
+          description: No autorizado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "No autorizado"
+        '500':
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Error interno del servidor"

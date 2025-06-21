@@ -30,6 +30,10 @@ const options = {
         name: 'Gastos',
         description: 'Operaciones relacionadas con gastos',
       },
+      {
+        name: 'Categorías',
+        description: 'Operaciones relacionadas con las categorías de ingresos y gastos',
+      }
     ],
     components: {
       securitySchemes: {
