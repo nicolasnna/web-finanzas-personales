@@ -1,0 +1,23 @@
+paths:
+  /api/auth/register-email:
+    post:
+      tags:
+        - Autenticación
+      summary: Registra un nuevo usuario con email y contraseña
+      description: Crea un nuevo usuario en la base de datos utilizando email y contraseña.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  description: Email del usuario
+                  required: true
+                password:
+                  type: string
+                  description: Contraseña del usuario
+                  required: true

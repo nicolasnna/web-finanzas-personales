@@ -1,6 +1,6 @@
 import { createCategoryExpenseService, createCategoryIncomeService, createExpenseService, createIncomeService, getCategoryExpensesService, getCategoryIncomesService, getExpensesService, getIncomesService } from '@/services/db.service';
 import { RequestUser } from '@/types/request.interface';
-import {Request, Response} from 'express';
+import { Response} from 'express';
 
 /* 
  * Subir a la base de datos un nuevo ingreso
@@ -10,17 +10,18 @@ export const createIncomeController = async (req: RequestUser, res: Response): P
   const uid = req.user?.uid;
 
   if (!data) {
-    return res.status(400).json({ message: 'Datos requeridos.' });
+    return res.status(400).json({message: 'Datos requeridos.' });
   }
+
   if (!uid) {
-    return res.status(400).json({ message: 'Se requiere un uid de usuario.' });
+    return res.status(500).json({message: 'Error interno: Usuario no identificado' });
   }
 
   try {
-    await createIncomeService(uid, data);
-    res.status(201).json({ message: 'Ingreso creado con exito.' });
+    const createElement = await createIncomeService(uid, data);
+    res.status(201).json(createElement);
   } catch (error: any) {
-    res.status(400).json({ message: error.message });
+    res.status(500).json({message: error.message });
   }
 }
 
@@ -96,14 +97,14 @@ export const createCategoryExpenseController = async (req: RequestUser, res: Res
 export const getIncomesController = async (req: RequestUser, res: Response): Promise<any> => {
   const uid = req.user?.uid;  
   if (!uid) {
-    return res.status(400).json({ message: 'Se requiere un uid de usuario.' });
+    return res.status(500).json({message: 'Error interno: Usuario no identificado' });
   }
 
   try {
     const incomes = await getIncomesService(uid);
     res.status(200).json(incomes);
   } catch (error: any) {
-    res.status(400).json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 }
 

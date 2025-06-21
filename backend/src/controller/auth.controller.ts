@@ -18,14 +18,14 @@ export const registerUserWithEmailController = async (
   if (!email || !password) {
     return res
       .status(400)
-      .json({ message: "Email y constraseña son requeridos." });
+      .json({ message: "Email y contraseña son requeridos." });
   }
 
   try {
     const user = await registerUserWithEmailService(email, password);
     res.status(201).json({ message: "Usuario creado con exito. ", user });
   } catch (error: any) {
-    res.status(400).json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 

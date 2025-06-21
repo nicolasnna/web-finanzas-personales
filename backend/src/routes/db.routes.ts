@@ -13,11 +13,11 @@ import { Router } from "express";
 
 const dbRouter = Router();
 
-/* Endpoints para el manejo de la base de datos en firebase */
 dbRouter.post("/incomes", authenticateToken, createIncomeController);
-dbRouter.post("/expenses", authenticateToken, createExpenseController);
-
 dbRouter.get("/incomes", authenticateToken, getIncomesController);
+
+
+dbRouter.post("/expenses", authenticateToken, createExpenseController);
 dbRouter.get("/expenses", authenticateToken, getExpensesController);
 
 

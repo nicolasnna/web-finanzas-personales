@@ -9,13 +9,13 @@ export const authenticateToken = (req: RequestUser, res: Response, next: NextFun
   const token = req.headers["authorization"]?.split(" ")[1]
   
   if (!token) {
-    return res.status(401).json({success: false, message: "Se necesita un token para la validación"})
+    return res.status(401).json({message: "Se necesita un token para la validación"})
   }
 
   const decoded = verifyToken(token)
 
   if (!decoded) {
-    return res.status(401).json({ success: false, message: "Token inválido" });
+    return res.status(401).json({message: "Token inválido" });
   }
 
   req.user = decoded as Object

@@ -14,7 +14,7 @@ const createService = async (uid: string, data: incomesData | expenseData, colle
   try {
     const collectionRef = collection(db, 'users', uid, collectionName);
     const doc = await addDoc(collectionRef, data);
-    return doc.id;
+    return doc;
   } catch (error: any) {
     throw new Error(error.message);
   }

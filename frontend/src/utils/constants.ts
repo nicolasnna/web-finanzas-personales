@@ -1,5 +1,5 @@
 export const URLS = {
-  API_URL: 'http://localhost:4001/api',
+  API_URL: 'http://localhost:4000/api',
   HOME: '/',
   INCOMES: '/incomes',
   EXPENSES: '/expenses',
