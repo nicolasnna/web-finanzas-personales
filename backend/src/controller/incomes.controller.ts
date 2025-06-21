@@ -1,5 +1,6 @@
 import { createIncomeService, getIncomesService } from "@/services/incomes.service";
-import { RequestUser } from "@/types/request.interface";
+import { RequestUser } from "@/types/RequestUser.interface";
+import { isTransactionData } from "@/types/TransactionData.interface";
 import { Response } from "express";
 
 export const createIncomeController = async (req: RequestUser, res: Response): Promise<any> => {
@@ -13,6 +14,8 @@ export const createIncomeController = async (req: RequestUser, res: Response): P
   if (!uid) {
     return res.status(500).json({message: 'Error interno: Usuario no identificado' });
   }
+
+  if (!isTransactionData(data)) return res.status(400).json({message: 'Formato de transacción no válida'})
 
   try {
     const createElement = await createIncomeService(uid, data);

@@ -1,12 +1,11 @@
 import {
   createUserWithEmailAndPassword,
-  getIdToken,
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { auth } from "./firebase";
 import { sign, verify } from "jsonwebtoken"
-import { infoTokenProps, uidTokenProps } from "@/types/generateToken.interface";
-import { User } from "@/types/user.interface";
+import { infoTokenProps, uidTokenProps } from "@/types/GenerateToken.interface";
+import { User } from "@/types/User.interface";
 
 const JWT_SECRET = process.env.JWT_SECRET || "FINANZA_PERSONAL"
 const JWT_EXPIRATION = "1m"

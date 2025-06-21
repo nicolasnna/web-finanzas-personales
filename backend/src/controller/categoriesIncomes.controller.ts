@@ -1,6 +1,6 @@
 import { createCategoryIncomeService, getCategoryIncomesService } from "@/services/categoriesIncomes.service";
 import { isCategory } from "@/types/category.interface";
-import { RequestUser } from "@/types/request.interface";
+import { RequestUser } from "@/types/RequestUser.interface";
 import { Response } from "express";
 
 export const createCategoryIncomeController = async (req: RequestUser, res: Response): Promise<any> => {

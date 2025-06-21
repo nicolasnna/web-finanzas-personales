@@ -1,4 +1,4 @@
-import { incomesData } from "@/types/incomes.interface";
+import { TransactionData } from "@/types/TransactionData.interface";
 import { createService, getService } from "./db.service";
 
 /**
@@ -6,7 +6,7 @@ import { createService, getService } from "./db.service";
  * @param uid - Identificador único del usuario
  * @param data - Información del ingreso a subir
  */
-export const createIncomeService = async (uid: string, data: incomesData) => {
+export const createIncomeService = async (uid: string, data: TransactionData) => {
   return await createService(uid, data, 'incomes');
 }
 

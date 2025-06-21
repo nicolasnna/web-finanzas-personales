@@ -1,8 +1,7 @@
 import { addDoc, collection, getDocs } from 'firebase/firestore';
 import { db } from './firebase';
-import { incomesData } from '@/types/incomes.interface';
-import { expenseData } from '@/types/expense.interface';
-import { category } from '@/types/category.interface';
+import { TransactionData } from '@/types/TransactionData.interface';
+import { Category } from '@/types/category.interface';
 
 /**
  * Crea un servicio para añadir datos a una colección
@@ -10,7 +9,7 @@ import { category } from '@/types/category.interface';
  * @param data - Información a subir
  * @param collectionName - Nombre de la colección
  */
-export const createService = async (uid: string, data: incomesData | expenseData, collectionName: string) => {
+export const createService = async (uid: string, data: TransactionData, collectionName: string) => {
   try {
     const collectionRef = collection(db, 'users', uid, collectionName);
     const doc = await addDoc(collectionRef, data);
@@ -20,7 +19,7 @@ export const createService = async (uid: string, data: incomesData | expenseData
   }
 }
 
-export const createCategoryService = async (uid: string, data: category, collectionName: string) => {
+export const createCategoryService = async (uid: string, data: Category, collectionName: string) => {
   try {
     const collectionRef = collection(db, 'users', uid, collectionName);
     const collectionSnapshot = await getDocs(collectionRef)

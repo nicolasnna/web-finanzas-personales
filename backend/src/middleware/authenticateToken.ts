@@ -1,5 +1,5 @@
 import { verifyToken } from "@/services/auth.service"
-import { RequestUser } from "@/types/request.interface";
+import { RequestUser } from "@/types/RequestUser.interface";
 import { Response, NextFunction } from "express";
 
 /**
