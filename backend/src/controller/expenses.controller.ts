@@ -1,4 +1,4 @@
-import { createExpenseService, getExpensesService } from "@/services/db.service";
+import { createExpenseService, getExpensesService } from "@/services/expenses.service";
 import { RequestUser } from "@/types/request.interface";
 import { Response } from "express";
 

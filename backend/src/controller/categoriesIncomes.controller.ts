@@ -1,8 +1,8 @@
-import { createCategoryExpenseService, getCategoryExpensesService } from "@/services/db.service";
+import { createCategoryIncomeService, getCategoryIncomesService } from "@/services/categoriesIncomes.service";
 import { RequestUser } from "@/types/request.interface";
 import { Response } from "express";
 
-export const createCategoryExpenseController = async (req: RequestUser, res: Response): Promise<any> => {
+export const createCategoryIncomeController = async (req: RequestUser, res: Response): Promise<any> => {
   const data = req.body;
   const uid = req.user?.uid;
 
@@ -14,14 +14,14 @@ export const createCategoryExpenseController = async (req: RequestUser, res: Res
   }
 
   try {
-    const createElement = await createCategoryExpenseService(uid, data);
-    res.status(201).json(createElement);
+    const createdCategory =  await createCategoryIncomeService(uid, data);
+    res.status(201).json(createdCategory);
   } catch (error: any) {
     res.status(500).json({ message: error.message });
   }
 }
 
-export const getCategoryExpensesController = async (req: RequestUser, res: Response): Promise<any> => {
+export const getCategoryIncomesController = async (req: RequestUser, res: Response): Promise<any> => {
   const uid = req.user?.uid;
 
   if (!uid) {
@@ -29,8 +29,8 @@ export const getCategoryExpensesController = async (req: RequestUser, res: Respo
   }
 
   try {
-    const expenses = await getCategoryExpensesService(uid);
-    res.status(200).json(expenses);
+    const incomes = await getCategoryIncomesService(uid);
+    res.status(200).json(incomes);
   } catch (error: any) {
     res.status(500).json({ message: error.message });
   }

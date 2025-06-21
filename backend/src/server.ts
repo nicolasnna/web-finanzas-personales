@@ -6,7 +6,8 @@ import cookieParser from 'cookie-parser'
 import swaggerUi from 'swagger-ui-express'
 import swaggerSpec from '@/swagger'
 import expensesRouter from "./routes/expenses.routes"
-import categoryIncomesRouter from "./routes/categoryIncomes.routes"
+import categoryIncomesRouter from "./routes/categoriesIncomes.routes"
+import categoryExpensesRouter from "./routes/categoriesExpenses.routes"
 const app = express()
 
 app.use(cookieParser())
@@ -22,7 +23,7 @@ app.use(cors({
 app.use("/api/auth", authRouter)
 
 app.use("/api", categoryIncomesRouter)
-app.use("/api", categoryIncomesRouter)
+app.use("/api", categoryExpensesRouter)
 
 app.use("/api", incomesRouter)
 app.use("/api", expensesRouter)

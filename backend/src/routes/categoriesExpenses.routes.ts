@@ -1,4 +1,4 @@
-import { createCategoryExpenseController, getCategoryExpensesController } from "@/controller/categoryExpenses.controller";
+import { createCategoryExpenseController, getCategoryExpensesController } from "@/controller/categoriesExpenses.controller";
 import { authenticateToken } from "@/middleware/authenticateToken";
 import { Router } from "express";
 

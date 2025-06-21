@@ -1,5 +1,5 @@
 
-import { createCategoryIncomeController, getCategoryIncomesController } from "@/controller/categoryIncomes.controller";
+import { createCategoryIncomeController, getCategoryIncomesController } from "@/controller/categoriesIncomes.controller";
 import { authenticateToken } from "@/middleware/authenticateToken";
 import { Router } from "express";
 
