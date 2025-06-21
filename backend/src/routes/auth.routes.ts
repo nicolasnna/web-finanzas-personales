@@ -1,4 +1,4 @@
-import { refreshTokenController, registerUserWithEmailController, signupUserWithEmailController } from "@/controller/auth.controller";
+import { loginUserWithEmailController, refreshTokenController, registerUserWithEmailController } from "@/controller/auth.controller";
 import { Router } from "express";
 
 const authRouter = Router()
@@ -6,8 +6,8 @@ const authRouter = Router()
 /**
  * Endpoint para registrar usuario con email
  */
-authRouter.post("/register-email", registerUserWithEmailController)
-authRouter.post("/signup-email", signupUserWithEmailController)
+authRouter.post("/register", registerUserWithEmailController)
+authRouter.post("/login", loginUserWithEmailController)
 authRouter.post("/refresh-token", refreshTokenController)
 
 

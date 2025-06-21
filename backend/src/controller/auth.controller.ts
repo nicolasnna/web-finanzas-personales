@@ -1,4 +1,4 @@
-import { refreshTokenService, registerUserWithEmailService, signupUserWithEmailService } from "@/services/auth.service";
+import { loginUserWithEmailService, refreshTokenService, registerUserWithEmailService } from "@/services/auth.service";
 import { Request, Response } from "express";
 
 interface RegisterUserRequest {
@@ -23,16 +23,25 @@ export const registerUserWithEmailController = async (
 
   try {
     const user = await registerUserWithEmailService(email, password);
-    res.status(201).json({ message: "Usuario creado con exito. ", user });
+    res.status(201).json({ message: "Usuario creado con exito. ", email: user.email });
   } catch (error: any) {
-    res.status(500).json({ message: error.message });
+    if (error.code === "auth/email-already-in-use") {
+      return res.status(409).json({ message: "El email ya está en uso." });
+    }
+    if (error.code === "auth/invalid-email") {
+      return res.status(422).json({ message: "El formato del correo no es válido." });
+    }
+    if (error.code === "auth/weak-password") {
+      return res.status(422).json({ message: "La contraseña es demasiado débil." });
+    }
+    res.status(500).json({ message: error.message});
   }
 };
 
 /**
  * Controlador para iniciar sesion
  */
-export const signupUserWithEmailController = async ( req: Request, res: Response): Promise<any> => {
+export const loginUserWithEmailController = async ( req: Request, res: Response): Promise<any> => {
   const { email, password } = req.body
 
   if (!email || !password) {
@@ -42,7 +51,7 @@ export const signupUserWithEmailController = async ( req: Request, res: Response
   }
 
   try {
-    const {token, refreshToken} = await signupUserWithEmailService(email, password)
+    const {token, refreshToken} = await loginUserWithEmailService(email, password)
     res.cookie("refreshToken", refreshToken, {sameSite: "lax"})
     res.status(200).json({ message: "Usuario iniciado con exito.", token, refreshToken})
   } catch (error: any) {

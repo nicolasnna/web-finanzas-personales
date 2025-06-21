@@ -9,7 +9,7 @@ const BACKEND_URL = URLS.API_URL
  * @returns - uid, email
 */
 export const registerEmailUser = async (email: string, password: string) => {
-  const endpoint = `${BACKEND_URL}/auth/register-email`
+  const endpoint = `${BACKEND_URL}/auth/register`
 
   try {
     const response = await fetch(endpoint, {
@@ -44,7 +44,7 @@ export const registerEmailUser = async (email: string, password: string) => {
  * @returns - [token, refreshToken]
 */
 export const loginEmailUser = async (email: string, password: string) => {
-  const endpoint = `${BACKEND_URL}/auth/signup-email`
+  const endpoint = `${BACKEND_URL}/auth/login`
 
   try {
     const response = await fetch(endpoint, {

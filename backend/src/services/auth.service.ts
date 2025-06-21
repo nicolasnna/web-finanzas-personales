@@ -104,7 +104,7 @@ export const registerUserWithEmailService = async (
       email: userCredentials.user.email,
     };
   } catch (error: any) {
-    throw new Error(mapFirebaseAuthError(error));
+    throw {code: error, message: mapFirebaseAuthError(error.code)};
   }
 };
 
@@ -114,7 +114,7 @@ export const registerUserWithEmailService = async (
  * @param password - Contraseña asociada
  * @returns Informacion del usuario iniciado uid, email, token
  */
-export const signupUserWithEmailService = async (
+export const loginUserWithEmailService = async (
   email: string,
   password: string
 ) => {
@@ -132,7 +132,7 @@ export const signupUserWithEmailService = async (
       refreshToken
     };
   } catch (error: any) {
-    throw new Error(mapFirebaseAuthError(error));
+    throw {code: error, message: mapFirebaseAuthError(error.code)};
   }
 };
 
