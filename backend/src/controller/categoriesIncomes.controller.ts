@@ -1,4 +1,5 @@
 import { createCategoryIncomeService, getCategoryIncomesService } from "@/services/categoriesIncomes.service";
+import { isCategory } from "@/types/category.interface";
 import { RequestUser } from "@/types/request.interface";
 import { Response } from "express";
 
@@ -6,12 +7,12 @@ export const createCategoryIncomeController = async (req: RequestUser, res: Resp
   const data = req.body;
   const uid = req.user?.uid;
 
-  if (!data) {
-    return res.status(400).json({ message: 'Datos requeridos.' });
-  }
-  if (!uid) {
-    return res.status(500).json({ message: 'Se requiere un uid de usuario.' });
-  }
+  if (!data) return res.status(400).json({ message: 'Datos requeridos.' });
+
+  if (!uid) return res.status(500).json({ message: 'Error interno: error al identificar el usuario.' });
+
+  if (!isCategory(data)) return res.status(400).json({ message: 'Formato de categoría no válida.' });
+  
 
   try {
     const createdCategory =  await createCategoryIncomeService(uid, data);
@@ -25,7 +26,7 @@ export const getCategoryIncomesController = async (req: RequestUser, res: Respon
   const uid = req.user?.uid;
 
   if (!uid) {
-    return res.status(500).json({ message: 'Se requiere un uid de usuario.' });
+    return res.status(500).json({ message: 'Error interno: error al identificar el usuario.' });
   }
 
   try {

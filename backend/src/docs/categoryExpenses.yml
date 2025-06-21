@@ -20,7 +20,7 @@ paths:
                     id:
                       type: string
                       description: ID de la categoría
-                    name:
+                    category:
                       type: string
                       description: Nombre de la categoría
         '401':
@@ -57,7 +57,7 @@ paths:
             schema:
               type: object
               properties:
-                name:
+                category:
                   type: string
                   description: Nombre de la categoría
       responses:
@@ -71,7 +71,7 @@ paths:
                   id:
                     type: string
                     description: ID de la categoría creada
-                  name:
+                  category:
                     type: string
                     description: Nombre de la categoría creada
         '400':

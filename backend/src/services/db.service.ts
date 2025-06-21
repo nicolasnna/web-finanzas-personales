@@ -24,7 +24,6 @@ export const createCategoryService = async (uid: string, data: category, collect
   try {
     const collectionRef = collection(db, 'users', uid, collectionName);
     const collectionSnapshot = await getDocs(collectionRef)
-    console.log(data)
     const exist = collectionSnapshot.docs.some( items => items.data().category.toLowerCase() == data.category.toLowerCase())
     if (!exist) {
       const doc = await addDoc(collectionRef, data);

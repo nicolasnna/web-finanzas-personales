@@ -20,7 +20,7 @@ paths:
                     id:
                       type: string
                       description: ID de la categoría
-                    name:
+                    category:
                       type: string
                       description: Nombre de la categoría
         '401':
@@ -57,7 +57,7 @@ paths:
             schema:
               type: object
               properties:
-                name:
+                category:
                   type: string
                   description: Nombre de la categoría
                   example: "Salario"
@@ -72,7 +72,7 @@ paths:
                   id:
                     type: string
                     description: ID de la nueva categoría
-                  name:
+                  category:
                     type: string
                     description: Nombre de la nueva categoría
         '400':
