@@ -1,15 +1,15 @@
 paths:
-  /api/incomes:
+  /api/expenses:
     get:
       tags:
-        - Ingresos
-      summary: Obtiene todos los ingresos
-      description: Obtiene todos los ingresos del usuario.
+        - Gastos
+      summary: Obtiene todos los gastos
+      description: Obtiene todos los gastos del usuario.
       security:
         - BearerAuth: []
       responses:
         '200':
-          description: Devuelve todos los ingresos
+          description: Devuelve todos los gastos
           content:
             application/json:
               schema:
@@ -19,20 +19,20 @@ paths:
                   properties:
                     category:
                       type: string
-                      description: Categoría del ingreso
+                      description: Categoría del gasto
                     details:
                       type: string
-                      description: Detalles del ingreso
+                      description: Detalles del ingregastoso
                     currency:
                       type: string
-                      description: Tipo de moneda del ingreso
+                      description: Tipo de moneda del gasto
                     date:
                       type: string
                       format: date
-                      description: Fecha del ingreso
+                      description: Fecha del gasto
                     value:
                       type: number
-                      description: Valor del ingreso
+                      description: Valor del gasto
         '400':
           description: Faltan datos en el body de la solicitud
           content:
@@ -65,9 +65,9 @@ paths:
                     example: "Error interno del servidor"
     post:
       tags:
-        - Ingresos
-      summary: Añade un ingreso
-      description: Crea un nuevo ingreso en la base de datos.
+        - Gastos
+      summary: Añade un gasto
+      description: Crea un nuevo gasto en la base de datos.
       security:
         - BearerAuth: []
       requestBody:
@@ -79,28 +79,28 @@ paths:
               properties:
                 category:
                   type: string
-                  description: Categoría del ingreso
+                  description: Categoría del gasto
                   required: false
                 details:
                   type: string
-                  description: Detalles del ingreso
+                  description: Detalles del gasto
                   required: false
                 currency:
                   type: string
-                  description: Tipo de moneda del ingreso
+                  description: Tipo de moneda del gasto
                   required: true
                 date:
                   type: string
                   format: date
-                  description: Fecha del ingreso
+                  description: Fecha del gasto
                   required: true
                 value:
                   type: number
-                  description: Valor del ingreso
+                  description: Valor del gasto
                   required: true
       responses:
         '201':
-          description: Ingreso creado exitosamente
+          description: Gasto creado exitosamente
           content:
             application/json:
               schema:
@@ -108,20 +108,20 @@ paths:
                 properties:
                   category:
                     type: string
-                    description: Categoría del ingreso
+                    description: Categoría del gasto
                   details:
                     type: string
-                    description: Detalles del ingreso
+                    description: Detalles del gasto
                   currency:
                     type: string
-                    description: Tipo de moneda del ingreso
+                    description: Tipo de moneda del gasto
                   date:
                     type: string
                     format: date
-                    description: Fecha del ingreso
+                    description: Fecha del gasto
                   value:
                     type: number
-                    description: Valor del ingreso
+                    description: Valor del gasto
         '400':
           description: Faltan datos en el body de la solicitud
           content:

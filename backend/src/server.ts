@@ -1,10 +1,12 @@
 import express from "express"
 import authRouter from "./routes/auth.routes"
-import dbRouter from "./routes/db.routes"
+import incomesRouter from "./routes/incomes.routes"
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import swaggerUi from 'swagger-ui-express'
 import swaggerSpec from '@/swagger'
+import expensesRouter from "./routes/expenses.routes"
+import categoryIncomesRouter from "./routes/categoryIncomes.routes"
 const app = express()
 
 app.use(cookieParser())
@@ -18,7 +20,12 @@ app.use(cors({
 }))
 
 app.use("/api/auth", authRouter)
-app.use("/api/db", dbRouter)
+
+app.use("/api", categoryIncomesRouter)
+app.use("/api", categoryIncomesRouter)
+
+app.use("/api", incomesRouter)
+app.use("/api", expensesRouter)
 
 app.get("/", (req, res) => {
   res.cookie("refreshToken", "token")

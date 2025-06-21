@@ -74,8 +74,6 @@ export const createCategoryExpenseService = async (uid: string, data: any) => {
   return await createCategoryService(uid, data, 'categoryExpenses');
 }
 
-
-
 /**
  * Obtiene los datos de una colección
  * @param uid - Identificador único del usuario
