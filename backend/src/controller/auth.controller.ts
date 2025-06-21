@@ -74,7 +74,7 @@ export const loginUserWithEmailController = async (
     });
     res
       .status(200)
-      .json({ message: "Usuario iniciado con exito.", token, refreshToken });
+      .json({ message: "Usuario iniciado con exito.", token });
   } catch (error: any) {
     if (error.code === "auth/user-not-found") {
       return res.status(404).json({ message: "Usuario no encontrado." });

@@ -113,9 +113,6 @@ paths:
                   token:
                     type: string
                     description: Token de autenticación JWT
-                  refreshToken:
-                    type: string
-                    description: Token de actualización JWT
         '400':
           description: Error de validación o solicitud incorrecta
           content:
