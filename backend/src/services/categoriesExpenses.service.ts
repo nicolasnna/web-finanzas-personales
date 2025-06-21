@@ -1,5 +1,5 @@
 import { Category } from "@/types/category.interface";
-import { createCategoryService, getService } from "./db.service";
+import { createCategoryService, getService, updateService } from "./db.service";
 
 /**
  * Añade una categoria para los gastos para un usuario especifico
@@ -16,4 +16,8 @@ export const createCategoryExpenseService = async (uid: string, category: Catego
  */
 export const getCategoryExpensesService = async (uid:string) => {
   return await getService(uid, 'categoryExpenses');
+}
+
+export const updateCategoryExpenseService = async (uidUser: string, uidDoc: string ,data: Category) => {
+  return await updateService<Category>(uidUser, 'categoryExpenses', uidDoc, data)
 }

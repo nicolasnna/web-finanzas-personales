@@ -1,14 +1,9 @@
-import { addDoc, collection, getDocs } from 'firebase/firestore';
+import { addDoc, collection, doc, getDocs, updateDoc } from 'firebase/firestore';
 import { db } from './firebase';
 import { TransactionData } from '@/types/TransactionData.interface';
 import { Category } from '@/types/category.interface';
 
-/**
- * Crea un servicio para añadir datos a una colección
- * @param uid - Identificador único del usuario
- * @param data - Información a subir
- * @param collectionName - Nombre de la colección
- */
+
 export const createService = async (uid: string, data: TransactionData, collectionName: string) => {
   try {
     const collectionRef = collection(db, 'users', uid, collectionName);
@@ -35,11 +30,20 @@ export const createCategoryService = async (uid: string, data: Category, collect
   }
 }
 
-/**
- * Obtiene los datos de una colección
- * @param uid - Identificador único del usuario
- * @param collectionName - Nombre de la colección
- */
+export const updateService = async <T>(uid: string, collectionName: string, docId: string, data: Partial<T>) => {
+  try {
+    const documentRef = doc(db, 'users', uid, collectionName, docId)
+
+    const { id, ...payload } = data as { id?: string } & Partial<T>;
+
+    const collectionUpdate = await updateDoc(documentRef, payload);
+
+    return collectionUpdate;
+  } catch (e: any) {
+    throw e;
+  }
+}
+
 export const getService = async (uid: string, collectionName: string) => {
   try {
     const collectionRef = collection(db, 'users', uid, collectionName);
@@ -48,6 +52,6 @@ export const getService = async (uid: string, collectionName: string) => {
     const collectionData = collectionSnapshot.docs.map(doc => ({id: doc.id, ...doc.data()}));
     return collectionData;
   } catch (error: any) {
-    throw new Error(error.message);
+    throw error;
   }
 }
