@@ -1,4 +1,4 @@
-import { createCategoryIncomeService, getCategoryIncomesService } from "@/services/categoriesIncomes.service";
+import { createCategoryIncomeService, getCategoryIncomesService, updateCategoryIncomesService } from "@/services/categoriesIncomes.service";
 import { isCategory } from "@/types/category.interface";
 import { RequestUser } from "@/types/RequestUser.interface";
 import { Response } from "express";
@@ -35,4 +35,23 @@ export const getCategoryIncomesController = async (req: RequestUser, res: Respon
   } catch (error: any) {
     res.status(500).json({ message: error.message });
   }
+}
+
+export const updateCategoryIncomesController = async (req: RequestUser, res: Response): Promise<any> => {
+  const data = req.body;
+    const uid = req.user?.uid;
+    const { docId } = req.params
+  
+    if (!data) return res.status(400).json({ message: 'Datos requeridos.' });
+    
+    if (!uid) return res.status(500).json({ message: 'Error interno: error al identificar el usuario.' });
+    
+    if (!isCategory(data)) return res.status(400).json({ message: 'Formato de categoría no válida.' });
+  
+    try {
+      const updateElement = await updateCategoryIncomesService(uid, docId, data)
+      res.status(200).json(updateElement);
+    } catch (e:any) {
+      res.status(500).json({ message: e.message });
+    }
 }

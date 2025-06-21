@@ -1,8 +1,19 @@
-import { addDoc, collection, doc, getDocs, updateDoc } from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, updateDoc } from 'firebase/firestore';
 import { db } from './firebase';
 import { TransactionData } from '@/types/TransactionData.interface';
 import { Category } from '@/types/category.interface';
 
+export const getService = async (uid: string, collectionName: string) => {
+  try {
+    const collectionRef = collection(db, 'users', uid, collectionName);
+    const collectionSnapshot = await getDocs(collectionRef);
+
+    const collectionData = collectionSnapshot.docs.map(doc => ({id: doc.id, ...doc.data()}));
+    return collectionData;
+  } catch (error: any) {
+    throw error;
+  }
+}
 
 export const createService = async (uid: string, data: TransactionData, collectionName: string) => {
   try {
@@ -44,14 +55,15 @@ export const updateService = async <T>(uid: string, collectionName: string, docI
   }
 }
 
-export const getService = async (uid: string, collectionName: string) => {
+export const deleteService = async (uid: string, collectionName: string, docId: string) => {
   try {
-    const collectionRef = collection(db, 'users', uid, collectionName);
-    const collectionSnapshot = await getDocs(collectionRef);
+    const documentRef = doc(db, 'users', uid, collectionName, docId)
 
-    const collectionData = collectionSnapshot.docs.map(doc => ({id: doc.id, ...doc.data()}));
-    return collectionData;
-  } catch (error: any) {
-    throw error;
+    const getDocument = await getDoc(documentRef)
+    await deleteDoc(documentRef)
+
+    return getDocument
+  } catch (e: any) {
+    throw e
   }
 }

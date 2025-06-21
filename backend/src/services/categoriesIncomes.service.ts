@@ -18,8 +18,6 @@ export const getCategoryIncomesService = async (uid:string) => {
   return await getService(uid, 'categoryIncomes');
 }
 
-export const updateCategoryIncomesService = async (uid: string, data: Category) => {
-  if (data.id) return await updateService<Category>(uid, 'categoryIncomes', data.id, data)
-  
-  throw new Error('No se ha detectado el id del documento')
-}
+export const updateCategoryIncomesService = async (uid: string, uidDoc: string, data: Category) => {
+  return await updateService<Category>(uid, 'categoryIncomes', uidDoc, data)
+  }
