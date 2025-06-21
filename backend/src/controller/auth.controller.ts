@@ -102,6 +102,8 @@ export const refreshTokenController = async (
     const token = refreshTokenService(tokenOld, refreshToken);
     res.status(200).json({ message: "Token actualizado con exito.", token });
   } catch (error: any) {
-    res.status(401).json({ message: error.message });
+    const status = error.code && typeof error.code === "number" ? error.code : 500;
+    const message = error.message || "Error interno del servidor.";
+    return res.status(status).json({ message });
   }
 };

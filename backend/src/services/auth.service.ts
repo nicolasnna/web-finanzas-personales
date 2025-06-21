@@ -72,10 +72,10 @@ export const refreshTokenService = (token: string, refreshToken: string) => {
   const refreshDecoded = verifyToken(refreshToken)
 
   if (!refreshDecoded) {
-    throw new Error("Token de actualización inválido")
+    throw { code: 401, message: "Token de actualización inválido"}
   }
   if (refreshDecoded.uid !== uid) {
-    throw new Error("Token de actualización no coincide con el usuario")
+    throw { code: 401, message: "Token de actualización no coincide con el usuario"}
   }
 
   const newToken = generateToken({ uid: uid, email: email })

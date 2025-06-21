@@ -143,3 +143,68 @@ paths:
                   message:
                     type: string
                     example: "Error interno del servidor"
+  /api/auth/refresh-token:
+    post:
+      tags:
+        - Autenticación
+      summary: Refresca el token de autenticación
+      description: Permite a un usuario obtener un nuevo token de autenticación utilizando un token de refresco.
+      parameters:
+        - name: refreshToken
+          in: cookie
+          required: true
+          schema:
+            type: string
+            description: Token de refresco del usuario
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+                  description: Token del usuario
+                  required: true
+      responses:
+        '200':
+          description: Token de autenticación actualizado exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: Nuevo token de autenticación JWT
+        '400':
+          description: Error de validación o solicitud incorrecta
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Descripción del error
+        '401':
+          description: Token de refresco inválido o no autorizado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Token de refresco inválido"
+        '500':
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Error interno del servidor"

@@ -6,7 +6,7 @@ paths:
       summary: Obtiene todos los ingresos
       description: Obtiene todos los ingresos del usuario.
       security:
-        - bearerAuth: []
+        - BearerAuth: []
       responses:
         '200':
           description: Devuelve todos los ingresos
@@ -69,7 +69,7 @@ paths:
       summary: Añade un ingreso
       description: Crea un nuevo ingreso en la base de datos.
       security:
-        - bearerAuth: []
+        - BearerAuth: []
       requestBody:
         required: true
         content:
