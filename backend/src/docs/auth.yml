@@ -1,5 +1,5 @@
 paths:
-  /api/auth/register-email:
+  /api/auth/register:
     post:
       tags:
         - Autenticación
@@ -66,6 +66,76 @@ paths:
                   message:
                     type: string
                     example: "Error de validación"
+        '500':
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Error interno del servidor"
+
+  /api/auth/login:
+    post:
+      tags:
+        - Autenticación
+      summary: Inicia sesión con email y contraseña
+      description: Permite a un usuario autenticarse utilizando su email y contraseña.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  description: Email del usuario
+                  required: true
+                password:
+                  type: string
+                  description: Contraseña del usuario
+                  required: true
+      responses:
+        '200':
+          description: Inicio de sesión exitoso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de éxito
+                  token:
+                    type: string
+                    description: Token de autenticación JWT
+                  refreshToken:
+                    type: string
+                    description: Token de actualización JWT
+        '400':
+          description: Error de validación o solicitud incorrecta
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Descripción del error
+        '401':
+          description: Credenciales inválidas o no autorizadas
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Credenciales inválidas"
         '500':
           description: Error interno del servidor
           content:

@@ -132,7 +132,7 @@ export const loginUserWithEmailService = async (
       refreshToken
     };
   } catch (error: any) {
-    throw {code: error, message: mapFirebaseAuthError(error.code)};
+    throw {code: error.code, message: mapFirebaseAuthError(error.code)};
   }
 };
 
