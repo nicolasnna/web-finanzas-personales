@@ -10,14 +10,14 @@ export const createCategoryIncomeController = async (req: RequestUser, res: Resp
     return res.status(400).json({ message: 'Datos requeridos.' });
   }
   if (!uid) {
-    return res.status(400).json({ message: 'Se requiere un uid de usuario.' });
+    return res.status(500).json({ message: 'Se requiere un uid de usuario.' });
   }
 
   try {
-    await createCategoryIncomeService(uid, data);
-    res.status(201).json({ message: 'Categoria de ingreso creada con exito.' });
+    const createdCategory =  await createCategoryIncomeService(uid, data);
+    res.status(201).json(createdCategory);
   } catch (error: any) {
-    res.status(400).json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 }
 
@@ -25,13 +25,13 @@ export const getCategoryIncomesController = async (req: RequestUser, res: Respon
   const uid = req.user?.uid;
 
   if (!uid) {
-    return res.status(400).json({ message: 'Se requiere un uid de usuario.' });
+    return res.status(500).json({ message: 'Se requiere un uid de usuario.' });
   }
 
   try {
     const incomes = await getCategoryIncomesService(uid);
     res.status(200).json(incomes);
   } catch (error: any) {
-    res.status(400).json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 }
