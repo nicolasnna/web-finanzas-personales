@@ -1,9 +1,5 @@
 import { BalanceInfo } from "./balanceInfo.interface";
-
-export interface category {
-  id?: string;
-  category: string
-}
+import { category } from "./category.interface";
 
 export interface BalanceState {
   balanceRows: BalanceInfo[];
