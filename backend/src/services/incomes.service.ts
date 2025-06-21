@@ -1,5 +1,7 @@
 import { TransactionData } from "@/types/TransactionData.interface";
-import { createService, getService } from "./db.service";
+import { createService, deleteService, getService, updateService } from "./db.service";
+
+const collectionName = 'incomes'
 
 /**
  * Añade un ingreso de finanzas para un usuario
@@ -7,7 +9,7 @@ import { createService, getService } from "./db.service";
  * @param data - Información del ingreso a subir
  */
 export const createIncomeService = async (uid: string, data: TransactionData) => {
-  return await createService(uid, data, 'incomes');
+  return await createService(uid, data, collectionName);
 }
 
 /**
@@ -15,6 +17,14 @@ export const createIncomeService = async (uid: string, data: TransactionData) =>
  * @param uid - Identificador único del usuario
  */
 export const getIncomesService = async (uid: string) => {
-  return await getService(uid, 'incomes');
+  return await getService(uid, collectionName);
+}
+
+export const updateIncomesService = async (uid: string, uidDoc: string, data: TransactionData) => {
+  return await updateService<TransactionData>(uid, collectionName, uidDoc, data)
+}
+
+export const deleteIncomesService = async (uid: string, uidDoc: string) => {
+  return await deleteService(uid, collectionName, uidDoc)
 }
 

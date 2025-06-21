@@ -152,3 +152,112 @@ paths:
                   message:
                     type: string
                     example: "Error interno del servidor"
+  /api/expenses/{docId}:
+    put:
+      tags:
+        - Gastos
+      summary: Actualiza la información del gasto
+      description: Actualiza la información del gasto
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: docId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                category:
+                  type: string
+                details:
+                  type: string
+                currency:
+                  type: string
+                date:
+                  type: string
+                  format: date
+                value:
+                  type: number
+      responses:
+        '200':
+          description: Gasto actualizado correctamente
+          content:
+            application/json:
+              schema: object
+              properties:
+                category:
+                  type: string
+                details:
+                  type: string
+                currency:
+                  type: string
+                date:
+                  type: string
+                  format: date
+                value:
+                  type: number
+        '400':
+          description: Error en los argumentos ingresados
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Datos requeridos
+        '401': 
+          description: Error en la autenticación
+        '500': 
+          description: Error interno
+    delete:
+      tags:
+        - Gastos
+      summary: Elimina la información del gasto
+      description: Elimina la información del gasto
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: docId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Gasto eliminado correctamente
+          content:
+            application/json:
+              schema: object
+              properties:
+                category:
+                  type: string
+                details:
+                  type: string
+                currency:
+                  type: string
+                date:
+                  type: string
+                  format: date
+                value:
+                  type: number
+        '400':
+          description: Error en los argumentos ingresados
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Datos requeridos
+        '401': 
+          description: Error en la autenticación
+        '500': 
+          description: Error interno
