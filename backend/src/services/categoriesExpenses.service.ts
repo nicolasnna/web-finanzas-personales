@@ -1,3 +1,4 @@
+import { category } from "@/types/category.interface";
 import { createCategoryService, getService } from "./db.service";
 
 /**
@@ -5,8 +6,8 @@ import { createCategoryService, getService } from "./db.service";
  * @param uid - Identificador único del usuario
  * @param data - Información de la categoria a subir  
  */
-export const createCategoryExpenseService = async (uid: string, data: any) => {
-  return await createCategoryService(uid, data, 'categoryExpenses');
+export const createCategoryExpenseService = async (uid: string, category: category) => {
+  return await createCategoryService(uid, category, 'categoryExpenses');
 }
 
 /**
