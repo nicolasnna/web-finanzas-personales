@@ -1,12 +1,9 @@
-import {
-  createCategoryExpenseService,
-  deleteCategoryExpensesService,
-  getCategoryExpensesService,
-  updateCategoryExpenseService,
-} from "@/services/categoriesExpenses.service";
-import { isCategory } from "@/types/category.interface";
+import { createCategoryService, deleteService, getService, updateService } from "@/services/db.service";
+import { Category, isCategory } from "@/types/category.interface";
 import { RequestUser } from "@/types/RequestUser.interface";
 import { Response } from "express";
+
+const collectionName = 'categoryExpenses'
 
 export const createCategoryExpenseController = async (
   req: RequestUser,
@@ -26,7 +23,7 @@ export const createCategoryExpenseController = async (
     return res.status(400).json({ message: "Formato de categoría no válida." });
 
   try {
-    const createElement = await createCategoryExpenseService(uid, data);
+    const createElement = await createCategoryService(uid, data, collectionName);
     res.status(201).json(createElement);
   } catch (error: any) {
     res.status(500).json({ message: error.message });
@@ -46,7 +43,7 @@ export const getCategoryExpensesController = async (
   }
 
   try {
-    const expenses = await getCategoryExpensesService(uid);
+    const expenses = await getService(uid, collectionName);
     res.status(200).json(expenses);
   } catch (error: any) {
     res.status(500).json({ message: error.message });
@@ -75,7 +72,7 @@ export const updateCategoryExpensesController = async (
     return res.status(400).json({ message: "Falta el parámetro docId." });
 
   try {
-    const updateElement = await updateCategoryExpenseService(uid, docId, data);
+    const updateElement = await updateService<Category>(uid, collectionName, docId, data);
     res.status(200).json(updateElement);
   } catch (e: any) {
     res.status(500).json({ message: e.message });
@@ -98,7 +95,7 @@ export const deleteCategoryExpensesController = async (
     return res.status(400).json({ message: "Falta el parámetro docId." });
 
   try {
-    const deleteElement = await deleteCategoryExpensesService(uid, docId);
+    const deleteElement = await deleteService(uid, collectionName, docId);
     res.status(200).json(deleteElement);
   } catch (e: any) {
     res.status(500).json({ message: e.message });

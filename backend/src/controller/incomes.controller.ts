@@ -1,7 +1,9 @@
-import { createIncomeService, deleteIncomesService, getIncomesService, updateIncomesService } from "@/services/incomes.service";
+import { createService, deleteService, getService, updateService } from "@/services/db.service";
 import { RequestUser } from "@/types/RequestUser.interface";
-import { isTransactionData } from "@/types/TransactionData.interface";
+import { isTransactionData, TransactionData } from "@/types/TransactionData.interface";
 import { Response } from "express";
+
+const collectionName = 'incomes'
 
 export const createIncomeController = async (req: RequestUser, res: Response): Promise<any> => {
   const data = req.body;
@@ -18,7 +20,7 @@ export const createIncomeController = async (req: RequestUser, res: Response): P
   if (!isTransactionData(data)) return res.status(400).json({message: 'Formato de transacción no válida'})
 
   try {
-    const createElement = await createIncomeService(uid, data);
+    const createElement = await createService(uid, data, collectionName);
     res.status(201).json(createElement);
   } catch (error: any) {
     res.status(500).json({message: error.message });
@@ -32,7 +34,7 @@ export const getIncomesController = async (req: RequestUser, res: Response): Pro
   }
 
   try {
-    const incomes = await getIncomesService(uid);
+    const incomes = await getService(uid, collectionName);
     res.status(200).json(incomes);
   } catch (error: any) {
     res.status(500).json({ message: error.message });
@@ -59,7 +61,7 @@ export const updateIncomesController = async (req: RequestUser, res: Response): 
     return res.status(400).json({ message: "Falta el parámetro docId." });
 
   try {
-    const updateElement = await updateIncomesService(uid, docId, data);
+    const updateElement = await updateService<TransactionData>(uid, collectionName,docId, data);
     res.status(200).json(updateElement);
   } catch (e: any) {
     res.status(500).json({ message: e.message });
@@ -79,7 +81,7 @@ export const deleteIncomesController = async (req: RequestUser, res: Response): 
     return res.status(400).json({ message: "Falta el parámetro docId." });
 
   try {
-    const deleteElement = await deleteIncomesService(uid, docId);
+    const deleteElement = await deleteService(uid, collectionName, docId);
     res.status(200).json(deleteElement);
   } catch (e: any) {
     res.status(500).json({ message: e.message });

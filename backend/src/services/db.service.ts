@@ -1,4 +1,4 @@
-import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, updateDoc } from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, orderBy, query, updateDoc, where } from 'firebase/firestore';
 import { db } from './firebase';
 import { TransactionData } from '@/types/TransactionData.interface';
 import { Category } from '@/types/category.interface';
@@ -69,3 +69,30 @@ export const deleteService = async (uid: string, collectionName: string, docId: 
     throw e
   }
 }
+
+export const getResumeService = async (uid: string, collectionName: string, year?: number, month?: number) => {
+  const transactionRef = collection(db, 'users', uid, collectionName)
+  let q
+
+  // Sin filtros
+  if (!year) {
+    q = query(transactionRef, orderBy('date'));
+  } else {
+    const start = new Date(year, (month ?? 1) - 1, 1);
+    const end = month !== undefined
+      ? new Date(year, month, 1)  //Sgte mes
+      : new Date(year + 1, 0, 1)  //Sgte año
+    
+    q = query(
+      transactionRef,
+      where('date', '>=', start),
+      where('date', '<=', end),
+      orderBy('date')
+    )
+  }
+
+  const snapshot = await getDocs(q)
+  const docs = snapshot.docs.map(doc => doc.data());
+
+  return docs
+} 
