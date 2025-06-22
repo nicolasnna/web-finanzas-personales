@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "ts-node-dev --respawn -r tsconfig-paths/register src/server.ts",
+    "test": "cross-env NODE_ENV=test npx jest --runInBand",
+    "dev": "ts-node-dev --respawn  -r tsconfig-paths/register src/server.ts",
     "start": "ts-node -r tsconfig-paths/register src/server.ts"
   },
   "keywords": [],
@@ -20,6 +20,7 @@
     "@types/supertest": "^6.0.3",
     "@types/swagger-jsdoc": "^6.0.4",
     "@types/swagger-ui-express": "^4.1.8",
+    "cross-env": "^7.0.3",
     "jest": "^30.0.2",
     "supertest": "^7.1.1",
     "ts-jest": "^29.4.0",

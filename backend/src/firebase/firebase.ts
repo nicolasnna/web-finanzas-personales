@@ -1,8 +1,9 @@
-import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
 import dotenv from "dotenv";
 dotenv.config();
+
+import { initializeApp } from "firebase/app";
+import { getFirestore, connectFirestoreEmulator  } from "firebase/firestore";
+import { getAuth, connectAuthEmulator  } from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -24,9 +25,22 @@ export const auth = getAuth(appFirebase)
 export const db = getFirestore(appFirebase)
 
 
-import { connectAuthEmulator } from "firebase/auth";
-import { connectFirestoreEmulator } from "firebase/firestore";
+// Firebase Admin (solo para test/servidor)
+import admin from "firebase-admin";
+import { getAuth as getAdminAuth } from "firebase-admin/auth";
 
+// 👉 Esto es CRUCIAL para que admin se conecte al emulador
+if (process.env.NODE_ENV === "test") {
+  process.env.FIREBASE_AUTH_EMULATOR_HOST = "localhost:9099";
+}
+
+if (!admin.apps.length) {
+  admin.initializeApp({
+    projectId: process.env.PROJECT_ID,
+  });
+}
+
+export const authAdmin = getAdminAuth(admin.app());
 if (process.env.NODE_ENV === 'test') {
   connectAuthEmulator(auth, "http://localhost:9099");
   connectFirestoreEmulator(db, "localhost", 8080);
