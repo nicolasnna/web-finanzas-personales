@@ -1,11 +1,11 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
-import { configDotenv } from "dotenv";
+import dotenv from "dotenv";
+dotenv.config();
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
-configDotenv();
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
@@ -22,3 +22,12 @@ const firebaseConfig = {
 export const appFirebase = initializeApp(firebaseConfig);
 export const auth = getAuth(appFirebase)
 export const db = getFirestore(appFirebase)
+
+
+import { connectAuthEmulator } from "firebase/auth";
+import { connectFirestoreEmulator } from "firebase/firestore";
+
+if (process.env.NODE_ENV === 'test') {
+  connectAuthEmulator(auth, "http://localhost:9099");
+  connectFirestoreEmulator(db, "localhost", 8080);
+}

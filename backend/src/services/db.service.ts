@@ -1,5 +1,5 @@
 import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, orderBy, query, updateDoc, where } from 'firebase/firestore';
-import { db } from './firebase';
+import { db } from '@/firebase/firebase';
 import { TransactionData } from '@/types/TransactionData.interface';
 import { Category } from '@/types/category.interface';
 

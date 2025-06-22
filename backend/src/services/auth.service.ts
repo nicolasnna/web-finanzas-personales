@@ -2,7 +2,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { auth } from "./firebase";
+import { auth } from '@/firebase/firebase';
 import { sign, verify } from "jsonwebtoken"
 import { infoTokenProps, uidTokenProps } from "@/types/GenerateToken.interface";
 import { User } from "@/types/User.interface";
