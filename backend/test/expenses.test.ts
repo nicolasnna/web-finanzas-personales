@@ -54,10 +54,13 @@ describe("Expense endpoint", () => {
   });
 
   it("should update created expense", async () => {
-    const newValue = 2430;
-    await request(app)
+    const updateTransaction = {...newTransaction, value: 2430}
+
+    const resUpdate = await request(app)
       .put(`/api/expenses/${transactionUid}`)
-      .set("Authorization", `Bearer ${token}`).send({value: newValue});
+      .set("Authorization", `Bearer ${token}`).send(updateTransaction);
+
+    expect(resUpdate.status).toBe(200);
 
     const res = await request(app)
       .get("/api/expenses")
@@ -65,7 +68,7 @@ describe("Expense endpoint", () => {
 
     expect(res.status).toBe(200);
     expect(res.body).toBeInstanceOf(Array);
-    expect(res.body[0].value).toBe(newValue);
+    expect(res.body[0].value).toBe(updateTransaction.value);
   });
 
   it("should delete expense", async () => {

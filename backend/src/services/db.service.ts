@@ -11,6 +11,7 @@ export const getService = async (uid: string, collectionName: string) => {
     const collectionData = collectionSnapshot.docs.map(doc => ({id: doc.id, ...doc.data()}));
 
     return collectionData ;
+
   } catch (error: any) {
     throw error;
   }
@@ -52,7 +53,11 @@ export const updateService = async <T>(uid: string, collectionName: string, docI
 
     const newDocument = await getDoc(documentRef)
 
-    return {id: newDocument.id, ...newDocument};
+    if (!newDocument.exists()) {
+      throw new Error("No existe el documento")
+    }
+
+    return {id: newDocument.id, ...newDocument.data()};
   } catch (e: any) {
     throw e;
   }
