@@ -1,21 +1,17 @@
 import request from "supertest";
 import app from "../src/app";
 import { authAdmin } from "@/firebase/firebase";
-import { TransactionData } from "@/types/TransactionData.interface";
+import { Category } from "@/types/category.interface";
 
-describe("Expense endpoint", () => {
+describe("Categories incomes endpoint", () => {
   const testEmail = "test@example.com";
   const testPassword = "123456";
   let createdUid: string = "";
   let token: string = "";
-  const newTransaction: TransactionData = {
+  const newCategory: Category = {
     category: "Compra",
-    details: "test",
-    currency: "CLP",
-    date: new Date(Date.now()),
-    value: 5000,
   };
-  let transactionUid: string = "";
+  let categoryId: string = "";
 
   beforeAll(async () => {
     await request(app)
@@ -30,57 +26,57 @@ describe("Expense endpoint", () => {
     token = res.body.token;
   });
 
-  it("should create a new expense", async () => {
+  it("should create a new incomes category", async () => {
     const res = await request(app)
-      .post("/api/expenses")
+      .post("/api/categories/incomes")
       .set("Authorization", `Bearer ${token}`)
-      .send({ ...newTransaction });
+      .send({ ...newCategory });
 
     expect(res.status).toBe(201);
     expect(res.body).toHaveProperty("id");
-    expect(res.body).toHaveProperty("value");
-    expect(res.body.value).toBe(newTransaction.value);
-    transactionUid = res.body.id;
+    expect(res.body).toHaveProperty("category");
+    expect(res.body.category).toBe(newCategory.category);
+    categoryId = res.body.id;
   });
 
-  it("should get all expenses", async () => {
+  it("should get all incomes categories", async () => {
     const res = await request(app)
-      .get("/api/expenses")
+      .get("/api/categories/incomes")
       .set("Authorization", `Bearer ${token}`);
 
     expect(res.status).toBe(200);
     expect(res.body).toBeInstanceOf(Array);
-    expect(res.body[0].value).toBe(newTransaction.value);
+    expect(res.body[0].category).toBe(newCategory.category);
   });
 
-  it("should update created expense", async () => {
-    const updateTransaction = { ...newTransaction, value: 2430 };
+  it("should update created incomes category", async () => {
+    const updateCategory = { ...newCategory, category: 'otra compra' };
 
     const resUpdate = await request(app)
-      .put(`/api/expenses/${transactionUid}`)
+      .put(`/api/categories/incomes/${categoryId}`)
       .set("Authorization", `Bearer ${token}`)
-      .send(updateTransaction);
+      .send(updateCategory);
 
     expect(resUpdate.status).toBe(200);
 
     const res = await request(app)
-      .get("/api/expenses")
+      .get("/api/categories/incomes")
       .set("Authorization", `Bearer ${token}`);
 
     expect(res.status).toBe(200);
     expect(res.body).toBeInstanceOf(Array);
-    expect(res.body[0].value).toBe(updateTransaction.value);
+    expect(res.body[0].category).toBe(updateCategory.category);
   });
 
-  it("should delete expense", async () => {
+  it("should delete incomes category", async () => {
     const res = await request(app)
-      .delete(`/api/expenses/${transactionUid}`)
+      .delete(`/api/categories/incomes/${categoryId}`)
       .set("Authorization", `Bearer ${token}`);
 
     expect(res.status).toBe(200);
 
     const resAfterDelete = await request(app)
-      .get("/api/expenses")
+      .get("/api/categories/incomes")
       .set("Authorization", `Bearer ${token}`);
     expect(resAfterDelete.status).toBe(200);
     expect(resAfterDelete.body.length).toEqual(0);

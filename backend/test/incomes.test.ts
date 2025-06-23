@@ -3,17 +3,17 @@ import app from "../src/app";
 import { authAdmin } from "@/firebase/firebase";
 import { TransactionData } from "@/types/TransactionData.interface";
 
-describe("Expense endpoint", () => {
+describe("Incomes endpoint", () => {
   const testEmail = "test@example.com";
   const testPassword = "123456";
   let createdUid: string = "";
   let token: string = "";
   const newTransaction: TransactionData = {
-    category: "Compra",
+    category: "Sueldo",
     details: "test",
     currency: "CLP",
     date: new Date(Date.now()),
-    value: 5000,
+    value: 10000,
   };
   let transactionUid: string = "";
 
@@ -30,9 +30,9 @@ describe("Expense endpoint", () => {
     token = res.body.token;
   });
 
-  it("should create a new expense", async () => {
+  it("should create a new incomes", async () => {
     const res = await request(app)
-      .post("/api/expenses")
+      .post("/api/incomes")
       .set("Authorization", `Bearer ${token}`)
       .send({ ...newTransaction });
 
@@ -43,9 +43,9 @@ describe("Expense endpoint", () => {
     transactionUid = res.body.id;
   });
 
-  it("should get all expenses", async () => {
+  it("should get all incomes", async () => {
     const res = await request(app)
-      .get("/api/expenses")
+      .get("/api/incomes")
       .set("Authorization", `Bearer ${token}`);
 
     expect(res.status).toBe(200);
@@ -53,18 +53,18 @@ describe("Expense endpoint", () => {
     expect(res.body[0].value).toBe(newTransaction.value);
   });
 
-  it("should update created expense", async () => {
+  it("should update created incomes", async () => {
     const updateTransaction = { ...newTransaction, value: 2430 };
 
     const resUpdate = await request(app)
-      .put(`/api/expenses/${transactionUid}`)
+      .put(`/api/incomes/${transactionUid}`)
       .set("Authorization", `Bearer ${token}`)
       .send(updateTransaction);
 
     expect(resUpdate.status).toBe(200);
 
     const res = await request(app)
-      .get("/api/expenses")
+      .get("/api/incomes")
       .set("Authorization", `Bearer ${token}`);
 
     expect(res.status).toBe(200);
@@ -72,15 +72,15 @@ describe("Expense endpoint", () => {
     expect(res.body[0].value).toBe(updateTransaction.value);
   });
 
-  it("should delete expense", async () => {
+  it("should delete income", async () => {
     const res = await request(app)
-      .delete(`/api/expenses/${transactionUid}`)
+      .delete(`/api/incomes/${transactionUid}`)
       .set("Authorization", `Bearer ${token}`);
 
     expect(res.status).toBe(200);
 
     const resAfterDelete = await request(app)
-      .get("/api/expenses")
+      .get("/api/incomes")
       .set("Authorization", `Bearer ${token}`);
     expect(resAfterDelete.status).toBe(200);
     expect(resAfterDelete.body.length).toEqual(0);
