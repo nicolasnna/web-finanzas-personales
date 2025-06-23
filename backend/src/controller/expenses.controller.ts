@@ -73,7 +73,7 @@ export const updateExpensesController = async (
       .json({ message: "Error interno: error al identificar el usuario." });
 
   if (!isTransactionData(data))
-    return res.status(400).json({ message: "Formato de categoría no válida." });
+    return res.status(400).json({ message: "Formato no válido." });
 
   if (!docId)
     return res.status(400).json({ message: "Falta el parámetro docId." });

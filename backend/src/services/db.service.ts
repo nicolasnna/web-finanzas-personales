@@ -9,7 +9,8 @@ export const getService = async (uid: string, collectionName: string) => {
     const collectionSnapshot = await getDocs(collectionRef);
 
     const collectionData = collectionSnapshot.docs.map(doc => ({id: doc.id, ...doc.data()}));
-    return collectionData;
+
+    return collectionData ;
   } catch (error: any) {
     throw error;
   }
@@ -51,7 +52,7 @@ export const updateService = async <T>(uid: string, collectionName: string, docI
 
     const newDocument = await getDoc(documentRef)
 
-    return newDocument;
+    return {id: newDocument.id, ...newDocument};
   } catch (e: any) {
     throw e;
   }
@@ -62,9 +63,10 @@ export const deleteService = async (uid: string, collectionName: string, docId: 
     const documentRef = doc(db, 'users', uid, collectionName, docId)
 
     const getDocument = await getDoc(documentRef)
+    const snapshot = getDocument.exists() ? { id: getDocument.id, ...getDocument.data() } : null
     await deleteDoc(documentRef)
 
-    return getDocument
+    return snapshot
   } catch (e: any) {
     throw e
   }
