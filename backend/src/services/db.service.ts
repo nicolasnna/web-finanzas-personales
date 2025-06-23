@@ -17,6 +17,7 @@ import { db } from "@/firebase/firebase";
 import { TransactionData } from "@/types/TransactionData.interface";
 import { Category } from "@/types/category.interface";
 import { CollectionName } from "@/types/CollectionName.type";
+import { GroupBy } from "@/types/GroupBy.type";
 
 export const getService = async (
   uid: string,
@@ -43,7 +44,7 @@ export const getTransactionService = async (
   limitDoc?: number,
   afterDate?: Date,
   atDate?: Date,
-  order: 'asc' | 'desc' = 'desc'
+  order: "asc" | "desc" = "desc"
 ) => {
   if (afterDate && !(afterDate instanceof Date)) {
     throw new Error("afterDate debe ser un tipo Date valido");
@@ -79,11 +80,10 @@ export const getTransactionService = async (
 
     const collectionData = collectionSnapshot.docs.map((doc) => ({
       id: doc.id,
-      ...doc.data() as TransactionData,
+      ...(doc.data() as TransactionData),
     }));
 
     return collectionData;
-
   } catch (error: any) {
     throw error;
   }
@@ -175,8 +175,14 @@ export const getFilterYearMonthService = async (
   uid: string,
   collectionName: CollectionName,
   year?: number,
-  month?: number
+  month?: number,
 ) => {
+  if (
+    collectionName === "categoryExpenses" ||
+    collectionName === "categoryIncomes"
+  )
+    throw new Error("El servicio solo esta disponible para incomes y expenses");
+
   const transactionRef = collection(db, "users", uid, collectionName);
   let q;
 
@@ -199,20 +205,28 @@ export const getFilterYearMonthService = async (
   }
 
   const snapshot = await getDocs(q);
-  const docs = snapshot.docs.map((doc) => doc.data());
+  const docs = snapshot.docs.map((doc) => doc.data()) as TransactionData[];
 
   return docs;
 };
 
 export const getFilterMostValueService = async (
   uid: string,
-  collectionName: CollectionName
+  collectionName: CollectionName,
+  order: 'asc' | 'desc' = 'desc',
+  limitValue: number = 5,
 ) => {
+  if (
+    collectionName === "categoryExpenses" ||
+    collectionName === "categoryIncomes"
+  )
+    throw new Error("El servicio solo esta disponible para incomes y expenses");
+
   const transactionRef = collection(db, "users", uid, collectionName);
-  const q = query(transactionRef, orderBy("value", "desc"), limit(5));
+  const q = query(transactionRef, orderBy("value", order), limit(limitValue));
 
   const snapshot = await getDocs(q);
-  const docs = snapshot.docs.map((doc) => doc.data());
+  const docs = snapshot.docs.map((doc) => doc.data()) as TransactionData[];
 
   return docs;
 };

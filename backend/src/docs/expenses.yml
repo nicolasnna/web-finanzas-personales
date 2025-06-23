@@ -7,6 +7,30 @@ paths:
       description: Obtiene los 200 gastos más recientes del usuario
       security:
         - BearerAuth: []
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          description: Numero de elementos retornados
+        - in: query
+          name: order
+          schema:
+            type: string
+            enum: 
+              - 'asc'
+              - 'desc'
+          description: Tipo de orden ascendente ('asc') o descendente ('desc')
+        - in: query
+          name: afterDate
+          schema:
+            type: string
+          description: Fecha de inicio para la obtención de elementos
+        - in: query
+          name: atDate
+          schema:
+            type: string
+          description: Fecha de termino para la obtención de elementos
       responses:
         '200':
           description: Devuelve todos los gastos

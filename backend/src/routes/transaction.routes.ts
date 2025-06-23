@@ -1,7 +1,7 @@
 import {
   createTransactionController,
   deleteTransactionController,
-  getTransactionsController,
+  getTransactionsQueryController,
   updateTransactionController,
 } from "@/controller/transaction.controller";
 import { authenticateToken } from "@/middleware/authenticateToken";
@@ -9,15 +9,15 @@ import { Router } from "express";
 
 const transactionRouter = Router();
 
+transactionRouter.get(
+  "/expenses",
+  authenticateToken,
+  getTransactionsQueryController
+);
 transactionRouter.post(
   "/expenses",
   authenticateToken,
   createTransactionController
-);
-transactionRouter.get(
-  "/expenses",
-  authenticateToken,
-  getTransactionsController
 );
 transactionRouter.put(
   "/expenses/:docId",
@@ -30,12 +30,16 @@ transactionRouter.delete(
   deleteTransactionController
 );
 
+transactionRouter.get(
+  "/incomes",
+  authenticateToken,
+  getTransactionsQueryController
+);
 transactionRouter.post(
   "/incomes",
   authenticateToken,
   createTransactionController
 );
-transactionRouter.get("/incomes", authenticateToken, getTransactionsController);
 transactionRouter.put(
   "/incomes/:docId",
   authenticateToken,
