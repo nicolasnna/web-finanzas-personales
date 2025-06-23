@@ -4,9 +4,8 @@ import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import swaggerUi from 'swagger-ui-express'
 import swaggerSpec from '@/swagger'
-import categoryIncomesRouter from "./routes/categoriesIncomes.routes"
-import categoryExpensesRouter from "./routes/categoriesExpenses.routes"
 import transactionRouter from "./routes/transaction.routes"
+import categoryRouter from "./routes/category.routes"
 
 const app = express()
 
@@ -22,9 +21,7 @@ app.use(cors({
 
 app.use("/api/auth", authRouter)
 
-app.use("/api", categoryIncomesRouter)
-app.use("/api", categoryExpensesRouter)
-
+app.use("/api", categoryRouter)
 app.use("/api", transactionRouter)
 
 app.get("/", (req, res) => {

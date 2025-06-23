@@ -1,13 +1,20 @@
 import { createCategoryService, deleteService, getService, updateService } from "@/services/db.service";
 import { Category, isCategory } from "@/types/category.interface";
+import { CollectionName } from "@/types/CollectionName.type";
 import { RequestUser } from "@/types/RequestUser.interface";
 import { Response } from "express";
 
-const collectionName = 'categoryIncomes'
+const getCollectionName = (req: RequestUser): CollectionName | null => {
+  const { path } = req;
+  if (path.includes("/categories/expenses")) return "categoryExpenses";
+  if (path.includes("/categories/incomes")) return "categoryIncomes";
+  return null;
+};
 
-export const createCategoryIncomeController = async (req: RequestUser, res: Response): Promise<any> => {
+export const createCategoryController = async (req: RequestUser, res: Response): Promise<any> => {
   const data = req.body;
   const uid = req.user?.uid;
+  const collectionName = getCollectionName(req)
 
   if (!data) return res.status(400).json({ message: 'Datos requeridos.' });
 
@@ -24,8 +31,9 @@ export const createCategoryIncomeController = async (req: RequestUser, res: Resp
   }
 }
 
-export const getCategoryIncomesController = async (req: RequestUser, res: Response): Promise<any> => {
+export const getCategoryController = async (req: RequestUser, res: Response): Promise<any> => {
   const uid = req.user?.uid;
+  const collectionName = getCollectionName(req)
 
   if (!uid) {
     return res.status(500).json({ message: 'Error interno: error al identificar el usuario.' });
@@ -39,11 +47,12 @@ export const getCategoryIncomesController = async (req: RequestUser, res: Respon
   }
 }
 
-export const updateCategoryIncomesController = async (req: RequestUser, res: Response): Promise<any> => {
+export const updateCategoryController = async (req: RequestUser, res: Response): Promise<any> => {
   const data = req.body;
     const uid = req.user?.uid;
     const { docId } = req.params
-  
+    const collectionName = getCollectionName(req)
+
     if (!data) return res.status(400).json({ message: 'Datos requeridos.' });
     
     if (!uid) return res.status(500).json({ message: 'Error interno: error al identificar el usuario.' });
@@ -60,12 +69,13 @@ export const updateCategoryIncomesController = async (req: RequestUser, res: Res
     }
 }
 
-export const deleteCategoryIncomesController = async (
+export const deleteCategoryController = async (
   req: RequestUser,
   res: Response
 ): Promise<any> => {
   const uid = req.user?.uid;
   const { docId } = req.params;
+  const collectionName = getCollectionName(req)
 
   if (!uid)
     return res
