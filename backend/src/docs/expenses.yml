@@ -189,19 +189,20 @@ paths:
           description: Gasto actualizado correctamente
           content:
             application/json:
-              schema: object
-              properties:
-                category:
-                  type: string
-                details:
-                  type: string
-                currency:
-                  type: string
-                date:
-                  type: string
-                  format: date
-                value:
-                  type: number
+              schema: 
+                type: object
+                properties:
+                  category:
+                    type: string
+                  details:
+                    type: string
+                  currency:
+                    type: string
+                  date:
+                    type: string
+                    format: date
+                  value:
+                    type: number
         '400':
           description: Error en los argumentos ingresados
           content:
@@ -234,19 +235,20 @@ paths:
           description: Gasto eliminado correctamente
           content:
             application/json:
-              schema: object
-              properties:
-                category:
-                  type: string
-                details:
-                  type: string
-                currency:
-                  type: string
-                date:
-                  type: string
-                  format: date
-                value:
-                  type: number
+              schema: 
+                type: object
+                properties:
+                  category:
+                    type: string
+                  details:
+                    type: string
+                  currency:
+                    type: string
+                  date:
+                    type: string
+                    format: date
+                  value:
+                    type: number
         '400':
           description: Error en los argumentos ingresados
           content:

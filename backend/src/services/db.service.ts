@@ -18,8 +18,8 @@ export const getService = async (uid: string, collectionName: string) => {
 export const createService = async (uid: string, data: TransactionData, collectionName: string) => {
   try {
     const collectionRef = collection(db, 'users', uid, collectionName);
-    const doc = await addDoc(collectionRef, data);
-    return doc;
+    const newDocRef  = await addDoc(collectionRef, data);
+    return { id: newDocRef.id, ...data};
   } catch (error: any) {
     throw error;
   }
@@ -32,7 +32,7 @@ export const createCategoryService = async (uid: string, data: Category, collect
     const exist = collectionSnapshot.docs.some( items => items.data().category.toLowerCase() == data.category.toLowerCase())
     if (!exist) {
       const doc = await addDoc(collectionRef, data);
-      return doc.id;
+      return {id: doc.id, ...data};
     } else {
       throw new Error(`La categoria ${data.category} ya se encuentra creada.`)
     }
