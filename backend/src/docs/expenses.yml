@@ -3,8 +3,8 @@ paths:
     get:
       tags:
         - Gastos
-      summary: Obtiene todos los gastos
-      description: Obtiene todos los gastos del usuario.
+      summary: Obtiene los 200 gastos más recientes del usuario
+      description: Obtiene los 200 gastos más recientes del usuario
       security:
         - BearerAuth: []
       responses:
