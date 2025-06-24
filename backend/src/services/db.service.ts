@@ -12,11 +12,32 @@ import {
   limit,
   startAfter,
   startAt,
+  Timestamp,
+  QuerySnapshot,
+  DocumentData,
 } from "firebase/firestore";
 import { db } from "@/firebase/firebase";
 import { TransactionData } from "@/types/TransactionData.interface";
 import { Category } from "@/types/category.interface";
 import { CollectionName } from "@/types/CollectionName.type";
+
+
+const transformDocumentToDataTransaction = (docSnapshot: QuerySnapshot<DocumentData, DocumentData>) => {
+  return docSnapshot.docs.map((doc) => {
+    const data = doc.data() as TransactionData;
+    let date;
+
+    if (data.date instanceof Timestamp) {
+      date = data.date.toDate().toISOString();
+    } else if (typeof data.date === "string") {
+      date = new Date(data.date).toISOString();
+    } else {
+      date = null; // o undefined, o algún valor por defecto
+    }
+
+    return {id: doc.id, ...data, date: date}
+  })
+}
 
 export const getService = async (
   uid: string,
@@ -26,12 +47,7 @@ export const getService = async (
     const collectionRef = collection(db, "users", uid, collectionName);
     const collectionSnapshot = await getDocs(collectionRef);
 
-    const collectionData = collectionSnapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-
-    return collectionData;
+    return transformDocumentToDataTransaction(collectionSnapshot)
   } catch (error: any) {
     throw error;
   }
@@ -77,12 +93,7 @@ export const getTransactionService = async (
 
     const collectionSnapshot = await getDocs(q);
 
-    const collectionData = collectionSnapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...(doc.data() as TransactionData),
-    }));
-
-    return collectionData;
+    return transformDocumentToDataTransaction(collectionSnapshot)
   } catch (error: any) {
     throw error;
   }
@@ -95,8 +106,9 @@ export const createService = async (
 ) => {
   try {
     const collectionRef = collection(db, "users", uid, collectionName);
-    const newDocRef = await addDoc(collectionRef, data);
-    return { id: newDocRef.id, ...data };
+    const dataRevised = {...data, date: Timestamp.fromDate(new Date(data.date))}
+    const newDocRef = await addDoc(collectionRef, dataRevised);
+    return { id: newDocRef.id, ...dataRevised };
   } catch (error: any) {
     throw error;
   }
@@ -194,7 +206,6 @@ export const getFilterYearMonthService = async (
       month !== undefined
         ? new Date(year, month, 1) //Sgte mes
         : new Date(year + 1, 0, 1); //Sgte año
-
     q = query(
       transactionRef,
       where("date", ">=", start),
@@ -204,7 +215,7 @@ export const getFilterYearMonthService = async (
   }
 
   const snapshot = await getDocs(q);
-  const docs = snapshot.docs.map((doc) => doc.data()) as TransactionData[];
+  const docs = transformDocumentToDataTransaction(snapshot);
 
   return docs;
 };
@@ -246,7 +257,7 @@ export const getFilterMostValueService = async (
   }
 
   const snapshot = await getDocs(q);
-  const docs = snapshot.docs.map((doc) => doc.data()) as TransactionData[];
+  const docs = transformDocumentToDataTransaction(snapshot);
 
   return docs;
 };

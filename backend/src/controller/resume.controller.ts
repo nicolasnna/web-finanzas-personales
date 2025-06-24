@@ -25,11 +25,6 @@ export const getResumeTransactionController = async (
   const parsedMonth = month ? parseInt(month as string) : undefined;
   const parsedGroupBy = groupBy ? (groupBy as GroupBy) : undefined;
 
-  if (!parsedYear)
-    return res
-      .status(400)
-      .json({ message: "Es necesario indicar un año válido" });
-
   if (parsedType !== "incomes" && parsedType !== "expenses")
     return res.status(400).json({ message: "Tipo de transacción no válido" });
 
