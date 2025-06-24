@@ -6,6 +6,7 @@ import swaggerUi from 'swagger-ui-express'
 import swaggerSpec from '@/swagger'
 import transactionRouter from "./routes/transaction.routes"
 import categoryRouter from "./routes/category.routes"
+import resumeRouter from "./routes/resume.routes"
 
 const app = express()
 
@@ -23,9 +24,9 @@ app.use("/api/auth", authRouter)
 
 app.use("/api", categoryRouter)
 app.use("/api", transactionRouter)
+app.use('/api', resumeRouter)
 
-app.get("/", (req, res) => {
-  res.cookie("refreshToken", "token")
+app.get("/", (_, res) => {
   res.status(200).send("API funcionando")
 })
 

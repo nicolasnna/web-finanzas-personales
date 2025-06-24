@@ -33,6 +33,10 @@ const options = {
       {
         name: 'Categorías',
         description: 'Operaciones relacionadas con las categorías de ingresos y gastos',
+      },
+      {
+        name: 'Resumen',
+        description: 'Resumenes de ingresos o gastos procesados'
       }
     ],
     components: {

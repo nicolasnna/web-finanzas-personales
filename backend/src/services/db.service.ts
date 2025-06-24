@@ -17,7 +17,6 @@ import { db } from "@/firebase/firebase";
 import { TransactionData } from "@/types/TransactionData.interface";
 import { Category } from "@/types/category.interface";
 import { CollectionName } from "@/types/CollectionName.type";
-import { GroupBy } from "@/types/GroupBy.type";
 
 export const getService = async (
   uid: string,
@@ -215,6 +214,8 @@ export const getFilterMostValueService = async (
   collectionName: CollectionName,
   order: 'asc' | 'desc' = 'desc',
   limitValue: number = 5,
+  year?: number,
+  month?: number
 ) => {
   if (
     collectionName === "categoryExpenses" ||
@@ -223,7 +224,26 @@ export const getFilterMostValueService = async (
     throw new Error("El servicio solo esta disponible para incomes y expenses");
 
   const transactionRef = collection(db, "users", uid, collectionName);
-  const q = query(transactionRef, orderBy("value", order), limit(limitValue));
+  
+  let q;
+
+  if (!year) {
+    q = query(transactionRef, orderBy("value", order), limit(limitValue));
+  } else {
+    const start = new Date(year, (month ?? 1) - 1, 1);
+    const end =
+      month !== undefined
+        ? new Date(year, month, 1) //Sgte mes
+        : new Date(year + 1, 0, 1); //Sgte año
+
+    q = query(
+      transactionRef,
+      where("date", ">=", start),
+      where("date", "<=", end),
+      orderBy("value", order),
+      limit(limitValue)
+    );
+  }
 
   const snapshot = await getDocs(q);
   const docs = snapshot.docs.map((doc) => doc.data()) as TransactionData[];

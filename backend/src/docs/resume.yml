@@ -1,0 +1,137 @@
+paths:
+  /api/resume/by-category:
+    get:
+      tags:
+        - Resumen
+      summary: Obtiene el total de ingresos o gastos por categoria, tanto por año o año/mes
+      description: Obtiene el total de ingresos o gastos por categoria, tanto por año o año/mes
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: query
+          name: type
+          required: true
+          schema:
+            type: string
+            enum: 
+              - incomes
+              - expenses
+          description: Obtener resumen de ingreso o gasto
+        - in: query
+          name: year
+          required: true
+          schema:
+            type: integer
+            example: 2025
+          description: Año del resumen
+        - in: query
+          name: month
+          schema:
+            type: integer
+            enum: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+          description: Mes del resumen
+        - in: query
+          name: groupBy
+          required: true
+          schema:
+            type: string
+            enum:
+              - category
+              - categoryByMonth
+          description: Tipo del resumen, por categoria total, o por mes y categoría
+      responses:
+        '200': 
+          description: Entrega el resultado del resumen
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    description: Resumen por categoría (una sola capa)
+                    additionalProperties:
+                      type: number
+                  - type: object
+                    description: Resumen por categoría agrupada por mes
+                    additionalProperties:
+                      type: object
+                      additionalProperties:
+                        type: number
+        '400':
+          description: Falta argumentos válidos
+        '401':
+          description: No autorizado
+        '500':
+          description: Error del servidor al generar el resumen
+  /api/resume/top:
+    get:
+      tags:
+        - Resumen
+      summary: Obtiene los top de ingresos o gastos ordenados ascendente o descendente
+      description: Obtiene los top de ingresos o gastos ordenados ascendente o descendente
+      security:
+        - BearerAuth: []
+      parameters: 
+        - in: query
+          name: type
+          required: true
+          description: Especificar si es ingreso o gasto
+          schema:
+            type: string
+            enum:
+              - incomes
+              - expenses
+        - in: query
+          name: limit
+          description: Cantidad del top a entregar
+          schema:
+            type: integer
+        - in: query
+          name: order
+          description: Especificar si el orden sera descendente (mayor) o ascendente (menor)
+          schema:
+            type: string
+            enum:
+              - desc
+              - asc
+        - in: query
+          name: year
+          description: Año a buscar
+          schema:
+            type: integer
+        - in: query
+          name: month
+          description: Mes a buscar. Requiere especificar el año para hacer uso
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Arreglo con los top encontrados
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    category:
+                      type: string
+                      description: Categoría del gasto
+                    details:
+                      type: string
+                      description: Detalles del ingregastoso
+                    currency:
+                      type: string
+                      description: Tipo de moneda del gasto
+                    date:
+                      type: string
+                      format: date
+                      description: Fecha del gasto
+                    value:
+                      type: number
+                      description: Valor del gasto
+        '400':
+          description: Falta ingresar argumentos válidos
+        '401': 
+          description: No autorizado
+        '500':
+          description: Error al buscar el top
