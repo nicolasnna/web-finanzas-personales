@@ -8,12 +8,19 @@ export const URLS = {
   SERVER_ERROR: '/500',
   UNAUTHORIZED: '/401',
 };
+Object.freeze(URLS)
 
 export const defaultCategoryExpense = [
   { category: 'Alquiler' },
   { category: 'Facturas' },
   { category: 'Transporte' },
 ];
+
+export const COLORS = {
+  INCOMES: "#00b512",
+  EXPENSES: "#b50000"
+}
+Object.freeze(COLORS)
 
 export const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 

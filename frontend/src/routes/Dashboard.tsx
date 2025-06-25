@@ -1,4 +1,5 @@
 import CardInfo from '@/components/CardInfo';
+import FinancialChartArea from '@/components/FinancialChartArea';
 import { useState } from 'react';
 
 interface ListInfoProps {
@@ -35,8 +36,8 @@ function Dashboard() {
   ]);
 
   return (
-    <div className="lg:mx-[250px] my-10">
-      <section className="grid grid-cols-3 gap-5 ">
+    <div className="mx-5 lg:mx-[200px] my-10 flex flex-col gap-10">
+      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 ">
         {listInfo.map((l) => (
           <CardInfo
             title={l.title}
@@ -46,6 +47,9 @@ function Dashboard() {
             status={l.status}
           />
         ))}
+      </section>
+      <section className="grid grid-cols-3 gap-10">
+        <FinancialChartArea className='col-span-2'/>
       </section>
     </div>
   );
