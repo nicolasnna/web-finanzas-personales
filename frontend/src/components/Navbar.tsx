@@ -7,9 +7,9 @@ import { BadgeDollarSign, ChartLine, ShoppingCart } from "lucide-react"
 import { useLocation } from "react-router"
 
 const views = [
-  {id: "dashboard", text: "Dashboard", icon: ChartLine, url: '/'},
-  {id: "incomes", text: "Ingresos", icon: BadgeDollarSign, url: '/incomes'},
-  {id: "expenses", text: "Gastos", icon: ShoppingCart, url: '/expenses'}
+  {id: "dashboard", text: "Dashboard", icon: ChartLine, url: '/', title: 'Mi plan financiero'},
+  {id: "incomes", text: "Ingresos", icon: BadgeDollarSign, url: '/incomes', title: 'Mis ingresos'},
+  {id: "expenses", text: "Gastos", icon: ShoppingCart, url: '/expenses', title: 'Mis gastos'}
 ]
 const selectedButtton = 'bg-blizzard-blue-200 text-secondary-950 font-bold'
 
@@ -27,8 +27,8 @@ const Navbar = () => {
   return (
     <nav className="w-full bg-blizzard-blue-950 border-b-2 border-blizzard-blue-200 z-20 select-none md:px-10">
       <div className="px-4 py-3 flex items-center justify-around w-full">
-        <h2 className="text-3xl text-blizzard-blue-50">
-          Finanzas personales
+        <h2 className="text-3xl text-blizzard-blue-50 font-semibold">
+          {views.filter(f => f.url === location.pathname)[0].title}
         </h2>
         {!user && <div className="space-x-5">
           <SignupEmail/>

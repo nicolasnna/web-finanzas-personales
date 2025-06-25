@@ -15,9 +15,7 @@ const Home = () => {
 
 
   return (
-    <div className="bg-white flex flex-col items-center justify-center space-y-9">
-      
-      <Header text="Mi plan financiero"/>
+    <div className="bg-white flex flex-col items-center justify-center space-y-9 w-full my-10">
       <section className="flex justify-center w-full gap-24">
         <FinancialTable title="Ingresos" content={incomeRows}/>
         <FinancialForm title="Añade un nuevo ingreso" {...useIncomeStore()} addDb={addIncomeDb} addCategory={incomeAddCategory} addCategoryDb={addCategoryIncomeDb}/>
