@@ -64,7 +64,7 @@ const RegisterForm = () => {
   return (
     <>
       {createPortal(<Toaster/>, document.body)}
-      <Button variant="primary" onClick={() => setShowForm(true)}>Registrarse</Button>
+      <Button variant="primary" className="border-[1px] border-r-[3px] border-b-[3px] border-blizzard-blue-700" onClick={() => setShowForm(true)}>Registrarse</Button>
 
       <AlertDialog open={showForm} onOpenChange={setShowForm}>
         <AlertDialogContent className="bg-blizzard-blue-100">

@@ -1,6 +1,5 @@
 import FinancialForm from "@/components/FinancialForm";
 import FinancialTable from "@/components/FinancialTable";
-import Header from "@/components/Header";
 import { addIncomeDb } from "@/services/dbIncomes";
 import { addExpenseDb } from "@/services/dbExpenses";
 import { useExpenseStore, useIncomeStore } from "@/store/useBalanceStore";

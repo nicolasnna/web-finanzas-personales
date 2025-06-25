@@ -3,13 +3,14 @@ import RegisterForm from "./RegisterEmail"
 import SignupEmail from "./SignupEmail"
 import { AuthContext } from "@/context/authContext"
 import { Button } from "./ui/button"
-import { BadgeDollarSign, ChartLine, ShoppingCart } from "lucide-react"
+import { BadgeDollarSign, ChartLine, ShoppingCart, UserRoundPen } from "lucide-react"
 import { useLocation } from "react-router"
 
 const views = [
   {id: "dashboard", text: "Dashboard", icon: ChartLine, url: '/', title: 'Mi plan financiero'},
   {id: "incomes", text: "Ingresos", icon: BadgeDollarSign, url: '/incomes', title: 'Mis ingresos'},
-  {id: "expenses", text: "Gastos", icon: ShoppingCart, url: '/expenses', title: 'Mis gastos'}
+  {id: "expenses", text: "Gastos", icon: ShoppingCart, url: '/expenses', title: 'Mis gastos'},
+  {id: "perfil", text: "Perfil", icon: UserRoundPen, url: '/prfil', title: 'Mi perfil'}
 ]
 const selectedButtton = 'bg-blizzard-blue-200 text-secondary-950 font-bold'
 
