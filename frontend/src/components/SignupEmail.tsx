@@ -51,7 +51,7 @@ const SignupEmail = () => {
 
   return (<>
     {createPortal(<Toaster/>, document.body)}
-    <Button variant="default" onClick={() => setShowForm(true)}>Iniciar sesión</Button>
+    <Button variant="secondary" onClick={() => setShowForm(true)}>Iniciar sesión</Button>
 
     <AlertDialog open={showForm} onOpenChange={setShowForm} >
       <AlertDialogContent className="bg-blizzard-blue-100 z-[101]">
