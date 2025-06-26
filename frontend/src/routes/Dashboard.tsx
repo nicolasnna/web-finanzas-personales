@@ -1,5 +1,6 @@
 import CardInfo from '@/components/CardInfo';
-import FinancialChartArea from '@/components/FinancialChartArea';
+import ChartArea from '@/components/ChartArea';
+import ChartPie from '@/components/ChartPie';
 import { useState } from 'react';
 
 interface ListInfoProps {
@@ -48,13 +49,18 @@ function Dashboard() {
           />
         ))}
       </section>
-      <section className="grid grid-cols-3 gap-10">
-        <FinancialChartArea 
+      <section className="grid grid-cols-3 gap-5 h-full">
+        <ChartArea 
           title='Tendencia mensual - año 2025'
-          className='col-span-2'
-          footer={
-            <span></span>
-          }
+          className='col-span-2 row-span-2 flex flex-col justify-around'
+        />
+        <ChartPie
+          title='Ingreso por categoría'
+          className='col-span-1 row-span-1'
+        />
+        <ChartPie
+          title='Gasto por categoría'
+          className='col-span-1 row-span-1'
         />
       </section>
     </div>

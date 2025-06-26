@@ -18,7 +18,7 @@ const COLORS = [
   'hsl(var(--chart-5))',
 ];
 
-const FinancialChartPie = ({ data }: { data: resumeBalanceInterface }) => {
+const FinancialChartPiePREV = ({ data }: { data: resumeBalanceInterface }) => {
   const filterResumeZero = data.resumeForCategory.filter(e => e.value !== 0)
   const percentajesResume = filterResumeZero.map(e => ({ ...e, value: e.value / data.total * 100 }))
   
@@ -70,4 +70,4 @@ const FinancialChartPie = ({ data }: { data: resumeBalanceInterface }) => {
   );
 };
 
-export default FinancialChartPie;
+export default FinancialChartPiePREV;
