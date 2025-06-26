@@ -10,7 +10,7 @@ const views = [
   {id: "dashboard", text: "Dashboard", icon: ChartLine, url: '/', title: 'Mi plan financiero'},
   {id: "incomes", text: "Ingresos", icon: BadgeDollarSign, url: '/incomes', title: 'Mis ingresos'},
   {id: "expenses", text: "Gastos", icon: ShoppingCart, url: '/expenses', title: 'Mis gastos'},
-  {id: "perfil", text: "Perfil", icon: UserRoundPen, url: '/prfil', title: 'Mi perfil'}
+  {id: "perfil", text: "Perfil", icon: UserRoundPen, url: '/profile', title: 'Mi perfil'}
 ]
 const selectedButtton = 'bg-blizzard-blue-200 text-secondary-950 font-bold'
 

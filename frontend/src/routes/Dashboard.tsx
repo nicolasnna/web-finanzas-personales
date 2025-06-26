@@ -36,7 +36,7 @@ function Dashboard() {
   ]);
 
   return (
-    <div className="mx-5 lg:mx-[200px] my-10 flex flex-col gap-10">
+    <div className="mx-5 lg:mx-[250px] my-10 flex flex-col gap-10">
       <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 ">
         {listInfo.map((l) => (
           <CardInfo
@@ -49,7 +49,13 @@ function Dashboard() {
         ))}
       </section>
       <section className="grid grid-cols-3 gap-10">
-        <FinancialChartArea className='col-span-2'/>
+        <FinancialChartArea 
+          title='Tendencia mensual - año 2025'
+          className='col-span-2'
+          footer={
+            <span></span>
+          }
+        />
       </section>
     </div>
   );
