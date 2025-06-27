@@ -3,6 +3,7 @@ import CardInfo from '@/components/CardInfo';
 import CategoryForm from '@/components/CategoryForm';
 import ChartArea from '@/components/ChartArea';
 import ChartPie from '@/components/ChartPie';
+import TransactionForm from '@/components/TransactionForm';
 import { useState } from 'react';
 
 interface ListInfoProps {
@@ -66,7 +67,7 @@ function Dashboard() {
           className='col-span-1 row-span-1'
         />
       </section>
-      <section className='grid grid-cols-3 z-10'>
+      <section className='grid grid-cols-3 z-10 gap-5'>
         <CardContainer
           title='Registrar nueva categoría'
           className='space-y-1'
@@ -74,6 +75,11 @@ function Dashboard() {
           classNameBody='pb-4'
         >
           <CategoryForm/>
+        </CardContainer>
+        <CardContainer
+          className='col-span-2'
+        >
+          <TransactionForm/>
         </CardContainer>
       </section>
     </div>

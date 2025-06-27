@@ -57,7 +57,7 @@ const Navbar = () => {
   }, [location]);
 
   return (
-    <nav className="w-full bg-blizzard-blue-950 border-b-2 border-blizzard-blue-200 z-20 select-none md:px-10">
+    <nav className="w-full bg-blizzard-blue-950 border-b-4 border-blizzard-blue-200 z-20 select-none md:px-10 shadow-[0_2px_2px_rgba(0,0,0,0.4)]">
       <div className="px-4 py-3 flex items-center justify-around w-full">
         <h2 className="text-3xl text-blizzard-blue-50 font-semibold">
           {views.filter((f) => f.url === location.pathname)[0].title}

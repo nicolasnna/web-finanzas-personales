@@ -25,7 +25,7 @@ const CategorySchema = z.object({
     .string()
     .trim()
     .min(2, { message: 'Debe tener un mínimo de 3 letras' }),
-  type: z.string().nonempty({ message: 'Debes seleccionar un tipo' }),
+  type: z.string().min(1, { message: 'Debes seleccionar un tipo' }),
 });
 type CategoryForm = z.infer<typeof CategorySchema>;
 
