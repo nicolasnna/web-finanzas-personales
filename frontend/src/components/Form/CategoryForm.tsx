@@ -1,10 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { Button } from './ui/button';
+import { Button } from '../ui/button';
 import { CategorySchema, CategoryTypeForm } from '@/types';
-import TypeFormField from './Form/TypeFormField';
-import NewCategoryFormField from './Form/NewCategoryFormField';
-import { Form } from './ui/form';
+import { Form } from '../ui/form';
+import { NewCategoryFormField, TypeFormField } from '../FormField';
 
 function CategoryForm() {
   const form = useForm<CategoryTypeForm>({

@@ -1,11 +1,14 @@
 import { useForm } from 'react-hook-form';
-import { Form } from './ui/form';
+import { Form } from '../ui/form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { TransactionSchema, TransactionTypeForm } from '@/types';
-import TypeFormField from './Form/TypeFormField';
-import NewCategoryFormField from './Form/NewCategoryFormField';
-import DateFormField from './Form/DateFormField';
-import ValueFormField from './Form/ValueFormField';
+import {
+  CategoryFormField,
+  DateFormField,
+  DetailsFormField,
+  TypeFormField,
+  ValueFormField,
+} from '../FormField';
 
 function TransactionForm() {
   const form = useForm<TransactionTypeForm>({
@@ -26,11 +29,15 @@ function TransactionForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmitForm)} className='grid grid-cols-6 gap-4'>
-        <NewCategoryFormField className='col-span-4' form={form}/>
-        <TypeFormField className='col-span-2' form={form}/>
-        <DateFormField className='col-span-2' form={form}/>
-        <ValueFormField className='col-span-2' form={form}/>
+      <form
+        onSubmit={form.handleSubmit(handleSubmitForm)}
+        className="grid grid-cols-3 gap-4"
+      >
+        <TypeFormField form={form} />
+        <DetailsFormField form={form} />
+        <DateFormField form={form} />
+        <CategoryFormField form={form} categories={['cat1', 'cat2']} />
+        <ValueFormField form={form} />
       </form>
     </Form>
   );

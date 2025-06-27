@@ -1,9 +1,9 @@
 import CardContainer from '@/components/CardContainer';
 import CardInfo from '@/components/CardInfo';
-import CategoryForm from '@/components/CategoryForm';
+import CategoryForm from '@/components/Form/CategoryForm';
 import ChartArea from '@/components/ChartArea';
 import ChartPie from '@/components/ChartPie';
-import TransactionForm from '@/components/TransactionForm';
+import TransactionForm from '@/components/Form/TransactionForm';
 import { useState } from 'react';
 
 interface ListInfoProps {
