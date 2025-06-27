@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { HTMLProps, ReactElement } from 'react';
 import {
   ChartConfig,
   ChartContainer,
@@ -13,7 +13,7 @@ import { TrendingDown, TrendingUp } from 'lucide-react';
 import CardContainer from './CardContainer';
 
 interface ChartAreaProps {
-  className?: string;
+  className?: HTMLProps<HTMLElement>["className"];
   title?: string;
   description?: string;
   footer?: ReactElement;

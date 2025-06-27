@@ -1,10 +1,11 @@
 import { formatNumber } from '@/utils/functions';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from './ui/card';
 import { TrendingDown, TrendingUp } from 'lucide-react';
+import { HTMLProps } from 'react';
 
 
 interface CardInfoProps {
-  className?: string;
+  className?: HTMLProps<HTMLElement>["className"];
   title?: string;
   value: number;
   currency?: string;

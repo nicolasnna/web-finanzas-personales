@@ -1,4 +1,4 @@
-import { BalanceInfo, BalanceState, category } from '@/types';
+import { BalanceInfo, BalanceState, Category } from '@/types';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
@@ -27,7 +27,7 @@ import { AuthContext } from '@/context/authContext';
 interface FinancialFormInputs extends BalanceState {
   title: string;
   addDb: (data: BalanceInfo, token: string) => void;
-  addCategoryDb: (category: category, token: string) => void;
+  addCategoryDb: (category: Category, token: string) => void;
 }
 
 const FinancialForm = ({

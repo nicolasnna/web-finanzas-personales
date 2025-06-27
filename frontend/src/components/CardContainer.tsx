@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { HTMLProps, ReactElement } from 'react';
 import {
   Card,
   CardContent,
@@ -9,11 +9,11 @@ import {
 } from './ui/card';
 
 interface CardContainerProps {
-  className?: string;
-  classNameTitle?: string;
-  classNameHeader?: string;
-  classNameBody?: string;
-  classNameFooter?: string;
+  className?: HTMLProps<HTMLElement>["className"];
+  classNameTitle?: HTMLProps<HTMLElement>["className"];
+  classNameHeader?: HTMLProps<HTMLElement>["className"];
+  classNameBody?: HTMLProps<HTMLElement>["className"];
+  classNameFooter?: HTMLProps<HTMLElement>["className"];
   children?: ReactElement;
   title?: string;
   description?: string;

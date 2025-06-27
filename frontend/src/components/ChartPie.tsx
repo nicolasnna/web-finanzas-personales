@@ -2,11 +2,11 @@ import { Pie, PieChart, Sector } from 'recharts';
 import CardContainer from './CardContainer';
 import { ChartConfig, ChartContainer} from './ui/chart';
 import { PieSectorDataItem } from 'recharts/types/polar/Pie';
-import { useMemo, useState } from 'react';
+import { HTMLProps, useMemo, useState } from 'react';
 import { formatNumber } from '@/utils/functions';
 
 interface ChartPieProps {
-  className?: string
+  className?: HTMLProps<HTMLElement>["className"]
   title?: string
   month?: string
   year?: number

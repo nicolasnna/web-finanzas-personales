@@ -14,10 +14,11 @@ import {
   SelectValue,
 } from '../ui/select';
 import { Path, UseFormReturn } from 'react-hook-form';
+import { HTMLProps } from 'react';
 
 interface TypeFormFieldProps<T extends { type: string }> {
   form: UseFormReturn<T>;
-  className?: string;
+  className?: HTMLProps<HTMLElement>["className"];
 }
 
 function TypeFormField<T extends { type: string }>({

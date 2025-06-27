@@ -7,10 +7,11 @@ import {
   FormMessage,
 } from '../ui/form';
 import { Input } from '../ui/input';
+import { HTMLProps } from 'react';
 
 interface CategoryFormFieldProps<T extends { category: string }> {
   form: UseFormReturn<T>;
-  className?: string;
+  className?: HTMLProps<HTMLElement>["className"];
 }
 
 function CategoryFormField<T extends { category: string }>({
