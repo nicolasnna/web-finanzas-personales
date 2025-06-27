@@ -40,7 +40,7 @@ function Dashboard() {
   ]);
 
   return (
-    <div className="mx-5 lg:mx-[250px] my-10 flex flex-col gap-5">
+    <div className="mx-5 xl:mx-[250px] my-10 flex flex-col gap-5">
       <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {listInfo.map((l) => (
           <CardInfo
@@ -53,31 +53,34 @@ function Dashboard() {
           />
         ))}
       </section>
-      <section className="grid grid-cols-3 gap-5 h-full">
+      <section className="grid grid-cols-2 md:grid-cols-3 gap-5 h-full">
         <ChartArea 
           title='Tendencia mensual - año 2025'
           className='col-span-2 row-span-2 flex flex-col justify-around'
         />
         <ChartPie
           title='Ingreso por categoría'
-          className='col-span-1 row-span-1'
+          className='col-span-2 md:col-span-1 row-span-1'
         />
         <ChartPie
           title='Gasto por categoría'
-          className='col-span-1 row-span-1'
+          className='col-span-2 md:col-span-1 row-span-1'
         />
       </section>
-      <section className='grid grid-cols-3 z-10 gap-5'>
+      <section className='grid md:grid-cols-3 z-10 gap-5'>
         <CardContainer
           title='Registrar nueva categoría'
           className='space-y-1'
           classNameHeader='pt-4'
-          classNameBody='pb-4'
+          classNameBody='pb-2'
         >
           <CategoryForm/>
         </CardContainer>
         <CardContainer
-          className='col-span-2'
+          title='Registrar nueva transacción'
+          className='md:col-span-2'
+          classNameHeader='pt-4'
+          classNameBody='pb-4'
         >
           <TransactionForm/>
         </CardContainer>

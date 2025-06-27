@@ -63,13 +63,13 @@ const Navbar = () => {
           {views.filter((f) => f.url === location.pathname)[0].title}
         </h2>
         {!user && (
-          <div className="space-x-5">
+          <div className="gap-2 flex flex-wrap justify-end">
             <SignupEmail />
             <RegisterForm />
           </div>
         )}
         {user && (
-          <div className="space-x-5 flex flex-row justify-center items-center">
+          <div className="gap-5 flex flex-row justify-center items-center">
             <div>
               <strong>Sesión iniciada</strong>
             </div>
@@ -84,7 +84,7 @@ const Navbar = () => {
           </div>
         )}
       </div>
-      <div className="flex flex-row justify-center">
+      <div className="flex flex-row justify-center flex-wrap-reverse">
         {views.map((v, index) => (
           <button
             key={v.id}

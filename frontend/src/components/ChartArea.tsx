@@ -84,7 +84,7 @@ function ChartArea({
   const parseAreaChart = areaChartConfig?.areaConfig ?? exampleAreaChartConfig;
 
   return (
-    <CardContainer className={className} title={title} description={description} footer={footer} classNameTitle='text-2xl'>
+    <CardContainer className={className} title={title} classNameBody='px-1' description={description} footer={footer} classNameTitle='text-2xl'>
       <ChartContainer
         config={parseChartConfig}
         // className={`h-[${areaChartConfig?.heightChart ?? 300}px] w-full`}

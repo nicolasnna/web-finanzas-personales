@@ -25,7 +25,7 @@ function DateFormField<T extends { date: Date }>({form, className}: DateFormFiel
     control={form.control}
     name={"date" as Path<T>}
     render={({ field }) => (
-      <FormItem className={className}>
+      <FormItem className={`flex flex-col ${className}`}>
         <FormLabel className="text-base text-blizzard-blue-950 font-semibold">
           Fecha
         </FormLabel>
