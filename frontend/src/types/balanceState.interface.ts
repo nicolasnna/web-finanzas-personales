@@ -1,5 +1,5 @@
 import { BalanceInfo } from "./balanceInfo.interface";
-import { category } from "./category.interface";
+import { category } from "./Category.interface";
 
 export interface BalanceState {
   balanceRows: BalanceInfo[];

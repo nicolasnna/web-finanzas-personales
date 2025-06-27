@@ -14,7 +14,7 @@ import { format } from "date-fns";
 import { es } from 'date-fns/locale'
 
 interface DatePicker {
-  form: UseFormReturn<FinancialInfoForm>,
+  form: UseFormReturn<FinancialInfoForm>
 }
 
 const DatePicker = ({form} : DatePicker) => {
