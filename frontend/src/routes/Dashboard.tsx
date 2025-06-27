@@ -1,4 +1,6 @@
+import CardContainer from '@/components/CardContainer';
 import CardInfo from '@/components/CardInfo';
+import CategoryForm from '@/components/CategoryForm';
 import ChartArea from '@/components/ChartArea';
 import ChartPie from '@/components/ChartPie';
 import { useState } from 'react';
@@ -37,10 +39,11 @@ function Dashboard() {
   ]);
 
   return (
-    <div className="mx-5 lg:mx-[250px] my-10 flex flex-col gap-10">
-      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 ">
+    <div className="mx-5 lg:mx-[250px] my-10 flex flex-col gap-5">
+      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {listInfo.map((l) => (
           <CardInfo
+            key={l.info}
             title={l.title}
             value={l.value}
             currency={l.currency}
@@ -62,6 +65,11 @@ function Dashboard() {
           title='Gasto por categoría'
           className='col-span-1 row-span-1'
         />
+      </section>
+      <section className='z-10'>
+        <CardContainer className='pt-4'>
+          <CategoryForm/>
+        </CardContainer>
       </section>
     </div>
   );

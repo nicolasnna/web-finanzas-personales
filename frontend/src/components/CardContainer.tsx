@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from './ui/card';
 
-interface CardChartProps {
+interface CardContainerProps {
   className?: string;
   classNameTitle?: string;
   classNameHeader?: string;
@@ -20,7 +20,7 @@ interface CardChartProps {
   footer?: ReactElement | string;
 }
 
-function CardChart({
+function CardContainer({
   className,
   classNameTitle,
   classNameBody,
@@ -30,7 +30,7 @@ function CardChart({
   title,
   description,
   footer,
-}: CardChartProps) {
+}: CardContainerProps) {
   return (
     <Card
       className={`${className} select-none bg-blizzard-blue-100 z-10 border-t-1 border-l-1 border-blizzard-blue-800 border-r-4 border-b-4`}
@@ -51,4 +51,4 @@ function CardChart({
   );
 }
 
-export default CardChart;
+export default CardContainer;

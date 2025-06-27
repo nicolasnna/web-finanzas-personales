@@ -10,7 +10,7 @@ import {
 import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts';
 import { COLORS } from '@/utils/constants';
 import { TrendingDown, TrendingUp } from 'lucide-react';
-import CardChart from './CardChart';
+import CardContainer from './CardContainer';
 
 interface ChartAreaProps {
   className?: string;
@@ -84,7 +84,7 @@ function ChartArea({
   const parseAreaChart = areaChartConfig?.areaConfig ?? exampleAreaChartConfig;
 
   return (
-    <CardChart className={className} title={title} description={description} footer={footer} classNameTitle='text-2xl'>
+    <CardContainer className={className} title={title} description={description} footer={footer} classNameTitle='text-2xl'>
       <ChartContainer
         config={parseChartConfig}
         // className={`h-[${areaChartConfig?.heightChart ?? 300}px] w-full`}
@@ -122,7 +122,7 @@ function ChartArea({
           />
         </AreaChart>
       </ChartContainer>
-    </CardChart>
+    </CardContainer>
   );
 }
 

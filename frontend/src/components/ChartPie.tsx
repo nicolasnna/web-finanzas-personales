@@ -1,5 +1,5 @@
 import { Pie, PieChart, Sector } from 'recharts';
-import CardChart from './CardChart';
+import CardContainer from './CardContainer';
 import { ChartConfig, ChartContainer} from './ui/chart';
 import { PieSectorDataItem } from 'recharts/types/polar/Pie';
 import { useMemo, useState } from 'react';
@@ -47,10 +47,10 @@ function ChartPie({className, title, month, year} : ChartPieProps) {
   const activeIndex = useMemo(() => exampleChartData.findIndex((item) => item.category === activeCategory ), [activeCategory])
 
   return (
-    <CardChart 
+    <CardContainer 
       className={className}
       classNameBody='pb-0'
-      classNameFooter='pb-2 text-base justify-end'
+      classNameFooter='pb-2 text-base justify-end text-blizzard-blue-950 font-semibold'
       title={title}
       footer={`${activeCategory}: ${formatNumber(exampleChartData[activeIndex].cantidad, 'CLP')} | ${month ?? 'Enero'} - ${year ?? 2025}`}
     >
@@ -82,7 +82,7 @@ function ChartPie({className, title, month, year} : ChartPieProps) {
           />
         </PieChart>
       </ChartContainer>
-    </CardChart>
+    </CardContainer>
   );
 }
 

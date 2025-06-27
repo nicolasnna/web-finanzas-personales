@@ -1,84 +1,106 @@
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useContext, useState } from "react"
-import { SubmitHandler, useForm } from "react-hook-form"
-import { z } from "zod"
-import { Button } from "./ui/button"
-import { FormControl, FormField, FormItem } from "./ui/form"
-import { Input } from "./ui/input"
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog"
-import { category } from "@/types"
-import { AuthContext } from "@/context/authContext"
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from './ui/form';
+import { Input } from './ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from './ui/select';
+import { TrendingDown, TrendingUp } from 'lucide-react';
+import { Button } from './ui/button';
 
 const CategorySchema = z.object({
-  category: z.string().min(2, {message: 'Debe tener un mínimo de 3 letras'}).trim()
-})
+  category: z
+    .string()
+    .trim()
+    .min(2, { message: 'Debe tener un mínimo de 3 letras' }),
+  type: z.string().nonempty({ message: 'Debes seleccionar un tipo' }),
+});
+type CategoryForm = z.infer<typeof CategorySchema>;
 
-type CategoryForm = z.infer<typeof CategorySchema>
-
-const CategoryForm = ({addResult, addDb} : {addResult: (category: category) => void, addDb: (category: category, token: string) =>  void}) => {
-  const {user} = useContext(AuthContext)
-  const [showForm, setShowForm] = useState(false)
+function CategoryForm() {
   const form = useForm<CategoryForm>({
     resolver: zodResolver(CategorySchema),
     defaultValues: {
-      category: ''
-    }
-  })
-  
-  const onSubmit: SubmitHandler<CategoryForm> = async (data) => {
-    await addResult({category: data.category})
-    if (user)
-      await addDb({category: data.category}, user)
-    setShowForm(false)
-  }
+      category: '',
+      type: '',
+    },
+  });
 
+  const handleSubmitForm = (values: z.infer<typeof CategorySchema>) => {
+    console.log(values);
+  };
 
   return (
-    <>
-      <Button onClick={() => setShowForm(true)}>Crear categoría</Button>
-      
-      <AlertDialog open={showForm} onOpenChange={setShowForm}>
-        <AlertDialogContent className="bg-blizzard-blue-100">
-          <AlertDialogHeader>
-            <AlertDialogTitle>Crear categoría</AlertDialogTitle>
-            <AlertDialogDescription>Crea una nueva categoría para el formularío.</AlertDialogDescription>
-          </AlertDialogHeader>
-          <FormField
-            control={form.control}
-            name="category"
-            render={({ field }) => (
-              <FormItem>
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(handleSubmitForm)}
+        className="space-y-2"
+      >
+        <FormField
+          control={form.control}
+          name="category"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Nueva categoría</FormLabel>
+              <FormControl>
+                <Input placeholder="Escribe una nueva categoría" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="type"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="">Tipo de transacción</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                  <Input
-                    placeholder="Escribe una nueva categoría"
-                    type="text"
-                    {...field}
-                  />
+                  <SelectTrigger>
+                    <SelectValue placeholder="Selecciona si es ingreso o gasto" />
+                  </SelectTrigger>
                 </FormControl>
-              </FormItem>
-            )}
-            />
-          <AlertDialogFooter>
-            <AlertDialogCancel onClick={() => setShowForm(false)}>
-              Cancelar
-            </AlertDialogCancel>
-            <AlertDialogAction onClick={form.handleSubmit(onSubmit)}>
-              Guardar
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
-    </>
-  )
+                <SelectContent>
+                  <SelectItem value="incomes">
+                    <div className="flex items-center gap-2">
+                      <TrendingUp className="w-4 h-4 text-green-600" />
+                      Ingreso
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="expenses">
+                    <div className="flex items-center gap-2">
+                      <TrendingDown className="w-4 h-4 text-red-600" />
+                      Gasto
+                    </div>
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button variant="secondary">
+          Limpiar
+        </Button>
+        <Button variant={'primary'} type="submit">
+          Crear
+        </Button>
+      </form>
+    </Form>
+  );
 }
 
-export default CategoryForm
+export default CategoryForm;
