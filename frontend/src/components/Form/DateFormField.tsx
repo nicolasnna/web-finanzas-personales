@@ -3,6 +3,7 @@ import {
   FormField,
   FormItem,
   FormControl,
+  FormLabel,
 } from '@/components/ui/form'; 
 import { Button } from '@/components/ui/button'; 
 import { Calendar } from '@/components/ui/calendar';
@@ -24,12 +25,15 @@ function DateFormField<T extends { date: Date }>({form, className}: DateFormFiel
     control={form.control}
     name={"date" as Path<T>}
     render={({ field }) => (
-      <FormItem className={`flex items-center w-full justify-start ${className}`}>
+      <FormItem className={className}>
+        <FormLabel className="text-base text-blizzard-blue-950 font-semibold">
+          Fecha
+        </FormLabel>
         <FormControl>
           <Popover>
             <PopoverTrigger asChild>
               <Button variant="outline" className={cn(
-                "w-[300px] justify-start text-left font-normal",
+                "justify-start text-left font-normal",
                 !field.value && "text-muted-foreground"
               )}>
                 <CalendarIcon />

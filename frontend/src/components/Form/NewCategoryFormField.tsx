@@ -9,15 +9,15 @@ import {
 import { Input } from '../ui/input';
 import { HTMLProps } from 'react';
 
-interface CategoryFormFieldProps<T extends { category: string }> {
+interface NewCategoryFormFieldProps<T extends { category: string }> {
   form: UseFormReturn<T>;
   className?: HTMLProps<HTMLElement>["className"];
 }
 
-function CategoryFormField<T extends { category: string }>({
+function NewCategoryFormField<T extends { category: string }>({
   form,
   className,
-}: CategoryFormFieldProps<T>) {
+}: NewCategoryFormFieldProps<T>) {
   return (
     <FormField
       control={form.control}
@@ -37,4 +37,4 @@ function CategoryFormField<T extends { category: string }>({
   );
 }
 
-export default CategoryFormField;
+export default NewCategoryFormField;

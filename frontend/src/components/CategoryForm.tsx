@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { Button } from './ui/button';
 import { CategorySchema, CategoryTypeForm } from '@/types';
 import TypeFormField from './Form/TypeFormField';
-import CategoryFormField from './Form/CategoryFormField';
+import NewCategoryFormField from './Form/NewCategoryFormField';
 import { Form } from './ui/form';
 
 function CategoryForm() {
@@ -29,7 +29,7 @@ function CategoryForm() {
         onSubmit={form.handleSubmit(handleSubmitForm)}
         className="space-y-3"
       >
-        <CategoryFormField form={form}/>
+        <NewCategoryFormField form={form}/>
         <TypeFormField form={form}/>
         <div className="flex items-center gap-2 justify-end">
           <Button variant="secondary" onClick={handleClean} type="reset">
