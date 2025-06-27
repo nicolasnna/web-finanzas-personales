@@ -66,8 +66,13 @@ function Dashboard() {
           className='col-span-1 row-span-1'
         />
       </section>
-      <section className='z-10'>
-        <CardContainer className='pt-4'>
+      <section className='grid grid-cols-3 z-10'>
+        <CardContainer
+          title='Registrar nueva categoría'
+          className='space-y-1'
+          classNameHeader='pt-4'
+          classNameBody='pb-4'
+        >
           <CategoryForm/>
         </CardContainer>
       </section>

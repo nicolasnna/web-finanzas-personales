@@ -42,18 +42,24 @@ function CategoryForm() {
     console.log(values);
   };
 
+  const handleClean = () => {
+    form.reset({ category: '', type: '' });
+  };
+
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(handleSubmitForm)}
-        className="space-y-2"
+        className="space-y-3"
       >
         <FormField
           control={form.control}
           name="category"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Nueva categoría</FormLabel>
+              <FormLabel className="text-base text-blizzard-blue-950 font-semibold">
+                Nueva categoría
+              </FormLabel>
               <FormControl>
                 <Input placeholder="Escribe una nueva categoría" {...field} />
               </FormControl>
@@ -66,8 +72,14 @@ function CategoryForm() {
           name="type"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="">Tipo de transacción</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <FormLabel className="text-base text-blizzard-blue-950 font-semibold">
+                Tipo de transacción
+              </FormLabel>
+              <Select
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+                value={field.value}
+              >
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder="Selecciona si es ingreso o gasto" />
@@ -92,12 +104,14 @@ function CategoryForm() {
             </FormItem>
           )}
         />
-        <Button variant="secondary">
-          Limpiar
-        </Button>
-        <Button variant={'primary'} type="submit">
-          Crear
-        </Button>
+        <div className="flex items-center gap-2 justify-end">
+          <Button variant="secondary" onClick={handleClean} type="reset">
+            Limpiar
+          </Button>
+          <Button variant={'primary'} type="submit">
+            Crear
+          </Button>
+        </div>
       </form>
     </Form>
   );
