@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
-import RegisterForm from './RegisterEmail';
-import SignupEmail from './SignupEmail';
+import RegisterForm from './Auth/RegisterEmail';
+import SignupEmail from './Auth/SignupEmail';
 import { AuthContext } from '@/context/authContext';
 import { Button } from './ui/button';
 import {

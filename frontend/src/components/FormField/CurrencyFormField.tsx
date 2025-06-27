@@ -34,6 +34,7 @@ function CurrencyFormField<T extends { currency: string }>({
             Divisa
           </FormLabel>
           <Select
+            name={field.name}
             onValueChange={field.onChange}
             defaultValue={field.value}
             value={field.value}

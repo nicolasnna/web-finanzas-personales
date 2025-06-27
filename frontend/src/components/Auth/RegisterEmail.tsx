@@ -8,12 +8,12 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
-import { Button } from "./ui/button"
+import { Button } from "../ui/button"
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "./ui/form"
-import { Input } from "./ui/input"
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
 import { registerEmailUser } from "@/services/authService";
 import { Toaster } from "@/components/ui/sonner"
 import { toast } from "sonner"
@@ -67,7 +67,7 @@ const RegisterForm = () => {
       <Button variant="primary" className="border-[1px] border-r-[3px] border-b-[3px] border-blizzard-blue-700" onClick={() => setShowForm(true)}>Registrarse</Button>
 
       <AlertDialog open={showForm} onOpenChange={setShowForm}>
-        <AlertDialogContent className="bg-blizzard-blue-100">
+        <AlertDialogContent className="bg-blizzard-blue-100 border-2 border-blizzard-blue-700 border-b-4 border-r-4">
           <AlertDialogHeader>
             <AlertDialogTitle className="text-2xl text-orange-950">Crear cuenta</AlertDialogTitle>
             <AlertDialogDescription className="text-base text-black">Regístrate con tu correo electrónico.</AlertDialogDescription>

@@ -35,6 +35,7 @@ function TypeFormField<T extends { type: string }>({
             Tipo de transacción
           </FormLabel>
           <Select
+            name={field.name}
             onValueChange={field.onChange}
             defaultValue={field.value}
             value={field.value}

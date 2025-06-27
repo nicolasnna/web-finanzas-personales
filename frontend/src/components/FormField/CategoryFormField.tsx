@@ -16,16 +16,17 @@ function CategoryFormField<T extends { category: string}>({form, className, cate
       name={'category' as Path<T>}
       render={({field}) => (
         <FormItem className={className}>
-          <FormLabel className="text-base text-blizzard-blue-950 font-semibold">
+          <FormLabel className="text-base text-blizzard-blue-950 font-semibold" htmlFor={field.name}>
             Categoría
           </FormLabel>
           <Select
+            name={field.name}
             onValueChange={field.onChange}
             defaultValue={field.value}
             value={field.value}
           >
             <FormControl>
-              <SelectTrigger>
+              <SelectTrigger id={field.name}>
                 <SelectValue placeholder='Selecciona la categoría'/>
               </SelectTrigger>
             </FormControl>

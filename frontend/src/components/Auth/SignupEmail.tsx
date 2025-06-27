@@ -8,12 +8,12 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
-import { Button } from "./ui/button"
+import { Button } from "@/components/ui/button"
 import { useContext, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "./ui/form"
-import { Input } from "./ui/input"
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
 import { Toaster } from "@/components/ui/sonner"
 import { toast } from "sonner"
 import { createPortal } from "react-dom";
@@ -54,7 +54,7 @@ const SignupEmail = () => {
     <Button variant="secondary" className="border-[1px] border-b-[3px] border-r-[3px] border-blizzard-blue-500" onClick={() => setShowForm(true)}>Iniciar sesión</Button>
 
     <AlertDialog open={showForm} onOpenChange={setShowForm} >
-      <AlertDialogContent className="bg-blizzard-blue-100 z-[101]">
+      <AlertDialogContent className="bg-blizzard-blue-100 border-2 border-blizzard-blue-700 border-b-4 border-r-4" >
         <AlertDialogHeader>
           <AlertDialogTitle className="text-2xl text-orange-950">Iniciar sesión</AlertDialogTitle>
           <AlertDialogDescription className="text-base text-black">Ingresa con tu correo electrónico.</AlertDialogDescription>
