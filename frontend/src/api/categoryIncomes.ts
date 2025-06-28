@@ -1,8 +1,8 @@
 import { Category, error } from "@/types";
 import { URLS } from "@/utils/constants";
 
-export const addCategoryIncomeDb = async (category: Category, token: string) => {
-  const endpoint = `${URLS.API_URL}/db/categories/incomes`
+export const addCategoryIncomeAPI = async (category: Category, token: string) => {
+  const endpoint = `${URLS.API_URL}/categories/incomes`
   try {
     const response = await fetch(endpoint, {
       method: "POST",
@@ -13,12 +13,11 @@ export const addCategoryIncomeDb = async (category: Category, token: string) => 
       body: JSON.stringify(category)
     })
 
+    const data = await response.json()
     if (!response.ok) {
-      const errorData = await response.json()
-      return {error: errorData.message}
+      throw new Error(data.message || 'Error al crear la categoría')
     }
 
-    const data = await response.json()
     return data
     // eslint-disable-next-line 
   } catch (error: any) {
@@ -27,8 +26,8 @@ export const addCategoryIncomeDb = async (category: Category, token: string) => 
 }
 
 
-export const getCategoryIncomeDb = async (token: string) : Promise<Category[] | error > => {
-  const endpoint = `${URLS.API_URL}/db/categories/incomes`
+export const getCategoryIncomeAPI = async (token: string) : Promise<Category[] | error > => {
+  const endpoint = `${URLS.API_URL}/categories/incomes`
   try {
     const res = await fetch(endpoint, {
       method: "GET",

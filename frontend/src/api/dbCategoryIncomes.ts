@@ -1,4 +1,4 @@
-import { category, error } from "@/types";
+import { Category, error } from "@/types";
 import { URLS } from "@/utils/constants";
 
 const BACKEND_URL = URLS.API_URL
@@ -8,7 +8,7 @@ const BACKEND_URL = URLS.API_URL
  * @param category - Categoria creada
  * @param token
  */
-export const addCategoryIncomeDb = async (category: category, token: string) => {
+export const addCategoryIncomeDb = async (category: Category, token: string) => {
   const endpoint = `${BACKEND_URL}/db/categories/incomes`
   try {
     const response = await fetch(endpoint, {
@@ -38,7 +38,7 @@ export const addCategoryIncomeDb = async (category: category, token: string) => 
  * Obtener categorias creadas previamente en la base de datos
  * @param token
  */
-export const getCategoryIncomeDb = async (token: string) : Promise<category[] | error > => {
+export const getCategoryIncomeDb = async (token: string) : Promise<Category[] | error > => {
   const endpoint = `${BACKEND_URL}/db/categories/incomes`
   try {
     const res = await fetch(endpoint, {

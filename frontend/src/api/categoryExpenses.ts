@@ -2,7 +2,7 @@ import { Category, error } from "@/types";
 import { URLS } from "@/utils/constants";
 
 export const addCategoryExpenseAPI = async (category: Category, token: string) => {
-  const endpoint = `${URLS.API_URL}/db/categories/expenses`
+  const endpoint = `${URLS.API_URL}/categories/expenses`
   try {
     const response = await fetch(endpoint, {
       method: "POST",
@@ -13,21 +13,20 @@ export const addCategoryExpenseAPI = async (category: Category, token: string) =
       body: JSON.stringify(category)
     })
 
+    const data = await response.json()
     if (!response.ok) {
-      const errorData = await response.json()
-      return {error: errorData.message}
+      throw new Error(data.message || 'Error al crear la categoría')
     }
 
-    const data = await response.json()
     return data
     // eslint-disable-next-line 
   } catch (error: any) {
-    return {error: error.message}
+    throw new Error(error.message)
   }
 }
 
 export const getCategoryExpenseAPI = async (token: string) : Promise<Category[] | error > => {
-  const endpoint = `${URLS.API_URL}/db/categories/expenses`
+  const endpoint = `${URLS.API_URL}/categories/expenses`
   try {
     const res = await fetch(endpoint, {
       method: "GET",
@@ -45,6 +44,6 @@ export const getCategoryExpenseAPI = async (token: string) : Promise<Category[] 
     return data
     //eslint-disable-next-line
   } catch (error: any) {
-    return {error: error.message}
+    throw {error: error.message}
   }
 }
