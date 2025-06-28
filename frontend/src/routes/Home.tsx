@@ -1,10 +1,10 @@
 import FinancialForm from "@/components/FinancialForm";
 import FinancialTable from "@/components/FinancialTable";
-import { addIncomeDb } from "@/services/dbIncomes";
-import { addExpenseDb } from "@/services/dbExpenses";
+import { addIncomeDb } from "@/api/dbIncomes";
+import { addExpenseDb } from "@/api/dbExpenses";
 import { useExpenseStore, useIncomeStore } from "@/store/useBalanceStore";
-import { addCategoryExpenseDb } from "@/services/dbCategoryExpenses";
-import { addCategoryIncomeDb } from "@/services/dbCategoryIncomes";
+import { addCategoryExpenseDb } from "@/api/dbCategoryExpenses";
+import { addCategoryIncomeDb } from "@/api/dbCategoryIncomes";
 
 const Home = () => {
   const expenseRows = useExpenseStore(state => state.balanceRows)

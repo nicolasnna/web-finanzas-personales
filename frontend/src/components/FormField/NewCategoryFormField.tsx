@@ -25,12 +25,12 @@ function NewCategoryFormField<T extends { category: string }>({
       render={({ field }) => (
         <FormItem className={className}>
           <FormLabel className="text-base text-blizzard-blue-950 font-semibold"
-            htmlFor={field.name}
+            htmlFor={`new ${field.name}`}
           >
             Nueva categoría
           </FormLabel>
           <FormControl>
-            <Input id={field.name} placeholder="Escribe una nueva categoría" {...field} />
+            <Input id={`new ${field.name}`} placeholder="Escribe una nueva categoría" {...field} />
           </FormControl>
           <FormMessage />
         </FormItem>

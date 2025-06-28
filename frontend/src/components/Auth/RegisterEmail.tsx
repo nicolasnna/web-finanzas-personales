@@ -14,7 +14,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { registerEmailUser } from "@/services/authService";
+import { registerEmailUser } from "@/api/auth";
 import { Toaster } from "@/components/ui/sonner"
 import { toast } from "sonner"
 import { createPortal } from "react-dom";
@@ -32,7 +32,6 @@ const RegisterForm = () => {
   })
 
   const onSubmit: SubmitHandler<RegisterType> = async data => {
-    console.log(data)
     const isCompleteRequest = await handleRegisterUser(data.email, data.password)
     setShowForm(!isCompleteRequest)
     if (isCompleteRequest) {
@@ -42,7 +41,6 @@ const RegisterForm = () => {
     } else {
       toast.error("No se ha logrado registrar al usuario")
     }
-    
   }
 
   const cancelRegister = () => {

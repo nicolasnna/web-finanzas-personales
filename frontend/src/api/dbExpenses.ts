@@ -3,12 +3,6 @@ import { URLS } from "@/utils/constants";
 
 const BACKEND_URL = URLS.API_URL
 
-/**
- * Añadir gasto del usuario a la base de datos
- * @param expenseData - Datos de gasto del tipo BalanceInfo
- * @param token 
- * @returns - Retorna respuesta del servidor
- */
 export const addExpenseDb = async (expenseData: BalanceInfo, token: string) => {
   const endpoint = `${BACKEND_URL}/db/expenses`
   try {
@@ -34,11 +28,6 @@ export const addExpenseDb = async (expenseData: BalanceInfo, token: string) => {
   }
 }
 
-/**
- * Obtiene los gastos del usuario
- * @param token 
- * @returns - Gastos del usuario
- */
 export const getExpensesDb = async (token: string) => {
   const endpoint = `${BACKEND_URL}/db/expenses`
   try {

@@ -44,7 +44,7 @@ const views = [
 const selectedButtton = 'bg-blizzard-blue-200 text-secondary-950 font-bold';
 
 const Navbar = () => {
-  const { user, logout } = useContext(AuthContext);
+  const { token, logout } = useContext(AuthContext);
   const location = useLocation();
   const navigation = useNavigate();
   const [active, setActive] = useState<Array<boolean>>(
@@ -62,22 +62,21 @@ const Navbar = () => {
         <h2 className="text-3xl text-blizzard-blue-50 font-semibold">
           {views.filter((f) => f.url === location.pathname)[0].title}
         </h2>
-        {!user && (
+        {!token && (
           <div className="gap-2 flex flex-wrap justify-end">
             <SignupEmail />
             <RegisterForm />
           </div>
         )}
-        {user && (
-          <div className="gap-5 flex flex-row justify-center items-center">
-            <div>
-              <strong>Sesión iniciada</strong>
-            </div>
+        {token && (
+          <div className="gap-5 flex flex-row justify-center items-center ">
+            <p className="text-blizzard-blue-50">Sesión iniciada</p>
             <Button
-              variant="outline"
+              variant="secondary"
               onClick={() => {
                 logout();
               }}
+              className="border-[1px] border-b-[3px] border-r-[3px] border-blizzard-blue-500"
             >
               Cerrar sesión
             </Button>

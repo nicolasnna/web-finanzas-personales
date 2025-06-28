@@ -1,5 +1,5 @@
 export const URLS = {
-  API_URL: 'http://localhost:4000/api',
+  API_URL: import.meta.env.VITE_BACKEND_URL,
   HOME: '/',
   INCOMES: '/incomes',
   EXPENSES: '/expenses',
@@ -8,7 +8,7 @@ export const URLS = {
   SERVER_ERROR: '/500',
   UNAUTHORIZED: '/401',
 };
-Object.freeze(URLS)
+
 
 export const defaultCategoryExpense = [
   { category: 'Alquiler' },

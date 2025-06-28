@@ -1,25 +1,25 @@
-import { loginEmailUser, refreshTokenService } from '@/services/authService'
+import { loginEmailUser, refreshTokenService } from '@/api/auth'
 import { useState, useEffect } from 'react'
 import { AuthContext } from './authContext'
 import { useExpenseStore, useIncomeStore } from '@/store/useBalanceStore'
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [user, setUser] = useState<string | null>(null)
+  const [token, setToken] = useState<string | null>(null)
   const {setBalanceRows: setIncomes} = useIncomeStore()
   const {setBalanceRows: setExpenses} = useExpenseStore()
 
   useEffect(() => {
-    const token = localStorage.getItem("auth")
-    if (token) {
-      setUser(token)
+    const tokenStorage = sessionStorage.getItem("auth")
+    if (tokenStorage) {
+      setToken(tokenStorage)
     }
   }, [])
 
   const login = async (email: string, password: string) => {
     try {
       const userData = await loginEmailUser(email, password)
-      setUser(userData.token)
-      localStorage.setItem("auth", userData.token)
+      setToken(userData.token)
+      sessionStorage.setItem("auth", userData.token)
       return userData
     } catch {
       throw new Error("Error al intentar el login")
@@ -27,11 +27,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }
 
   const updateToken = async () => {
-    if (user) {
-      const res = await refreshTokenService(user)
+    if (token) {
+      const res = await refreshTokenService(token)
       if (res?.token) {
-        setUser(res.token)
-        localStorage.setItem("auth", res.token)
+        setToken(res.token)
+        sessionStorage.setItem("auth", res.token)
       } else {
         logout()
         throw new Error("Error al refrescar el token. Cerrando sesión.")
@@ -40,15 +40,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }
 
   const logout = () => {
-    localStorage.removeItem("auth")
+    sessionStorage.removeItem("auth")
     console.log("Logout exitoso")
     setIncomes([])
     setExpenses([])
-    setUser(null)
+    setToken(null)
   }
 
   return (
-    <AuthContext.Provider value={{user, login, logout, updateToken}}>
+    <AuthContext.Provider value={{token, login, logout, updateToken}}>
       {children}
     </AuthContext.Provider>
   )

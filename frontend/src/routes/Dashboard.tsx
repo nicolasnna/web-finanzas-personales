@@ -4,7 +4,9 @@ import CategoryForm from '@/components/Form/CategoryForm';
 import ChartArea from '@/components/ChartArea';
 import ChartPie from '@/components/ChartPie';
 import TransactionForm from '@/components/Form/TransactionForm';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { AuthContext } from '@/context/authContext';
+import { getIncomesAPI } from '@/api/incomes';
 
 interface ListInfoProps {
   title: string;
@@ -38,6 +40,17 @@ function Dashboard() {
       status: 'decrement'
     },
   ]);
+  const user = useContext(AuthContext)
+
+  useEffect(() => {
+    
+    const fetchData = async () => {
+      if (!user.token) return
+      const res = await getIncomesAPI(user.token)
+      console.log(res)
+    }
+    fetchData()
+  }, [user.token])
 
   return (
     <div className="mx-5 xl:mx-[250px] my-10 flex flex-col gap-5">

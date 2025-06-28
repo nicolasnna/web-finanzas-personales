@@ -13,6 +13,7 @@ import CurrencyFormField from '../FormField/CurrencyFormField';
 import { Button } from '../ui/button';
 
 function TransactionForm() {
+  
   const form = useForm<TransactionTypeForm>({
     resolver: zodResolver(TransactionSchema),
     defaultValues: {
