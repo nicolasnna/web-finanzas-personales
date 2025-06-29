@@ -19,7 +19,15 @@ function ValueFormField<T extends { value: number}>({form, className} : ValueFor
             Valor
           </FormLabel>
           <FormControl>
-            <Input placeholder="Ingresar monto" {...field}/>
+            <Input 
+              placeholder="Ingresar monto" 
+              {...field} 
+              type="number"
+              onChange={(e) => {
+                const num = e.target.valueAsNumber;
+                field.onChange(Number.isNaN(num) ? undefined : num)
+              }}
+            />
           </FormControl>
           <FormMessage/>
         </FormItem>

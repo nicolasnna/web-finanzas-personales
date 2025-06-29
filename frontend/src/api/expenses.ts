@@ -2,7 +2,7 @@ import { Transaction } from "@/types";
 import { URLS } from "@/utils/constants";
 
 export const addExpenseAPI = async (data: Transaction, token: string) : Promise<Transaction | Error> => {
-  const endpoint = `${URLS.API_URL}/db/expenses`
+  const endpoint = `${URLS.API_URL}/expenses`
   try {
     const response = await fetch(endpoint, {
       method: "POST",
@@ -25,7 +25,7 @@ export const addExpenseAPI = async (data: Transaction, token: string) : Promise<
 }
 
 export const getExpensesAPI = async (token: string) : Promise<Transaction[] | Error> => {
-  const endpoint = `${URLS.API_URL}/db/expenses`
+  const endpoint = `${URLS.API_URL}/expenses`
   try {
     const response = await fetch(endpoint, {
       method: "GET",

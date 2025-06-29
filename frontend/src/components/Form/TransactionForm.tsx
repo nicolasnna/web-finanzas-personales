@@ -3,7 +3,7 @@ import {
   useExpenseCategoriesStore,
   useIncomeCategoriesStore,
 } from '@/store/useCategoryStore';
-import { TransactionSchema, TransactionTypeForm } from '@/types';
+import { Transaction, TransactionSchema, TransactionTypeForm } from '@/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import {
@@ -16,15 +16,21 @@ import {
 import CurrencyFormField from '../FormField/CurrencyFormField';
 import { Button } from '../ui/button';
 import { Form } from '../ui/form';
+import { addIncomeAPI } from '@/api/incomes';
+import { addExpenseAPI } from '@/api/expenses';
+import { useContext, useState } from 'react';
+import { AuthContext } from '@/context/authContext';
+import { toast } from 'sonner';
 
+const dictAddTransaction: Record<string, (data: Transaction, token: string) => Promise<Transaction | Error>> = {
+  incomes: addIncomeAPI,
+  expenses: addExpenseAPI
+}
 
 function TransactionForm() {
-  const incomeCategories = useIncomeCategoriesStore(
-    (state) => state.categories
-  );
-  const expenseCategories = useExpenseCategoriesStore(
-    (state) => state.categories
-  );
+  const [disable, setDisable] = useState<boolean>(false)
+  const incomeCategories = useIncomeCategoriesStore((s) => s.categories);
+  const expenseCategories = useExpenseCategoriesStore((s) => s.categories);
   const form = useForm<TransactionTypeForm>({
     resolver: zodResolver(TransactionSchema),
     defaultValues: {
@@ -36,12 +42,25 @@ function TransactionForm() {
       date: new Date(),
     },
   });
-  const typeValue = form.watch("type");
+  const typeValue = form.watch('type');
+  const token = useContext(AuthContext).token
 
-  useLoadCategories(typeValue)
+  useLoadCategories(typeValue);
 
   const handleSubmitForm = (values: TransactionTypeForm) => {
-    console.log(values);
+    if (!token) return;
+    setDisable(() => true)
+    toast.promise(dictAddTransaction[values.type](values, token),{
+      loading: 'Creando registro...',
+      success: () => {
+        setDisable(() => false)
+        return 'Registro creado con exito'
+      },
+      error: (err) => {
+        setDisable(() => false)
+        return err.message || 'No se ha podido crear el registro'
+      }
+    })
   };
 
   const handleClearForm = () => {
@@ -55,8 +74,7 @@ function TransactionForm() {
     });
   };
 
-  const categoriesToShow = (typeValue === 'incomes' &&
-    incomeCategories) ||
+  const categoriesToShow = (typeValue === 'incomes' && incomeCategories) ||
     (typeValue === 'expenses' && expenseCategories) || [
       { category: 'example1' },
       { category: 'example2' },
@@ -66,7 +84,7 @@ function TransactionForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(handleSubmitForm)}
-        className="grid grid-cols-2 lg:grid-cols-3 gap-4 items-end"
+        className={`grid grid-cols-2 lg:grid-cols-3 gap-4 items-end ${disable && 'opacity-40'}`}
       >
         <TypeFormField form={form} />
         <DetailsFormField form={form} />
@@ -74,19 +92,16 @@ function TransactionForm() {
         <CategoryFormField
           form={form}
           categories={categoriesToShow.map((c) => c.category)}
-          disable={
-            !(typeValue=== 'incomes' ||
-            typeValue === 'expenses')
-          }
+          disable={!(typeValue === 'incomes' || typeValue === 'expenses')}
         />
         <ValueFormField form={form} />
         <CurrencyFormField form={form} />
 
         <div className="flex gap-2 justify-end col-span-2 lg:col-span-3">
-          <Button onClick={handleClearForm} type="reset" variant="secondary">
+          <Button onClick={handleClearForm} type="reset" variant="secondary" disabled={disable}>
             Limpiar
           </Button>
-          <Button type="submit" variant="primary">
+          <Button type="submit" variant="primary" disabled={disable}>
             Guardar
           </Button>
         </div>
