@@ -1,8 +1,8 @@
-import { Category } from "@/types";
+import { Category} from "@/types";
 import { URLS } from "@/utils/constants";
 
-export const addCategoryExpenseAPI = async (category: Category, token: string) : Promise<Category | Error> => {
-  const endpoint = `${URLS.API_URL}/categories/expenses`
+export const addIncomeCategoryAPI = async (category: Category, token: string): Promise<Category | Error> => {
+  const endpoint = `${URLS.API_URL}/categories/incomes`
   try {
     const response = await fetch(endpoint, {
       method: "POST",
@@ -21,12 +21,13 @@ export const addCategoryExpenseAPI = async (category: Category, token: string) :
     return data
     // eslint-disable-next-line 
   } catch (error: any) {
-    throw new Error(error.message)
+    throw new Error(error.message || "Error al obtener la categoria de ingresos")
   }
 }
 
-export const getCategoryExpenseAPI = async (token: string) : Promise<Category[] | Error > => {
-  const endpoint = `${URLS.API_URL}/categories/expenses`
+
+export const getIncomeCategoryAPI = async (token: string) : Promise<Category[] | Error > => {
+  const endpoint = `${URLS.API_URL}/categories/incomes`
   try {
     const res = await fetch(endpoint, {
       method: "GET",
@@ -37,13 +38,13 @@ export const getCategoryExpenseAPI = async (token: string) : Promise<Category[] 
 
     if (!res.ok) {
       const errorData = await res.json()
-      throw new Error(errorData.message || "Error al obtener la vategoria de gastos")
+      throw new Error(errorData.message || "Error al obtener la categoria de ingresos")
     } 
 
     const data = await res.json()
     return data
     //eslint-disable-next-line
   } catch (error: any) {
-    throw new Error(error.message)
+    throw new Error(error.message || "Error al obtener la categoria de ingresos")
   }
 }

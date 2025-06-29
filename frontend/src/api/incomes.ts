@@ -1,7 +1,7 @@
 import { Transaction } from "@/types";
 import { URLS } from "@/utils/constants";
 
-export const addIncomeAPI = async (data: Transaction, token: string) => {
+export const addIncomeAPI = async (data: Transaction, token: string) : Promise<Transaction[] | Error> => {
   const endpoint = `${URLS.API_URL}/db/incomes`
   try {
     const response = await fetch(endpoint, {
@@ -13,12 +13,10 @@ export const addIncomeAPI = async (data: Transaction, token: string) => {
       body: JSON.stringify(data)
     })
     
-    if (!response.ok) {
-      const errorData = await response.json()
-      throw new Error(errorData.message || "Error al añadir el ingreso")
-    }
-
     const responseData = await response.json()
+    if (!response.ok) 
+      throw new Error(responseData.message || "Error al añadir el ingreso")
+    
     return responseData
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any ) {
@@ -26,7 +24,7 @@ export const addIncomeAPI = async (data: Transaction, token: string) => {
   }
 }
 
-export const getIncomesAPI = async (token: string) => {
+export const getIncomesAPI = async (token: string) : Promise<Transaction[] | Error> => {
   const endpoint = `${URLS.API_URL}/db/incomes`
   try {
     const response = await fetch(endpoint, {
@@ -36,12 +34,10 @@ export const getIncomesAPI = async (token: string) => {
       }
     })
 
-    if (!response.ok) {
-      const errorData = await response.json()
-      throw new Error(errorData.message || "Error al obtener los ingresos")
-    }
-
     const responseData = await response.json()
+    if (!response.ok) 
+      throw new Error(responseData.message || "Error al obtener los ingresos")
+    
     return responseData
     //eslint-disable-next-line
   } catch (error: any) {

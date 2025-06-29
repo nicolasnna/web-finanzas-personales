@@ -6,10 +6,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 interface CategoryFormFieldProps<T extends { category: string }>{
   form: UseFormReturn<T>
   className?: HTMLProps<HTMLElement>["className"],
-  categories: Array<string>
+  categories: Array<string>,
+  disable?: boolean
 }
 
-function CategoryFormField<T extends { category: string}>({form, className, categories} : CategoryFormFieldProps<T>) {
+function CategoryFormField<T extends { category: string}>({form, className, categories, disable} : CategoryFormFieldProps<T>) {
   return (
     <FormField
       control={form.control}
@@ -24,6 +25,7 @@ function CategoryFormField<T extends { category: string}>({form, className, cate
             onValueChange={field.onChange}
             defaultValue={field.value}
             value={field.value}
+            disabled={disable}
           >
             <FormControl>
               <SelectTrigger id={field.name}>

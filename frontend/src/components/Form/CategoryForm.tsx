@@ -6,8 +6,8 @@ import { Form } from '../ui/form';
 import { NewCategoryFormField, TypeFormField } from '../FormField';
 import { useContext, useState } from 'react';
 import { AuthContext } from '@/context/authContext';
-import { addCategoryIncomeAPI } from '@/api/categoryIncomes';
-import { addCategoryExpenseAPI } from '@/api/categoryExpenses';
+import { addIncomeCategoryAPI } from '@/api/incomeCategories';
+import { addExpenseCategoryAPI } from '@/api/expenseCategories';
 import { toast } from 'sonner';
 
 function CategoryForm() {
@@ -22,8 +22,8 @@ function CategoryForm() {
   });
 
   const apiTransaction: Record<string, (category: Category, token: string) => Promise<Category | Error>> = {
-    incomes: addCategoryIncomeAPI,
-    expenses: addCategoryExpenseAPI
+    incomes: addIncomeCategoryAPI,
+    expenses: addExpenseCategoryAPI
   }
 
   const handleSubmitForm = (values: CategoryTypeForm) => {
