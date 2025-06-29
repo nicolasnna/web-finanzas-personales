@@ -1,7 +1,7 @@
-import { Category, error } from "@/types";
+import { Category} from "@/types";
 import { URLS } from "@/utils/constants";
 
-export const addCategoryIncomeAPI = async (category: Category, token: string) => {
+export const addCategoryIncomeAPI = async (category: Category, token: string): Promise<Category | Error> => {
   const endpoint = `${URLS.API_URL}/categories/incomes`
   try {
     const response = await fetch(endpoint, {
@@ -26,7 +26,7 @@ export const addCategoryIncomeAPI = async (category: Category, token: string) =>
 }
 
 
-export const getCategoryIncomeAPI = async (token: string) : Promise<Category[] | error > => {
+export const getCategoryIncomeAPI = async (token: string) : Promise<Category[] | Error > => {
   const endpoint = `${URLS.API_URL}/categories/incomes`
   try {
     const res = await fetch(endpoint, {

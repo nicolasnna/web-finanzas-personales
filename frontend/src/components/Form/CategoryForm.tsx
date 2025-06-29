@@ -6,7 +6,7 @@ import { Form } from '../ui/form';
 import { NewCategoryFormField, TypeFormField } from '../FormField';
 import { useContext, useState } from 'react';
 import { AuthContext } from '@/context/authContext';
-import { addCategoryIncomeAPI } from '@/api/CategoryIncomes';
+import { addCategoryIncomeAPI } from '@/api/categoryIncomes';
 import { addCategoryExpenseAPI } from '@/api/categoryExpenses';
 import { toast } from 'sonner';
 
@@ -21,28 +21,26 @@ function CategoryForm() {
     },
   });
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const apiTransaction: Record<string, (category: Category, token: string) => Promise<any>> = {
+  const apiTransaction: Record<string, (category: Category, token: string) => Promise<Category | Error>> = {
     incomes: addCategoryIncomeAPI,
     expenses: addCategoryExpenseAPI
   }
 
-  const handleSubmitForm = async (values: CategoryTypeForm) => {
-    console.log(values);
+  const handleSubmitForm = (values: CategoryTypeForm) => {
     if (!token) return;
     setDisable(() => true)
-    try {
-      await toast.promise(apiTransaction[values.type]({category: values.category}, token), {
-        loading: 'Creando categoria...',
-        success: 'Categoría creada',
-        error: (err) => err.message || 'No se ha logrado crear la categoría'
-      })
-      
-      form.reset({ category: '', type: ''})
-    } catch {
-      throw new Error('Error al subir el registro de categoría')
-    }
-    setDisable(() => false)
+    toast.promise(apiTransaction[values.type]({ category: values.category }, token), {
+      loading: 'Creando categoria...',
+      success: () => {
+        setDisable(() => false)
+        form.reset({ category: '', type: ''})
+        return 'Categoría creada'
+      },
+      error: (err) => {
+        setDisable(() => false)
+        return err.message || 'No se ha logrado crear la categoría'
+      }
+    })
   };
 
   const handleClean = () => {
@@ -53,7 +51,7 @@ function CategoryForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(handleSubmitForm)}
-        className="space-y-3"
+        className={`space-y-3 ${disable && 'opacity-40'}`} 
       >
         <NewCategoryFormField form={form}/>
         <TypeFormField form={form}/>
