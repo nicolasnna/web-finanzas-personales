@@ -52,14 +52,16 @@ function Dashboard() {
     const fetchAllSummary = async () => {
       if (!user.token) return
       try {
-        const [resInc, resExp, resMonthInc] = await Promise.all([
+        const [resInc, resExp, resMonthInc, resMonthExp] = await Promise.all([
           getResumeTransactionByCategory(user.token, 'incomes', 2025, 'category', 6),
           getResumeTransactionByCategory(user.token, 'expenses', 2025, 'category', 6),
-          getResumeTransactionByMonth(user.token, 'incomes', 2025)
+          getResumeTransactionByMonth(user.token, 'incomes', 2025),
+          getResumeTransactionByMonth(user.token, 'expenses', 2025)
         ])
         dataPieIncomes.setDataRaw(resInc as RawResumeTransaction)
         dataPieExpenses.setDataRaw(resExp as RawResumeTransaction)
         dataAreaChart.setRawIncome(resMonthInc.data as RawResumeTransactionByMonth)
+        dataAreaChart.setRawExpense(resMonthExp.data as RawResumeTransactionByMonth)
         toast.success('Resumenes cargados')
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (err: any) {
@@ -90,6 +92,8 @@ function Dashboard() {
         <ChartArea 
           title='Tendencia mensual - año 2025'
           className='col-span-2 row-span-2 flex flex-col justify-around'
+          data={dataAreaChart.data}
+          chartConfig={dataAreaChart.config}
         />
         <ChartPie
           title='Ingreso por categoría'

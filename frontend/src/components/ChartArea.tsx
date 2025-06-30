@@ -80,14 +80,14 @@ function ChartArea({
   chartConfig,
   areaChartConfig,
 }: ChartAreaProps) {
-  const parseData = data ?? exampleData;
-  const parseChartConfig = chartConfig ?? exampleChartConfig;
+  const parseData = data && data?.length > 1 ? data : exampleData;
+  const parseChartConfig = data && data?.length > 1 ? chartConfig : exampleChartConfig;
   const parseAreaChart = areaChartConfig?.areaConfig ?? exampleAreaChartConfig;
 
   return (
     <CardContainer className={className} title={title} classNameBody='px-1' description={description} footer={footer} classNameTitle='text-2xl'>
       <ChartContainer
-        config={parseChartConfig}
+        config={parseChartConfig ?? exampleChartConfig}
         // className={`h-[${areaChartConfig?.heightChart ?? 300}px] w-full`}
       >
         <AreaChart
@@ -115,7 +115,7 @@ function ChartArea({
             tickMargin={4}
           />
           {parseAreaChart.map((e) => (
-            <Area key={e.dataKey} {...e} type="natural" />
+            <Area key={e.dataKey} {...e} type="bump" />
           ))}
           <ChartLegend
             content={<ChartLegendContent />}
