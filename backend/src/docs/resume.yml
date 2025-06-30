@@ -62,6 +62,49 @@ paths:
           description: No autorizado
         '500':
           description: Error del servidor al generar el resumen
+  /api/resume/by-month:
+    get:
+      tags:
+        - Resumen
+      summary: Obtiene el total de ingresos o gastos por mes
+      description:  Obtiene el total de ingresos o gastos por mes
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: query
+          name: type
+          required: true
+          schema:
+            type: string
+            enum: 
+              - incomes
+              - expenses
+          description: Obtener resumen de ingreso o gasto
+        - in: query
+          name: year
+          required: true
+          schema:
+            type: integer
+            example: 2025
+          description: Año del resumen
+      responses:
+        '200': 
+          description: Entrega el resultado del resumen
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: number
+                example:
+                  "0": 120000
+                  "1": 130000
+        '400':
+          description: Falta argumentos válidos
+        '401':
+          description: No autorizado
+        '500':
+          description: Error del servidor al generar el resumen
   /api/resume/top:
     get:
       tags:

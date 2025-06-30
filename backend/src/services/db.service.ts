@@ -169,9 +169,9 @@ export const deleteService = async (
 export const getFilterYearMonthService = async (
   uid: string,
   collectionName: CollectionName,
-  limitValue?: number,
   year?: number,
   month?: number,
+  limitValue?: number,
 ) => {
   if (
     collectionName === "categoryExpenses" ||

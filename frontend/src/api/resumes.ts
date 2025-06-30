@@ -24,7 +24,6 @@ export const getResumeTransactionByCategory = async (
     const responseData = await res.json()
     if (!res.ok)
       throw new Error(responseData.message || "Error al obtener el resument")
-
     return responseData
   } catch  {
     throw new Error('Error al obtener el resumen');

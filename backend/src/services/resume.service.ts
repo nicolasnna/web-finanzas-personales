@@ -28,7 +28,7 @@ export const getResumeCategoryPerMonthService = async (
 
   for (let month = 0; month < 12; month++) {
     categoryTotalPerMonth[month] = {};
-    const transactions = await getFilterYearMonthService(uid, collectionName, 200, year, month);
+    const transactions = await getFilterYearMonthService(uid, collectionName, year, month, 200);
     for (const tx of transactions) {
       const cat = tx.category ?? "Sin categoria";
       categoryTotalPerMonth[month][cat] = (categoryTotalPerMonth[month][cat] ?? 0) + tx.value;
@@ -45,7 +45,7 @@ export const getResumePerMonthService = async (
   const totalPerMonth: Record<string, number> = {};
   for (let month = 0; month < 12; month++) {
     totalPerMonth[String(month)] = 0;
-    const transactions = await getFilterYearMonthService(uid, collectionName, 500, year, month);
+    const transactions = await getFilterYearMonthService(uid, collectionName, year, month, 500);
     for (const tx of transactions) {
       totalPerMonth[String(month)] += tx.value;
     }

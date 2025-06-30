@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 
 export interface RawResumeTransactionByMonth {
-  [category: string]: {
+  [month: number]: {
     [category: string]: number;
   };
 }
@@ -16,7 +16,7 @@ export function UseAreaChartData() {
       [m]: Object.values(rawIncome[m] || {}).reduce((acc, value) => acc + value, 0),
     }));
 
-    console.log(incomes)
+    // console.log(incomes)
   }, [rawIncome, rawExpense]);
 
   return {setRawExpense, setRawIncome}

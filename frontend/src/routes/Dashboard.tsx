@@ -52,14 +52,16 @@ function Dashboard() {
     const fetchAllSummary = async () => {
       if (!user.token) return
       try {
-        const [resInc, resExp, resMonthInc] = await Promise.all([
+        const [resInc, resExp] = await Promise.all([
           getResumeTransactionByCategory(user.token, 'incomes', 2025, 'category', 6),
           getResumeTransactionByCategory(user.token, 'expenses', 2025, 'category', 6),
-          getResumeTransactionByCategory(user.token, 'incomes', 2025, 'categoryByMonth')
+          // getResumeTransactionByCategory(user.token, 'incomes', 2025, 'categoryByMonth')
         ])
+        console.log(resInc)
+        console.log(resExp)
         dataPieIncomes.setDataRaw(resInc as RawResumeTransaction)
         dataPieExpenses.setDataRaw(resExp as RawResumeTransaction)
-        dataAreaChart.setRawIncome(resMonthInc as RawResumeTransactionByMonth)
+        // dataAreaChart.setRawIncome(resMonthInc as RawResumeTransactionByMonth)
         toast.success('Resumenes cargados')
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (err: any) {

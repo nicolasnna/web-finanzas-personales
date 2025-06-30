@@ -37,7 +37,6 @@ export const getResumeTransactionController = async (
         parsedYear,
         parsedMonth
       );
-
       return res.status(200).json(resume);
     }
 
