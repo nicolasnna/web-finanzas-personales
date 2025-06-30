@@ -8,7 +8,7 @@ import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '@/context/authContext';
 import { RawResumeTransaction, usePieChartData } from '@/hooks/usePieChartData';
 import { toast } from 'sonner';
-import { getResumeTransactionByCategory } from '@/api/resumes';
+import { getResumeTransactionByCategory, getResumeTransactionByMonth } from '@/api/resumes';
 import { RawResumeTransactionByMonth, UseAreaChartData } from '@/hooks/useAreaChartData';
 
 interface ListInfoProps {
@@ -52,16 +52,14 @@ function Dashboard() {
     const fetchAllSummary = async () => {
       if (!user.token) return
       try {
-        const [resInc, resExp] = await Promise.all([
+        const [resInc, resExp, resMonthInc] = await Promise.all([
           getResumeTransactionByCategory(user.token, 'incomes', 2025, 'category', 6),
           getResumeTransactionByCategory(user.token, 'expenses', 2025, 'category', 6),
-          // getResumeTransactionByCategory(user.token, 'incomes', 2025, 'categoryByMonth')
+          getResumeTransactionByMonth(user.token, 'incomes', 2025)
         ])
-        console.log(resInc)
-        console.log(resExp)
         dataPieIncomes.setDataRaw(resInc as RawResumeTransaction)
         dataPieExpenses.setDataRaw(resExp as RawResumeTransaction)
-        // dataAreaChart.setRawIncome(resMonthInc as RawResumeTransactionByMonth)
+        dataAreaChart.setRawIncome(resMonthInc.data as RawResumeTransactionByMonth)
         toast.success('Resumenes cargados')
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (err: any) {
