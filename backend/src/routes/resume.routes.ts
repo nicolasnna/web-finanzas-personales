@@ -1,5 +1,6 @@
 import {
   getResumeTransactionController,
+  getResumeTransactionPerMonth,
   getTopTransactionController,
 } from "@/controller/resume.controller";
 import { authenticateToken } from "@/middleware/authenticateToken";
@@ -12,6 +13,12 @@ resumeRouter.get(
   authenticateToken,
   getResumeTransactionController
 );
+
+resumeRouter.get(
+  "/resume/by-month",
+  authenticateToken,
+  getResumeTransactionPerMonth
+)
 
 resumeRouter.get("/resume/top", authenticateToken, getTopTransactionController);
 

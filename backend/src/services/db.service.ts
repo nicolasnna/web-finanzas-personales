@@ -19,7 +19,7 @@ import {
 import { db } from "@/firebase/firebase";
 import { TransactionData } from "@/types/TransactionData.interface";
 import { Category } from "@/types/category.interface";
-import { CollectionName } from "@/types/CollectionName.type";
+import { CollectionName, TransactionName } from "@/types/CollectionName.type";
 
 
 const transformDocumentToDataTransaction = (docSnapshot: QuerySnapshot<DocumentData, DocumentData>) => {
@@ -43,14 +43,10 @@ export const getService = async (
   uid: string,
   collectionName: CollectionName
 ) => {
-  try {
-    const collectionRef = collection(db, "users", uid, collectionName);
-    const collectionSnapshot = await getDocs(collectionRef);
+  const collectionRef = collection(db, "users", uid, collectionName);
+  const collectionSnapshot = await getDocs(collectionRef);
 
-    return transformDocumentToDataTransaction(collectionSnapshot)
-  } catch (error: any) {
-    throw error;
-  }
+  return transformDocumentToDataTransaction(collectionSnapshot)
 };
 
 export const getTransactionService = async (
@@ -69,34 +65,30 @@ export const getTransactionService = async (
     throw new Error("atDate debe ser un tipo Date valido");
   }
 
-  try {
-    const collectionRef = collection(db, "users", uid, collectionName);
-    let q;
+  const collectionRef = collection(db, "users", uid, collectionName);
+  let q;
 
-    if (afterDate) {
-      q = query(
-        collectionRef,
-        orderBy("date", order),
-        startAfter(afterDate),
-        limit(limitDoc ?? 200)
-      );
-    } else if (atDate) {
-      q = query(
-        collectionRef,
-        orderBy("date", order),
-        startAt(atDate),
-        limit(limitDoc ?? 200)
-      );
-    } else {
-      q = query(collectionRef, orderBy("date", order), limit(limitDoc ?? 200));
-    }
-
-    const collectionSnapshot = await getDocs(q);
-
-    return transformDocumentToDataTransaction(collectionSnapshot)
-  } catch (error: any) {
-    throw error;
+  if (afterDate) {
+    q = query(
+      collectionRef,
+      orderBy("date", order),
+      startAfter(afterDate),
+      limit(limitDoc ?? 200)
+    );
+  } else if (atDate) {
+    q = query(
+      collectionRef,
+      orderBy("date", order),
+      startAt(atDate),
+      limit(limitDoc ?? 200)
+    );
+  } else {
+    q = query(collectionRef, orderBy("date", order), limit(limitDoc ?? 200));
   }
+
+  const collectionSnapshot = await getDocs(q);
+
+  return transformDocumentToDataTransaction(collectionSnapshot)
 };
 
 export const createService = async (
@@ -104,14 +96,10 @@ export const createService = async (
   data: TransactionData,
   collectionName: CollectionName
 ) => {
-  try {
-    const collectionRef = collection(db, "users", uid, collectionName);
-    const dataRevised = {...data, date: Timestamp.fromDate(new Date(data.date))}
-    const newDocRef = await addDoc(collectionRef, dataRevised);
-    return { id: newDocRef.id, ...dataRevised };
-  } catch (error: any) {
-    throw error;
-  }
+  const collectionRef = collection(db, "users", uid, collectionName);
+  const dataRevised = {...data, date: Timestamp.fromDate(new Date(data.date))}
+  const newDocRef = await addDoc(collectionRef, dataRevised);
+  return { id: newDocRef.id, ...dataRevised };
 };
 
 export const createCategoryService = async (
@@ -119,21 +107,17 @@ export const createCategoryService = async (
   data: Category,
   collectionName: CollectionName
 ) => {
-  try {
-    const collectionRef = collection(db, "users", uid, collectionName);
-    const collectionSnapshot = await getDocs(collectionRef);
-    const exist = collectionSnapshot.docs.some(
-      (items) =>
-        items.data().category.toLowerCase() == data.category.toLowerCase()
-    );
-    if (!exist) {
-      const doc = await addDoc(collectionRef, data);
-      return { id: doc.id, ...data };
-    } else {
-      throw new Error(`La categoria ${data.category} ya se encuentra creada.`);
-    }
-  } catch (error: any) {
-    throw error;
+  const collectionRef = collection(db, "users", uid, collectionName);
+  const collectionSnapshot = await getDocs(collectionRef);
+  const exist = collectionSnapshot.docs.some(
+    (items) =>
+      items.data().category.toLowerCase() == data.category.toLowerCase()
+  );
+  if (!exist) {
+    const doc = await addDoc(collectionRef, data);
+    return { id: doc.id, ...data };
+  } else {
+    throw new Error(`La categoria ${data.category} ya se encuentra creada.`);
   }
 };
 
@@ -185,6 +169,7 @@ export const deleteService = async (
 export const getFilterYearMonthService = async (
   uid: string,
   collectionName: CollectionName,
+  limitValue?: number,
   year?: number,
   month?: number,
 ) => {
@@ -199,7 +184,7 @@ export const getFilterYearMonthService = async (
 
   // Sin filtros
   if (!year) {
-    q = query(transactionRef, orderBy("date"));
+    q = query(transactionRef, limit(limitValue ?? 200), orderBy("date"));
   } else {
     const start = new Date(year, (month ?? 1) - 1, 1);
     const end =

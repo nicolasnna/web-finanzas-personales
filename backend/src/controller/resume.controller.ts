@@ -2,8 +2,9 @@ import { getFilterMostValueService } from "@/services/db.service";
 import {
   getResumeCategoryPerMonthService,
   getResumeCategoryService,
+  getResumePerMonthService,
 } from "@/services/resume.service";
-import { CollectionName } from "@/types/CollectionName.type";
+import { CollectionName, TransactionName } from "@/types/CollectionName.type";
 import { GroupBy } from "@/types/GroupBy.type";
 import { RequestUser } from "@/types/RequestUser.interface";
 import { Response } from "express";
@@ -59,6 +60,36 @@ export const getResumeTransactionController = async (
   }
 };
 
+export const getResumeTransactionPerMonth = async (
+  req: RequestUser,
+  res: Response
+): Promise<any> => {
+  const uid = req.user?.uid
+  if (!uid) return res.status(401).json({ message: "No authorizado" })
+
+  const { type, year} = req.query;
+
+  if (!type || (String(type) !== "incomes" && String(type) !== "expenses"))
+    return res.status(400).json({ message: "Necesario especificar el tipo" });
+
+  if (!year) return res.status(422).json({ message: "Necesario especificar el año del resumen "})
+
+  const parsedType = type as TransactionName
+  const parsedYear = parseInt(year as string)
+  if (Number.isNaN(parsedYear)) {
+    return res
+      .status(400)
+      .json({ message: "El año debe ser un número válido" });
+  }
+
+  try {
+    const resumeYear = await getResumePerMonthService(uid, parsedType, parsedYear)
+    return res.status(200).json({data: resumeYear})
+  } catch (error) {
+    return res.status(500).json({ message: error.message })
+  }
+}
+
 export const getTopTransactionController = async (
   req: RequestUser,
   res: Response
@@ -80,10 +111,8 @@ export const getTopTransactionController = async (
 
   try {
     const topResponse = await getFilterMostValueService(uid, parsedType, parsedOrder, parsedLimit, parsedYear, parsedMonth)
-
     return res.status(200).json(topResponse)
   } catch (error) {
     return res.status(500).json({ message: error.message })
   }
-
 }
