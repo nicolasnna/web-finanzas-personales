@@ -6,7 +6,10 @@ import ChartPie from '@/components/ChartPie';
 import TransactionForm from '@/components/Form/TransactionForm';
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '@/context/authContext';
-import { getIncomesAPI } from '@/api/incomes';
+import { RawResumeTransaction, usePieChartData } from '@/hooks/usePieChartData';
+import { toast } from 'sonner';
+import { getResumeTransactionByCategory } from '@/api/resumes';
+import { RawResumeTransactionByMonth, UseAreaChartData } from '@/hooks/useAreaChartData';
 
 interface ListInfoProps {
   title: string;
@@ -40,18 +43,35 @@ function Dashboard() {
       status: 'decrement'
     },
   ]);
+  const dataPieIncomes = usePieChartData()
+  const dataPieExpenses = usePieChartData()
+  const dataAreaChart = UseAreaChartData()
   const user = useContext(AuthContext)
 
   useEffect(() => {
-    
-    const fetchData = async () => {
+    const fetchAllSummary = async () => {
       if (!user.token) return
-      const res = await getIncomesAPI(user.token)
-      console.log(res)
+      try {
+        const [resInc, resExp, resMonthInc] = await Promise.all([
+          getResumeTransactionByCategory(user.token, 'incomes', 2025, 'category', 6),
+          getResumeTransactionByCategory(user.token, 'expenses', 2025, 'category', 6),
+          getResumeTransactionByCategory(user.token, 'incomes', 2025, 'categoryByMonth')
+        ])
+        dataPieIncomes.setDataRaw(resInc as RawResumeTransaction)
+        dataPieExpenses.setDataRaw(resExp as RawResumeTransaction)
+        dataAreaChart.setRawIncome(resMonthInc as RawResumeTransactionByMonth)
+        toast.success('Resumenes cargados')
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (err: any) {
+        toast.error(err.message || 'Error al cargar el resumen')
+        user.updateToken()
+      }
     }
-    fetchData()
+    
+    fetchAllSummary()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user.token])
-
+  
   return (
     <div className="mx-5 xl:mx-[250px] my-10 flex flex-col gap-5">
       <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -74,10 +94,14 @@ function Dashboard() {
         <ChartPie
           title='Ingreso por categoría'
           className='col-span-2 md:col-span-1 row-span-1'
+          chartConfig={dataPieIncomes.config}
+          chartData={dataPieIncomes.data}
         />
         <ChartPie
           title='Gasto por categoría'
           className='col-span-2 md:col-span-1 row-span-1'
+          chartConfig={dataPieExpenses.config}
+          chartData={dataPieExpenses.data}
         />
       </section>
       <section className='grid md:grid-cols-3 z-10 gap-5'>

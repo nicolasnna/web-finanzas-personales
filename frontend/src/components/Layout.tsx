@@ -10,7 +10,10 @@ interface LayoutProps {
 const Layout = ({ children }: LayoutProps) => {
   return (
     <div className='w-full'>
-      <Toaster/>
+      <Toaster
+        duration={2000}
+        expand={true}
+      />
       <BackgroundNumbers/>
       <main className="flex flex-col h-full w-full">
         <Navbar/>

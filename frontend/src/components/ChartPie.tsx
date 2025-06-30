@@ -1,19 +1,22 @@
-import { Pie, PieChart, Sector } from 'recharts';
-import CardContainer from './CardContainer';
-import { ChartConfig, ChartContainer} from './ui/chart';
-import { PieSectorDataItem } from 'recharts/types/polar/Pie';
-import { HTMLProps, useMemo, useState } from 'react';
+import { DataChartPie } from '@/types/DataChart.interface';
 import { formatNumber } from '@/utils/functions';
+import { HTMLProps, useEffect, useMemo, useState } from 'react';
+import { Pie, PieChart, Sector } from 'recharts';
+import { PieSectorDataItem } from 'recharts/types/polar/Pie';
+import CardContainer from './CardContainer';
+import { ChartConfig, ChartContainer } from './ui/chart';
 
 interface ChartPieProps {
   className?: HTMLProps<HTMLElement>["className"]
   title?: string
   month?: string
   year?: number
+  chartConfig?: ChartConfig
+  chartData?: DataChartPie[]
 }
 
 const exampleChartConfig = {
-  cantidad: {
+  value: {
     label: 'Cantidad',
   },
   category1: {
@@ -34,17 +37,27 @@ const exampleChartConfig = {
 } satisfies ChartConfig;
 
 const exampleChartData = [
-  { category: "categoria1", cantidad: 50000, fill: "hsl(var(--chart-1))" },
-  { category: "categoria2", cantidad: 5000, fill: "hsl(var(--chart-2))" },
-  { category: "categoria3", cantidad: 15000, fill: "hsl(var(--chart-3))" },
-  { category: "categoria4", cantidad: 32000, fill: "hsl(var(--chart-4))" },
-  { category: "categoria5", cantidad: 55000, fill: "hsl(var(--chart-5))" },
+  { category: "categoria1", value: 50000, fill: "hsl(var(--chart-1))" },
+  { category: "categoria2", value: 5000, fill: "hsl(var(--chart-2))" },
+  { category: "categoria3", value: 15000, fill: "hsl(var(--chart-3))" },
+  { category: "categoria4", value: 32000, fill: "hsl(var(--chart-4))" },
+  { category: "categoria5", value: 55000, fill: "hsl(var(--chart-5))" },
 ] 
 
-function ChartPie({className, title, month, year} : ChartPieProps) {
-  const [activeCategory, setActiveCategory] = useState(exampleChartData[0].category)
+function ChartPie({className, title, month, year, chartConfig, chartData} : ChartPieProps) {
+  const chartDataToUse = chartData?.length ? chartData : exampleChartData
+  const configToUse = chartConfig && Object.keys(chartConfig).length > 1 ? chartConfig : exampleChartConfig
+  const [activeCategory, setActiveCategory] = useState(chartDataToUse[0]?.category ?? "")
 
-  const activeIndex = useMemo(() => exampleChartData.findIndex((item) => item.category === activeCategory ), [activeCategory])
+  useEffect(() => {
+    setActiveCategory(chartDataToUse[0]?.category ?? "")
+  }, [chartDataToUse])
+
+  const activeIndex = useMemo(() => chartDataToUse.findIndex((item) => item.category === activeCategory ), [activeCategory, chartDataToUse])
+
+  const activeData = chartDataToUse[activeIndex] ?? chartDataToUse[0]
+  const activeLabel = activeData?.category ?? ""
+  const activeValue = activeData?.value ?? ''
 
   return (
     <CardContainer 
@@ -52,10 +65,10 @@ function ChartPie({className, title, month, year} : ChartPieProps) {
       classNameBody='pb-0'
       classNameFooter='pb-2 text-base justify-end text-blizzard-blue-950 font-semibold'
       title={title}
-      footer={`${activeCategory}: ${formatNumber(exampleChartData[activeIndex].cantidad, 'CLP')} | ${month ?? 'Enero'} - ${year ?? 2025}`}
+      footer={`${activeLabel}: ${formatNumber(activeValue, 'CLP')} | ${month ?? 'Enero'} - ${year ?? 2025}`}
     >
       <ChartContainer
-        config={exampleChartConfig}
+        config={configToUse}
       >
         <PieChart>
           {/* <ChartTooltip
@@ -63,14 +76,14 @@ function ChartPie({className, title, month, year} : ChartPieProps) {
             content={<ChartTooltipContent hideLabel />}
           /> */}
           <Pie
-            data={exampleChartData}
-            dataKey="cantidad"
+            data={chartDataToUse}
+            dataKey="value"
             nameKey="category"
             innerRadius={0}
             paddingAngle={2}
             strokeWidth={0}
             activeIndex={activeIndex}
-            onMouseEnter={(_, index) => setActiveCategory(exampleChartData[index].category)}
+            onMouseEnter={(_, index) => setActiveCategory(chartDataToUse[index].category)}
             activeShape={({
               outerRadius = 0,
               ...props

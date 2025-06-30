@@ -54,6 +54,7 @@ function TransactionForm() {
       loading: 'Creando registro...',
       success: () => {
         setDisable(() => false)
+        handleClearForm()
         return 'Registro creado con exito'
       },
       error: (err) => {

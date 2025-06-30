@@ -11,13 +11,14 @@ import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts';
 import { COLORS } from '@/utils/constants';
 import { TrendingDown, TrendingUp } from 'lucide-react';
 import CardContainer from './CardContainer';
+import { DataChartArea } from '@/types/DataChart.interface';
 
 interface ChartAreaProps {
   className?: HTMLProps<HTMLElement>["className"];
   title?: string;
   description?: string;
   footer?: ReactElement;
-  data?: Array<object>;
+  data?: DataChartArea[];
   chartConfig?: ChartConfig;
   areaChartConfig?: AreaChartConfigProps;
 }
@@ -33,7 +34,7 @@ interface AreaChartConfigProps {
   }>;
 }
 
-const exampleData = [
+const exampleData: DataChartArea[] = [
   { month: 'Enero', incomes: 100000, expenses: 20000 },
   { month: 'Febrero', incomes: 100000, expenses: 20000 },
   { month: 'Marzo', incomes: 20000, expenses: 20000 },
