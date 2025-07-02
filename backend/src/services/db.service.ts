@@ -236,13 +236,17 @@ export const getFilterMostValueService = async (
       transactionRef,
       where("date", ">=", start),
       where("date", "<=", end),
-      orderBy("value", order),
+      orderBy("date", "asc"),    // primero por fecha
+      orderBy("value", order),  // después por valor
       limit(limitValue)
-    );
+    )
   }
-
-  const snapshot = await getDocs(q);
-  const docs = transformDocumentToDataTransaction(snapshot);
-
-  return docs;
+  
+  try {
+    const snapshot = await getDocs(q);
+    return transformDocumentToDataTransaction(snapshot);
+  } catch (err: any) {
+    console.error("Firestore error code:", err.code, err.message);
+    throw new Error(`Firestore failed: ${err.code}`);
+  }
 };

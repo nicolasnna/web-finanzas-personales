@@ -97,7 +97,7 @@ export const getTopTransactionController = async (
   if (!uid) return res.status(401).json({ message: "No autorizado" });
 
   const { type, limit, order, year, month } = req.query;
-  
+
   const parsedType = type ? type as string : undefined
 
   if (!parsedType || (parsedType !== 'incomes' && parsedType !== 'expenses'))
@@ -110,6 +110,7 @@ export const getTopTransactionController = async (
 
   try {
     const topResponse = await getFilterMostValueService(uid, parsedType, parsedOrder, parsedLimit, parsedYear, parsedMonth)
+
     return res.status(200).json(topResponse)
   } catch (error) {
     return res.status(500).json({ message: error.message })

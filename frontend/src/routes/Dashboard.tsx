@@ -23,13 +23,6 @@ interface ListInfoProps {
 function Dashboard() {
   const [listInfo, setListInfo] = useState<ListInfoProps[]>([
     {
-      title: 'Mayor Gasto del mes',
-      value: 300000,
-      currency: 'CLP',
-      info: 'Compra celular',
-      status: undefined
-    },
-    {
       title: 'Resultado neto del mes',
       value: -2000000,
       currency: 'CLP',
@@ -72,6 +65,7 @@ function Dashboard() {
     <div className="mx-5 xl:mx-[250px] my-10 flex flex-col gap-5">
       <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         <TopTransactionCard type='incomes'/>
+        <TopTransactionCard type='expenses' />
         {listInfo.map((l) => (
           <CardInfo
             key={l.info}

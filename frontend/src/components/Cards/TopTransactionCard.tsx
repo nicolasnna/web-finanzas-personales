@@ -2,6 +2,8 @@ import { HTMLProps, useContext, useEffect, useState } from "react";
 import CardInfo from "./CardInfo";
 import { AuthContext } from "@/context/authContext";
 import { getTopTransactionAPI } from "@/api/resumes";
+import { toast } from "sonner";
+import { Transaction } from "@/types";
 
 interface TopTransactionCardProps {
   type: 'incomes' | 'expenses',
@@ -9,7 +11,6 @@ interface TopTransactionCardProps {
 }
 
 interface CardInfo {
-  title: string,
   value: number,
   currency: string,
   info: string,
@@ -17,13 +18,11 @@ interface CardInfo {
 
 const defaultValues: Record<string, CardInfo> = {
   incomes: {
-    title: 'Mayor ingreso del mes',
     value: 800000,
     currency: 'CLP',
     info: 'Sueldo mayo',
   },
   expenses: {
-    title: 'Mayor Gasto del mes',
     value: 300000,
     currency: 'CLP',
     info: 'Compra celular',
@@ -39,9 +38,17 @@ export function TopTransactionCard({type, className}: TopTransactionCardProps) {
     const getTop = async () => {
       if (!token) return
       const dateNow = new Date(Date.now())
-      const res = await getTopTransactionAPI(token, type, dateNow.getFullYear(), dateNow.getMonth(),1)
-
-      console.log(res)
+      try {
+        const res = await getTopTransactionAPI(token, type, dateNow.getFullYear(), dateNow.getMonth(),1)
+        const data = res[0] as Transaction
+        setTopTransaction({
+          value: data.value,
+          info: data.details || '',
+          currency: data.currency
+        })
+      } catch {
+        toast.error(`Error al obtener el top de ${type} | ${dateNow.getMonth()} ${dateNow.getFullYear()}`)
+      }
     } 
     getTop()
   }, [token, type])
