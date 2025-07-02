@@ -1,5 +1,5 @@
-import CardContainer from '@/components/CardContainer';
-import CardInfo from '@/components/CardInfo';
+import CardContainer from '@/components/Cards/CardContainer';
+import CardInfo from '@/components/Cards/CardInfo';
 import CategoryForm from '@/components/Form/CategoryForm';
 import ChartArea from '@/components/ChartArea';
 import ChartPie from '@/components/ChartPie';
@@ -10,6 +10,7 @@ import { RawResumeTransaction, usePieChartData } from '@/hooks/usePieChartData';
 import { toast } from 'sonner';
 import { getResumeTransactionByCategory, getResumeTransactionByMonth } from '@/api/resumes';
 import { RawResumeTransactionByMonth, UseAreaChartData } from '@/hooks/useAreaChartData';
+import { TopTransactionCard } from '@/components/Cards/TopTransactionCard';
 
 interface ListInfoProps {
   title: string;
@@ -21,13 +22,6 @@ interface ListInfoProps {
 
 function Dashboard() {
   const [listInfo, setListInfo] = useState<ListInfoProps[]>([
-    {
-      title: 'Mayor ingreso del mes',
-      value: 800000,
-      currency: 'CLP',
-      info: 'Sueldo mayo',
-      status: undefined
-    },
     {
       title: 'Mayor Gasto del mes',
       value: 300000,
@@ -77,6 +71,7 @@ function Dashboard() {
   return (
     <div className="mx-5 xl:mx-[250px] my-10 flex flex-col gap-5">
       <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <TopTransactionCard type='incomes'/>
         {listInfo.map((l) => (
           <CardInfo
             key={l.info}

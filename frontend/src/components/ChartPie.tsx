@@ -3,7 +3,7 @@ import { formatNumber } from '@/utils/functions';
 import { HTMLProps, useEffect, useMemo, useState } from 'react';
 import { Pie, PieChart, Sector } from 'recharts';
 import { PieSectorDataItem } from 'recharts/types/polar/Pie';
-import CardContainer from './CardContainer';
+import CardContainer from './Cards/CardContainer';
 import { ChartConfig, ChartContainer } from './ui/chart';
 
 interface ChartPieProps {

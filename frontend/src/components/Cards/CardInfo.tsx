@@ -1,5 +1,5 @@
 import { formatNumber } from '@/utils/functions';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from './ui/card';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { TrendingDown, TrendingUp } from 'lucide-react';
 import { HTMLProps } from 'react';
 

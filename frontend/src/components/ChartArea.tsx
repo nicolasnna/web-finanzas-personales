@@ -10,7 +10,7 @@ import {
 import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts';
 import { COLORS } from '@/utils/constants';
 import { TrendingDown, TrendingUp } from 'lucide-react';
-import CardContainer from './CardContainer';
+import CardContainer from './Cards/CardContainer';
 import { DataChartArea } from '@/types/DataChart.interface';
 
 interface ChartAreaProps {

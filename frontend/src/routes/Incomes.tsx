@@ -1,4 +1,4 @@
-import CardInfo from '@/components/CardInfo';
+import CardInfo from '@/components/Cards/CardInfo';
 import FinancialChartBar from '@/components/FinancialChartBarPREV';
 import FinancialChartPie from '@/components/FinancialChartPiePREV';
 import FinancialForm from '@/components/FinancialForm';

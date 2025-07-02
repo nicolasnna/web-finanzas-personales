@@ -6,7 +6,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from './ui/card';
+} from '@/components/ui/card';
 
 interface CardContainerProps {
   className?: HTMLProps<HTMLElement>["className"];
