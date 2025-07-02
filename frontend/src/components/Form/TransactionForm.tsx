@@ -60,6 +60,10 @@ function TransactionForm() {
       error: (err) => {
         setDisable(() => false)
         return err.message || 'No se ha podido crear el registro'
+      },
+      action: {
+        label: 'Actualizar',
+        onClick: () => window.location.reload()
       }
     })
   };

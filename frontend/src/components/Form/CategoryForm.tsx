@@ -9,6 +9,7 @@ import { AuthContext } from '@/context/authContext';
 import { addIncomeCategoryAPI } from '@/api/incomeCategories';
 import { addExpenseCategoryAPI } from '@/api/expenseCategories';
 import { toast } from 'sonner';
+import { useExpenseCategoriesStore, useIncomeCategoriesStore } from '@/store/useCategoryStore';
 
 function CategoryForm() {
   const [disable, setDisable] = useState<boolean>(false)
@@ -20,10 +21,17 @@ function CategoryForm() {
       type: '',
     },
   });
+  const cleanIncomes = useIncomeCategoriesStore(s => s.cleanCategories)
+  const cleanExpenses = useExpenseCategoriesStore(s => s.cleanCategories)
 
   const apiTransaction: Record<string, (category: Category, token: string) => Promise<Category | Error>> = {
     incomes: addIncomeCategoryAPI,
     expenses: addExpenseCategoryAPI
+  }
+
+  const cleanCategories: Record<string, () => void> = {
+    incomes: cleanIncomes,
+    expenses: cleanExpenses
   }
 
   const handleSubmitForm = (values: CategoryTypeForm) => {
@@ -34,6 +42,7 @@ function CategoryForm() {
       success: () => {
         setDisable(() => false)
         form.reset({ category: '', type: ''})
+        cleanCategories[values.type]()
         return 'Categoría creada'
       },
       error: (err) => {
