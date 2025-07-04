@@ -1,6 +1,4 @@
-export * from './balanceState.interface'
 export * from './balanceInfo.interface'
 export * from './Promises.interface'
-export * from './resumeBalance.interface'
 export * from './Category.interface'
 export * from './Transaction.interface'
