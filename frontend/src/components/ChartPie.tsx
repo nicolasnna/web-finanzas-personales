@@ -1,10 +1,11 @@
 import { DataChartPie } from '@/types/DataChart.interface';
 import { formatNumber } from '@/utils/functions';
-import { HTMLProps, useEffect, useMemo, useState } from 'react';
+import { HTMLProps, useContext, useEffect, useMemo, useState } from 'react';
 import { Pie, PieChart, Sector } from 'recharts';
 import { PieSectorDataItem } from 'recharts/types/polar/Pie';
 import CardContainer from './Cards/CardContainer';
 import { ChartConfig, ChartContainer } from './ui/chart';
+import { AuthContext } from '@/context/authContext';
 
 interface ChartPieProps {
   className?: HTMLProps<HTMLElement>["className"]
@@ -45,8 +46,14 @@ const exampleChartData = [
 ] 
 
 function ChartPie({className, title, month, year, chartConfig, chartData} : ChartPieProps) {
-  const chartDataToUse = chartData?.length ? chartData : exampleChartData
-  const configToUse = chartConfig && Object.keys(chartConfig).length > 1 ? chartConfig : exampleChartConfig
+  const token = useContext(AuthContext).token
+  const chartDataToUse = useMemo(() => {
+    if (token) return chartData ?? [] // En caso de estar el usuario logeado
+    return chartData?.length ? chartData : exampleChartData
+  }, [chartData, token])
+  const configToUse = useMemo(() => {
+    return chartConfig && Object.keys(chartConfig).length > 1 ? chartConfig : exampleChartConfig
+  }, [chartConfig])
   const [activeCategory, setActiveCategory] = useState(chartDataToUse[0]?.category ?? "")
 
   useEffect(() => {
@@ -58,6 +65,20 @@ function ChartPie({className, title, month, year, chartConfig, chartData} : Char
   const activeData = chartDataToUse[activeIndex] ?? chartDataToUse[0]
   const activeLabel = activeData?.category ?? ""
   const activeValue = activeData?.value ?? ''
+
+  if (!activeData) {
+    return <CardContainer 
+      className={className}
+      classNameBody='pb-0'
+      classNameFooter='pb-2 text-base justify-end text-blizzard-blue-950 font-semibold'
+      title={title}
+      footer={`${month ?? 'Enero'} - ${year ?? 2025}`}
+    >
+      <div className='flex justify-center my-6'>
+        <p className='text-xl font-bold text-center'>Sin registros para este mes/año</p>
+      </div>
+    </CardContainer>
+  }
 
   return (
     <CardContainer 

@@ -1,13 +1,15 @@
+import { getTopTransactionAPI } from "@/api/resumes";
+import { AuthContext } from "@/context/authContext";
+import { Transaction } from "@/types";
+import { months } from "@/utils/constants";
 import { HTMLProps, useContext, useEffect, useState } from "react";
 import CardInfo from "./CardInfo";
-import { AuthContext } from "@/context/authContext";
-import { getTopTransactionAPI } from "@/api/resumes";
-import { toast } from "sonner";
-import { Transaction } from "@/types";
 
 interface TopTransactionCardProps {
   type: 'incomes' | 'expenses',
-  className?: HTMLProps<HTMLElement>["className"]
+  className?: HTMLProps<HTMLElement>["className"],
+  month?:number
+  year?: number
 }
 
 interface CardInfo {
@@ -29,7 +31,7 @@ const defaultValues: Record<string, CardInfo> = {
   }
 }
 
-export function TopTransactionCard({type, className}: TopTransactionCardProps) {
+export function TopTransactionCard({type, className, month, year}: TopTransactionCardProps) {
   const [topTransaction, setTopTransaction] = useState<CardInfo>(defaultValues[type])
   const token = useContext(AuthContext).token
   const title = type === 'incomes' ? 'Mayor ingreso del mes' : 'Mayor gasto del mes'
@@ -39,7 +41,7 @@ export function TopTransactionCard({type, className}: TopTransactionCardProps) {
       if (!token) return
       const dateNow = new Date(Date.now())
       try {
-        const res = await getTopTransactionAPI(token, type, dateNow.getFullYear(), dateNow.getMonth(),1)
+        const res = await getTopTransactionAPI(token, type, year ?? dateNow.getFullYear(), month ?? dateNow.getMonth(),1)
         const data = res[0] as Transaction
         setTopTransaction({
           value: data.value,
@@ -47,11 +49,15 @@ export function TopTransactionCard({type, className}: TopTransactionCardProps) {
           currency: data.currency
         })
       } catch {
-        toast.error(`Error al obtener el top de ${type} | ${dateNow.getMonth()} ${dateNow.getFullYear()}`)
+        setTopTransaction({
+          value: 0,
+          info: '',
+          currency: 'CLP'
+        })
       }
     } 
     getTop()
-  }, [token, type])
+  }, [token, type, month, year])
 
 
   return (
@@ -60,7 +66,9 @@ export function TopTransactionCard({type, className}: TopTransactionCardProps) {
       title={title}
       value={topTransaction.value}
       currency={topTransaction.currency}
-      info={topTransaction.info}
+      info={
+        `${topTransaction.info} | ${months[(month && month-1) ?? new Date(Date.now()).getMonth()]}`
+      }
       status={undefined}
       className={className}
     />

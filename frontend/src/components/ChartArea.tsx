@@ -14,7 +14,7 @@ import CardContainer from './Cards/CardContainer';
 import { DataChartArea } from '@/types/DataChart.interface';
 
 interface ChartAreaProps {
-  className?: HTMLProps<HTMLElement>["className"];
+  className?: HTMLProps<HTMLElement>['className'];
   title?: string;
   description?: string;
   footer?: ReactElement;
@@ -81,14 +81,23 @@ function ChartArea({
   data,
   chartConfig,
   areaChartConfig,
-  onClickHandle
+  onClickHandle,
 }: ChartAreaProps) {
   const parseData = data && data?.length > 1 ? data : exampleData;
-  const parseChartConfig = data && data?.length > 1 ? chartConfig : exampleChartConfig;
+  const parseChartConfig =
+    data && data?.length > 1 ? chartConfig : exampleChartConfig;
   const parseAreaChart = areaChartConfig?.areaConfig ?? exampleAreaChartConfig;
 
   return (
-    <CardContainer className={className} title={title} classNameBody='px-1' description={description} footer={footer} classNameTitle='text-2xl'>
+    <CardContainer
+      className={className}
+      title={title}
+      classNameBody="px-1 pb-0"
+      description={description}
+      footer={footer}
+      classNameTitle="text-2xl"
+      classNameFooter='text-base pb-2'
+    >
       <ChartContainer
         config={parseChartConfig ?? exampleChartConfig}
         // className={`h-[${areaChartConfig?.heightChart ?? 300}px] w-full`}
@@ -99,7 +108,7 @@ function ChartArea({
           margin={{
             top: 20,
             left: 20,
-            right: 20
+            right: 20,
           }}
           onClick={onClickHandle}
         >
@@ -119,12 +128,14 @@ function ChartArea({
             tickMargin={4}
           />
           {parseAreaChart.map((e) => (
-            <Area key={e.dataKey} {...e} type="bump" />
+            <Area
+              key={e.dataKey}
+              {...e}
+              type="bump"
+              className="cursor-pointer"
+            />
           ))}
-          <ChartLegend
-            content={<ChartLegendContent />}
-            className="text-base"
-          />
+          <ChartLegend content={<ChartLegendContent />} className="text-base" />
         </AreaChart>
       </ChartContainer>
     </CardContainer>

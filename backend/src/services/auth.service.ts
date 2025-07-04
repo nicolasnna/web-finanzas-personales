@@ -8,7 +8,7 @@ import { infoTokenProps, uidTokenProps } from "@/types/GenerateToken.interface";
 import { User } from "@/types/User.interface";
 
 const JWT_SECRET = process.env.JWT_SECRET || "FINANZA_PERSONAL"
-const JWT_EXPIRATION = "10m"
+const JWT_EXPIRATION = process.env.JWT_EXPIRE || "10m"
 
 /**
  * Genera un token JWT con la información del usuario

@@ -36,5 +36,5 @@ export function UseAreaChartData() {
     return {data: dataEx, config: configChart}
   }, [rawIncome, rawExpense]);
 
-  return {setRawExpense, setRawIncome, data: AreaData.data, config: AreaData.config}
+  return {setRawExpense, setRawIncome, rawExpense, rawIncome,data: AreaData.data, config: AreaData.config}
 }
