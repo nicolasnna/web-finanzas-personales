@@ -38,7 +38,10 @@ export function TopTransactionCard({type, className, month, year}: TopTransactio
 
   useEffect(() => {
     const getTop = async () => {
-      if (!token) return
+      if (!token) {
+        setTopTransaction(defaultValues[type])
+        return
+      }
       const dateNow = new Date(Date.now())
       try {
         const res = await getTopTransactionAPI(token, type, year ?? dateNow.getFullYear(), month ?? dateNow.getMonth(),1)

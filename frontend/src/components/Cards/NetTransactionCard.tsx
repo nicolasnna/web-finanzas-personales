@@ -1,5 +1,7 @@
 import { months } from '@/utils/constants';
 import CardInfo from './CardInfo';
+import { useContext } from 'react';
+import { AuthContext } from '@/context/authContext';
 
 interface infoValues {
   value: number;
@@ -26,8 +28,9 @@ export function NetTransactionCard({
   info,
   month,
 }: NetTransactionCardProps) {
+  const token = useContext(AuthContext).token
   const transaction: infoValues = {
-    value: value && !isNaN(value) ? value : defaultValue.value,
+    value: value && !isNaN(value) ? value : token ? 0 : defaultValue.value,
     currency: currency ?? defaultValue.currency,
     info: info ?? defaultValue.info,
   };
