@@ -1,12 +1,9 @@
 import { loginEmailUser, refreshTokenService } from '@/api/auth'
 import { useState, useEffect } from 'react'
 import { AuthContext } from './authContext'
-import { useExpenseStore, useIncomeStore } from '@/store/useBalanceStore'
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [token, setToken] = useState<string | null>(null)
-  const {setBalanceRows: setIncomes} = useIncomeStore()
-  const {setBalanceRows: setExpenses} = useExpenseStore()
 
   useEffect(() => {
     const tokenStorage = sessionStorage.getItem("auth")
@@ -42,8 +39,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const logout = () => {
     sessionStorage.removeItem("auth")
     console.log("Logout exitoso")
-    setIncomes([])
-    setExpenses([])
     setToken(null)
   }
 
