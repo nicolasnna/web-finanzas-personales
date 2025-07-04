@@ -15,6 +15,7 @@ interface CardContainerProps {
   classNameBody?: HTMLProps<HTMLElement>["className"];
   classNameFooter?: HTMLProps<HTMLElement>["className"];
   children?: ReactElement;
+  titleChildren?: ReactElement;
   title?: string;
   description?: string;
   footer?: ReactElement | string;
@@ -28,6 +29,7 @@ function CardContainer({
   classNameFooter,
   children,
   title,
+  titleChildren,
   description,
   footer,
 }: CardContainerProps) {
@@ -37,11 +39,14 @@ function CardContainer({
     >
       {(title || description) && (
         <CardHeader className={`pb-2 ${classNameHeader}`}>
-          {title && (
-            <CardTitle className={`text-xl font-semibold uppercase ${classNameTitle}`}>
-              {title}
-            </CardTitle>
-          )}
+          <div className='flex gap-5 justify-center items-center'>
+            {title && (
+              <CardTitle className={`text-xl font-semibold uppercase ${classNameTitle}`}>
+                {title}
+              </CardTitle>
+            )}
+            {titleChildren}
+          </div>
           {description && <CardDescription>{description}</CardDescription>}
         </CardHeader>
       )}

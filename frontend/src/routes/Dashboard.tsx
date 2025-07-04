@@ -17,6 +17,7 @@ function Dashboard() {
   const [month, setMonth] = useState<number>(new Date(Date.now()).getMonth() + 1)
   const [year, setYear] = useState<number>(new Date(Date.now()).getFullYear())
   const [disable, setDisable] = useState<boolean>(false)
+  const [disableArea, setDisableArea] = useState<boolean>(false)
   const dataPieIncomes = usePieChartData()
   const dataPieExpenses = usePieChartData()
   const dataAreaChart = UseAreaChartData()
@@ -27,16 +28,12 @@ function Dashboard() {
       if (!user.token) return
       try {
         setDisable(() => true)
-        const [resInc, resExp, resMonthInc, resMonthExp] = await Promise.all([
+        const [resInc, resExp] = await Promise.all([
           getResumeTransactionByCategory(user.token, 'incomes', year, 'category', month),
           getResumeTransactionByCategory(user.token, 'expenses', year, 'category', month),
-          getResumeTransactionByMonth(user.token, 'incomes', year),
-          getResumeTransactionByMonth(user.token, 'expenses', year)
         ])
         dataPieIncomes.setDataRaw(resInc as RawResumeTransaction)
         dataPieExpenses.setDataRaw(resExp as RawResumeTransaction)
-        dataAreaChart.setRawIncome(resMonthInc.data as RawResumeTransactionByMonth)
-        dataAreaChart.setRawExpense(resMonthExp.data as RawResumeTransactionByMonth)
         toast.success('Resumenes cargados')
         setDisable(() => false)
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -45,11 +42,31 @@ function Dashboard() {
         user.updateToken()
       }
     }
-    
     fetchAllSummary()
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user.token, month, year])
   
+
+  useEffect(() => {
+    const fetchArea = async () => {
+      if (!user.token) return
+      try {
+        setDisableArea(() => true)
+        const [resMonthInc, resMonthExp] = await Promise.all([
+          getResumeTransactionByMonth(user.token, 'incomes', year),
+          getResumeTransactionByMonth(user.token, 'expenses', year)
+        ])
+        dataAreaChart.setRawIncome(resMonthInc.data as RawResumeTransactionByMonth)
+        dataAreaChart.setRawExpense(resMonthExp.data as RawResumeTransactionByMonth)
+      } catch {
+        user.updateToken()
+      }
+      setDisableArea(() => false)
+    }
+    fetchArea()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user.token, year])
+
   const handleClickAreaChart = (e: {activeTooltipIndex: number}) => {
     if (Object.keys(e).length === 0) return 
     setMonth(() => e.activeTooltipIndex + 1)
@@ -68,11 +85,13 @@ function Dashboard() {
       <section className="grid grid-cols-2 md:grid-cols-3 gap-5 h-full">
         <ChartArea 
           title={`Tendencia mensual - año ${year}`}
-          className='col-span-2 row-span-2 flex flex-col justify-around'
+          className={`col-span-2 row-span-2 flex flex-col justify-around ${disable ? 'opacity-40': ''}`}
           data={dataAreaChart.data}
           chartConfig={dataAreaChart.config}
           onClickHandle={handleClickAreaChart}
           footer={<p className='italic'>*Seleccione un mes para ajustar los gráficos y la información destacada</p>}
+          handleArrowLeft={() => !disableArea && setYear((prev) => prev-1)}
+          handleArrowRight={() => !disableArea && setYear((prev) => prev+1)}
         />
         <ChartPie
           title='Ingreso por categoría*'

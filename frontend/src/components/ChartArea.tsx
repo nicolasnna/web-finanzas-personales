@@ -9,7 +9,7 @@ import {
 } from './ui/chart';
 import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts';
 import { COLORS } from '@/utils/constants';
-import { TrendingDown, TrendingUp } from 'lucide-react';
+import { ArrowBigLeftDashIcon, ArrowBigRightDashIcon, TrendingDown, TrendingUp } from 'lucide-react';
 import CardContainer from './Cards/CardContainer';
 import { DataChartArea } from '@/types/DataChart.interface';
 
@@ -23,6 +23,8 @@ interface ChartAreaProps {
   areaChartConfig?: AreaChartConfigProps;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onClickHandle?: (e: any) => void;
+  handleArrowLeft?: () => void
+  handleArrowRight?: () => void
 }
 
 interface AreaChartConfigProps {
@@ -82,6 +84,8 @@ function ChartArea({
   chartConfig,
   areaChartConfig,
   onClickHandle,
+  handleArrowLeft,
+  handleArrowRight
 }: ChartAreaProps) {
   const parseData = data && data?.length > 1 ? data : exampleData;
   const parseChartConfig =
@@ -97,6 +101,10 @@ function ChartArea({
       footer={footer}
       classNameTitle="text-2xl"
       classNameFooter='text-base pb-2'
+      titleChildren={<div className='flex gap-5'>
+        <ArrowBigLeftDashIcon onClick={handleArrowLeft} size={35} className='cursor-pointer hover:text-blizzard-blue-500'/>
+        <ArrowBigRightDashIcon onClick={handleArrowRight} size={35} className='cursor-pointer hover:text-blizzard-blue-500'/>
+      </div>}
     >
       <ChartContainer
         config={parseChartConfig ?? exampleChartConfig}
