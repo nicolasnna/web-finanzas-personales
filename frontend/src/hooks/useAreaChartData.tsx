@@ -18,7 +18,7 @@ export function UseAreaChartData() {
       return { data: [] as { month: string; incomes: number; expenses: number }[], config: {} };
     }
 
-    const dataEx = months.map((m, index) => ({month: m, incomes: rawIncome[index], expenses: rawExpense[index]}))
+    const dataEx = months.map((m, index) => ({month: m, incomes: rawIncome[index+1], expenses: rawExpense[index+1]}))
 
     const configChart = {
         incomes: {

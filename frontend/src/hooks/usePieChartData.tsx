@@ -9,7 +9,7 @@ export interface RawResumeTransaction {
 
 export function usePieChartData() {
   const [dataRaw, setDataRaw] = useState<RawResumeTransaction>({})
-
+  
   const pieData = useMemo(() => {
     const categories = Object.keys(dataRaw)
     const dataChart: DataChartPie[] = categories.map((k) => ({

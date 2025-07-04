@@ -21,6 +21,8 @@ interface ChartAreaProps {
   data?: DataChartArea[];
   chartConfig?: ChartConfig;
   areaChartConfig?: AreaChartConfigProps;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onClickHandle?: (e: any) => void;
 }
 
 interface AreaChartConfigProps {
@@ -79,6 +81,7 @@ function ChartArea({
   data,
   chartConfig,
   areaChartConfig,
+  onClickHandle
 }: ChartAreaProps) {
   const parseData = data && data?.length > 1 ? data : exampleData;
   const parseChartConfig = data && data?.length > 1 ? chartConfig : exampleChartConfig;
@@ -98,6 +101,7 @@ function ChartArea({
             left: 20,
             right: 20
           }}
+          onClick={onClickHandle}
         >
           <CartesianGrid vertical={false} />
           <ChartTooltip
