@@ -24,8 +24,9 @@ export const addExpenseAPI = async (data: Transaction, token: string) : Promise<
   }
 }
 
-export const getExpensesAPI = async (token: string) : Promise<Transaction[] | Error> => {
-  const endpoint = `${URLS.API_URL}/expenses`
+export const getExpensesAPI = async (token: string, afterDate?: Date) : Promise<Transaction[] | Error> => {
+  let endpoint = `${URLS.API_URL}/incomes`
+  if (afterDate) endpoint = endpoint +  `?afterDate=${afterDate.toISOString()}`
   try {
     const response = await fetch(endpoint, {
       method: "GET",

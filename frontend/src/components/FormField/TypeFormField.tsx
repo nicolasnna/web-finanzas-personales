@@ -19,11 +19,13 @@ import { HTMLProps } from 'react';
 interface TypeFormFieldProps<T extends { type: string }> {
   form: UseFormReturn<T>;
   className?: HTMLProps<HTMLElement>["className"];
+  defaultValue?: 'incomes' | 'expenses';
 }
 
 function TypeFormField<T extends { type: string }>({
   form,
   className,
+  defaultValue
 }: TypeFormFieldProps<T>) {
   return (
     <FormField
@@ -37,7 +39,7 @@ function TypeFormField<T extends { type: string }>({
           <Select
             name={field.name}
             onValueChange={field.onChange}
-            defaultValue={field.value}
+            defaultValue={defaultValue ?? field.value}
             value={field.value}
           >
             <FormControl>

@@ -11,14 +11,18 @@ import { addExpenseCategoryAPI } from '@/api/expenseCategories';
 import { toast } from 'sonner';
 import { useExpenseCategoriesStore, useIncomeCategoriesStore } from '@/store/useCategoryStore';
 
-function CategoryForm() {
+interface CategoryFormInput {
+  typeDefault?: 'incomes' | 'expenses'
+}
+
+function CategoryForm({typeDefault}: CategoryFormInput) {
   const [disable, setDisable] = useState<boolean>(false)
   const token = useContext(AuthContext).token
   const form = useForm<CategoryTypeForm>({
     resolver: zodResolver(CategorySchema),
     defaultValues: {
       category: '',
-      type: '',
+      type: typeDefault ?? '',
     },
   });
   const cleanIncomes = useIncomeCategoriesStore(s => s.cleanCategories)
@@ -63,7 +67,7 @@ function CategoryForm() {
         className={`space-y-3 ${disable && 'opacity-40'}`} 
       >
         <NewCategoryFormField form={form}/>
-        <TypeFormField form={form}/>
+        <TypeFormField defaultValue={typeDefault} form={form}/>
         <div className="flex items-center gap-2 justify-end">
           <Button variant="secondary" onClick={handleClean} type="reset" disabled={disable}>
             Limpiar

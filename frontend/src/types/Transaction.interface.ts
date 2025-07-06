@@ -1,4 +1,8 @@
-import { z } from "zod";
+import { ColumnDef } from '@tanstack/react-table';
+import { z } from 'zod';
+import { format } from 'date-fns';
+import { es } from 'date-fns/locale';
+import { formatNumber } from '@/utils/functions';
 
 export interface Transaction {
   id?: string;
@@ -8,6 +12,27 @@ export interface Transaction {
   value: number;
   date: Date;
 }
+
+export const TransactionColumns: ColumnDef<Transaction>[] = [
+  {
+    accessorKey: 'date',
+    header: 'Fecha',
+    cell: ({ row }) => {
+      const date = new Date(row.getValue('date'));
+      const dateFormated = format(date, 'PPP', { locale: es });
+      return dateFormated;
+    },
+  },
+  { accessorKey: 'category', header: 'Categoría' },
+  { accessorKey: 'details', header: 'Detalle' },
+  {
+    accessorKey: 'value',
+    header: 'Valor',
+    cell: ({ row }) =>
+      formatNumber(row.getValue('value'), row.getValue('currency') ?? 'CLP'),
+  },
+  { accessorKey: 'currency', header: 'Divisa' },
+];
 
 export const TransactionSchema = z.object({
   type: z.string().min(1, { message: 'Debes seleccionar un tipo' }),

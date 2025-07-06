@@ -27,14 +27,18 @@ const dictAddTransaction: Record<string, (data: Transaction, token: string) => P
   expenses: addExpenseAPI
 }
 
-function TransactionForm() {
+interface TransactionFormInput {
+  typeDefault?: 'incomes' | 'expenses'
+}
+
+function TransactionForm({typeDefault}: TransactionFormInput) {
   const [disable, setDisable] = useState<boolean>(false)
   const incomeCategories = useIncomeCategoriesStore((s) => s.categories);
   const expenseCategories = useExpenseCategoriesStore((s) => s.categories);
   const form = useForm<TransactionTypeForm>({
     resolver: zodResolver(TransactionSchema),
     defaultValues: {
-      type: '',
+      type: typeDefault ?? '',
       category: '',
       details: '',
       value: 0,
@@ -91,7 +95,7 @@ function TransactionForm() {
         onSubmit={form.handleSubmit(handleSubmitForm)}
         className={`grid grid-cols-2 lg:grid-cols-3 gap-4 items-end ${disable && 'opacity-40'}`}
       >
-        <TypeFormField form={form} />
+        <TypeFormField form={form} defaultValue={typeDefault}/>
         <DetailsFormField form={form} />
         <DateFormField className="col-span-2 lg:col-span-1" form={form} />
         <CategoryFormField
