@@ -1,48 +1,39 @@
-import { Transaction } from "@/types";
-import { URLS } from "@/utils/constants";
+import { Transaction } from '@/types';
+import { apiRequest } from '@/utils/apiRequest';
+import { URLS } from '@/utils/constants';
 
-export const addExpenseAPI = async (data: Transaction, token: string) : Promise<Transaction | Error> => {
-  const endpoint = `${URLS.API_URL}/expenses`
-  try {
-    const response = await fetch(endpoint, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
-      },
-      body: JSON.stringify(data)
-    })
+export const addExpenseAPI = async (
+  data: Transaction,
+  token: string
+): Promise<Transaction | Error> => {
+  const endpoint = `${URLS.API_URL}/expenses`;
+  return apiRequest<Transaction>(endpoint, {
+    method: 'POST',
+    token,
+    body: data,
+  });
+};
 
-    const responseData = await response.json()
-    if (!response.ok) 
-      throw new Error(responseData.message || "Error al añadir el gasto")
+export const getExpensesAPI = async (
+  token: string,
+  afterDate?: Date
+): Promise<Transaction[] | Error> => {
+  const endpoint = afterDate
+    ? `${URLS.API_URL}/expenses?afterDate=${afterDate.toISOString()}`
+    : `${URLS.API_URL}/expenses`;
+  return apiRequest<Transaction[]>(endpoint, {
+    method: 'GET',
+    token
+  })
+};
 
-    return responseData
-    //eslint-disable-next-line
-  } catch (error: any) {
-    throw new Error(`Error al añadir los egresos`)
-  }
+export const deleteExpensesAPI = async (
+  token: string,
+  id: string
+) : Promise<Transaction | Error> => {
+  const endpoint = URLS.API_URL + 'expenses/' + id
+  return apiRequest<Transaction>(endpoint, {
+    method: 'DELETE',
+    token
+  })
 }
-
-export const getExpensesAPI = async (token: string, afterDate?: Date) : Promise<Transaction[] | Error> => {
-  let endpoint = `${URLS.API_URL}/incomes`
-  if (afterDate) endpoint = endpoint +  `?afterDate=${afterDate.toISOString()}`
-  try {
-    const response = await fetch(endpoint, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    })
-
-    const data = await response.json()
-    if (!response.ok) 
-      throw new Error(data.message || "Error al obtener los gastos")
-    
-    return data
-    //eslint-disable-next-line
-  } catch (error: any) {
-    throw new Error(`Error al obtener los egresos`)
-  }
-}
-

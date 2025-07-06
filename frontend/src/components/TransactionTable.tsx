@@ -21,6 +21,7 @@ import { getIncomesAPI } from '@/api/incomes';
 import { getExpensesAPI } from '@/api/expenses';
 import { toast } from 'sonner';
 import { Button } from './ui/button';
+import { Eraser, Pencil } from 'lucide-react';
 
 interface TransactionTableProps {
   type?: 'incomes' | 'expenses';
@@ -70,9 +71,15 @@ export function TransactionTable({ type }: TransactionTableProps) {
     if (!token || !type) return;
     let res;
     if (type === 'incomes') {
-      res = await getIncomesAPI(token, new Date(transaction[transaction.length-1].date));
+      res = await getIncomesAPI(
+        token,
+        new Date(transaction[transaction.length - 1].date)
+      );
     } else {
-      res = await getExpensesAPI(token, new Date(transaction[transaction.length-1].date));
+      res = await getExpensesAPI(
+        token,
+        new Date(transaction[transaction.length - 1].date)
+      );
     }
     if (res instanceof Error) {
       console.error('Error al obtener transacciones:', res.message);
@@ -81,10 +88,19 @@ export function TransactionTable({ type }: TransactionTableProps) {
 
     if (res.length === 0) {
       toast.success('No existen más transacciones');
-      return
+      console.log(transaction)
+      return;
     }
-    toast.success('Se han cargado más transacciones')
-    setTransaction((prev) => [...prev, ...res])
+    toast.success('Se han cargado más transacciones');
+    setTransaction((prev) => [...prev, ...res]);
+  };
+
+  const handeUpdate = (trans: Transaction) => {
+    console.log(trans)
+  }
+
+  const handleDelete = (trans: Transaction) => {
+    console.log(trans)
   }
 
   return (
@@ -102,8 +118,8 @@ export function TransactionTable({ type }: TransactionTableProps) {
                     cursor-pointer
                     tracking-wide	
                     text-blizzard-blue-50 font-bold bg-blizzard-blue-900 ${
-                    index === 0 && 'rounded-tl-2xl'
-                  } ${index === 4 && 'rounded-tr-2xl'}`}
+                      index === 0 && 'rounded-tl-2xl'
+                    }`}
                 >
                   {header.isPlaceholder
                     ? null
@@ -113,6 +129,15 @@ export function TransactionTable({ type }: TransactionTableProps) {
                       )}
                 </TableHead>
               ))}
+              <TableHead
+                className={`text-center 
+                    text-base
+                    cursor-pointer
+                    tracking-wide	
+                    text-blizzard-blue-50 font-bold bg-blizzard-blue-900 rounded-tr-2xl`}
+              >
+                Acciones
+              </TableHead>
             </TableRow>
           ))}
         </TableHeader>
@@ -124,16 +149,29 @@ export function TransactionTable({ type }: TransactionTableProps) {
                 data-state={row.getIsSelected() && 'selected'}
               >
                 {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id} className="text-center text-secondary-950 font-semibold p-3">
+                  <TableCell
+                    key={cell.id}
+                    className="text-center text-secondary-950 font-semibold p-3"
+                  >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
                 ))}
+                <TableCell className='p-2 flex items-center justify-center gap-4'>
+                  <Pencil 
+                    className='cursor-pointer hover:text-green-500'
+                    onClick={() => handeUpdate(row.original)}
+                  />
+                  <Eraser 
+                    className='cursor-pointer hover:text-red-500'
+                    onClick={() => handleDelete(row.original)}
+                  />
+                </TableCell>
               </TableRow>
             ))
           ) : (
             <TableRow>
               <TableCell
-                colSpan={TransactionColumns.length}
+                colSpan={TransactionColumns.length +1}
                 className="h-24 text-center text-xl font-bold"
               >
                 No hay resultados
@@ -142,21 +180,22 @@ export function TransactionTable({ type }: TransactionTableProps) {
           )}
         </TableBody>
       </Table>
-      <div className="flex p-2 gap-2 justify-between">
+      <div className="flex p-2 gap-2 justify-between flex-wrap">
         {transaction.length !== 0 && (
-          <div className='flex items-center gap-1 '>
-            <strong className='text-sm'>
-              {transaction.length}
-            </strong>
-            <span className='text-sm'>
-              Transacciones obtenidas
-            </span>
-            <Button variant="secondary" className='my-0' disabled={!token} onClick={getNextValues}>
+          <div className="flex items-center gap-1 ">
+            <strong className="text-sm">{transaction.length}</strong>
+            <span className="text-sm">Transacciones obtenidas</span>
+            <Button
+              variant="secondary"
+              className="my-0"
+              disabled={!token}
+              onClick={getNextValues}
+            >
               Más
             </Button>
           </div>
         )}
-        <div className='flex items-center'>
+        <div className="flex items-center">
           {table.getPageCount() !== 0 && (
             <div className="mx-5 flex items-center">
               <span className="text-sm">

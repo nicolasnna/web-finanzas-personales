@@ -31,7 +31,7 @@ export const TransactionColumns: ColumnDef<Transaction>[] = [
     cell: ({ row }) =>
       formatNumber(row.getValue('value'), row.getValue('currency') ?? 'CLP'),
   },
-  { accessorKey: 'currency', header: 'Divisa' },
+  { accessorKey: 'currency', header: 'Divisa' }
 ];
 
 export const TransactionSchema = z.object({

@@ -1,47 +1,39 @@
-import { Transaction } from "@/types";
-import { URLS } from "@/utils/constants";
+import { Transaction } from '@/types';
+import { apiRequest } from '@/utils/apiRequest';
+import { URLS } from '@/utils/constants';
 
-export const addIncomeAPI = async (data: Transaction, token: string) : Promise<Transaction | Error> => {
-  const endpoint = `${URLS.API_URL}/incomes`
-  try {
-    const response = await fetch(endpoint, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
-      },
-      body: JSON.stringify(data)
-    })
-    
-    const responseData = await response.json()
-    if (!response.ok) 
-      throw new Error(responseData.message || "Error al añadir el ingreso")
-    
-    return responseData
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (error: any ) {
-    throw new Error(`Error al añadir los ingresos: ${error.message}`)
-  }
-}
+export const addIncomeAPI = async (
+  data: Transaction,
+  token: string
+): Promise<Transaction | Error> => {
+  const endpoint = `${URLS.API_URL}/incomes`;
+  return apiRequest<Transaction>(endpoint, {
+    method: 'POST',
+    token,
+    body: data,
+  });
+};
 
-export const getIncomesAPI = async (token: string, afterDate?: Date) : Promise<Transaction[] | Error> => {
-  let endpoint = `${URLS.API_URL}/incomes`
-  if (afterDate) endpoint = endpoint +  `?afterDate=${afterDate.toISOString()}`
-  try {
-    const response = await fetch(endpoint, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    })
+export const getIncomesAPI = async (
+  token: string,
+  afterDate?: Date
+): Promise<Transaction[] | Error> => {
+  const endpoint = afterDate
+    ? `${URLS.API_URL}/incomes?afterDate=${afterDate.toISOString()}`
+    : `${URLS.API_URL}/incomes`;
+  return apiRequest<Transaction[]>(endpoint, {
+    method: 'GET',
+    token,
+  });
+};
 
-    const responseData = await response.json()
-    if (!response.ok) 
-      throw new Error(responseData.message || "Error al obtener los ingresos")
-    
-    return responseData
-    //eslint-disable-next-line
-  } catch (error: any) {
-    throw new Error(`Error al obtener los ingresos`)
-  }
-}
+export const deleteIncomesAPI = async (
+  token: string,
+  id: string
+): Promise<Transaction | Error> => {
+  const endpoint = URLS.API_URL + 'incomes/' + id;
+  return apiRequest<Transaction>(endpoint, {
+    method: 'DELETE',
+    token
+  })
+};
