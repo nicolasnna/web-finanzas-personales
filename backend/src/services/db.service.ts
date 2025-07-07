@@ -127,23 +127,31 @@ export const updateService = async <T>(
   docId: string,
   data: Partial<T>
 ) => {
-  try {
-    const documentRef = doc(db, "users", uid, collectionName, docId);
+  const documentRef = doc(db, "users", uid, collectionName, docId);
 
-    const { id, ...payload } = data as { id?: string } & Partial<T>;
+  const { id, ...payload } = data as { id?: string } & Partial<T>;
 
-    await updateDoc(documentRef, payload);
+  const newData = { ...payload};
 
-    const newDocument = await getDoc(documentRef);
-
-    if (!newDocument.exists()) {
-      throw new Error("No existe el documento");
+  if ('date' in newData && newData.date) {
+    if (newData.date instanceof Timestamp) {
+      newData.date = newData.date; // ya está bien
+    } else if (typeof newData.date === "string") {
+      newData.date = Timestamp.fromDate(new Date(newData.date));
+    } else if (newData.date instanceof Date) {
+      newData.date = Timestamp.fromDate(newData.date);
     }
-
-    return { id: newDocument.id, ...newDocument.data() };
-  } catch (e: any) {
-    throw e;
   }
+
+  await updateDoc(documentRef, newData);
+
+  const newDocument = await getDoc(documentRef);
+
+  if (!newDocument.exists()) {
+    throw new Error("No existe el documento");
+  }
+
+  return { id: newDocument.id, ...newDocument.data() };
 };
 
 export const deleteService = async (
