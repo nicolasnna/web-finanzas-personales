@@ -7,18 +7,16 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog"
-import { Button } from "@/components/ui/button"
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { AuthContext } from "@/context/authContext";
+import { SignupSchema, SignupType } from "@/schemas/signup.schema";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useContext, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { Toaster } from "@/components/ui/sonner"
-import { toast } from "sonner"
-import { createPortal } from "react-dom";
-import { SignupSchema, SignupType } from "@/schemas/signup.schema";
-import { AuthContext } from "@/context/authContext";
+import { toast } from "sonner";
 
 const SignupEmail = () => {
   const [showForm, setShowForm] = useState(false)
@@ -50,7 +48,7 @@ const SignupEmail = () => {
 
 
   return (<>
-    {createPortal(<Toaster/>, document.body)}
+    
     <Button variant="secondary" className="border-[1px] border-b-[3px] border-r-[3px] border-blizzard-blue-500" onClick={() => setShowForm(true)}>Iniciar sesión</Button>
 
     <AlertDialog open={showForm} onOpenChange={setShowForm} >

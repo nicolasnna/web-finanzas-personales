@@ -27,11 +27,24 @@ export const getExpensesAPI = async (
   })
 };
 
+export const updateExpensesAPI = async (
+  token: string,
+  id: string,
+  data: Transaction
+) : Promise<Transaction | Error> => {
+  const endpoint = URLS.API_URL + '/expenses/' + id
+  return apiRequest<Transaction>(endpoint, {
+    method: 'PUT',
+    token,
+    body: data
+  })
+}
+
 export const deleteExpensesAPI = async (
   token: string,
   id: string
 ) : Promise<Transaction | Error> => {
-  const endpoint = URLS.API_URL + 'expenses/' + id
+  const endpoint = URLS.API_URL + '/expenses/' + id
   return apiRequest<Transaction>(endpoint, {
     method: 'DELETE',
     token

@@ -27,11 +27,24 @@ export const getIncomesAPI = async (
   });
 };
 
+export const updateIncomesAPI = async (
+  token: string,
+  id: string,
+  data: Transaction
+) : Promise<Transaction | Error> => {
+  const endpoint = URLS.API_URL + '/incomes/' + id;
+  return apiRequest<Transaction>(endpoint, {
+    method: 'PUT',
+    token,
+    body: data
+  })
+}
+
 export const deleteIncomesAPI = async (
   token: string,
   id: string
 ): Promise<Transaction | Error> => {
-  const endpoint = URLS.API_URL + 'incomes/' + id;
+  const endpoint = URLS.API_URL + '/incomes/' + id;
   return apiRequest<Transaction>(endpoint, {
     method: 'DELETE',
     token

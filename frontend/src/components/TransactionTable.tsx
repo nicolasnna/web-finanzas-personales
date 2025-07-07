@@ -1,12 +1,6 @@
-import { useContext, useEffect, useState } from 'react';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from './ui/table';
+import { getExpensesAPI } from '@/api/expenses';
+import { getIncomesAPI } from '@/api/incomes';
+import { AuthContext } from '@/context/authContext';
 import { Transaction, TransactionColumns } from '@/types';
 import {
   flexRender,
@@ -16,12 +10,19 @@ import {
   SortingState,
   useReactTable,
 } from '@tanstack/react-table';
-import { AuthContext } from '@/context/authContext';
-import { getIncomesAPI } from '@/api/incomes';
-import { getExpensesAPI } from '@/api/expenses';
+import { Eraser } from 'lucide-react';
+import { useContext, useEffect, useState } from 'react';
 import { toast } from 'sonner';
+import { DialogUpdateTransaction } from './Dialog/DialogUpdateTransaction';
 import { Button } from './ui/button';
-import { Eraser, Pencil } from 'lucide-react';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from './ui/table';
 
 interface TransactionTableProps {
   type?: 'incomes' | 'expenses';
@@ -95,10 +96,6 @@ export function TransactionTable({ type }: TransactionTableProps) {
     setTransaction((prev) => [...prev, ...res]);
   };
 
-  const handeUpdate = (trans: Transaction) => {
-    console.log(trans)
-  }
-
   const handleDelete = (trans: Transaction) => {
     console.log(trans)
   }
@@ -157,9 +154,9 @@ export function TransactionTable({ type }: TransactionTableProps) {
                   </TableCell>
                 ))}
                 <TableCell className='p-2 flex items-center justify-center gap-4'>
-                  <Pencil 
-                    className='cursor-pointer hover:text-green-500'
-                    onClick={() => handeUpdate(row.original)}
+                  <DialogUpdateTransaction
+                    data={row.original}
+                    type={type ?? 'incomes'}
                   />
                   <Eraser 
                     className='cursor-pointer hover:text-red-500'
