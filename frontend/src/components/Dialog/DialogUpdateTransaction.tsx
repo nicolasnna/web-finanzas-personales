@@ -30,7 +30,7 @@ import { updateExpensesAPI } from '@/api/expenses';
 import { AuthContext } from '@/context/authContext';
 import { toast } from 'sonner';
 
-interface DialogUpdateTransaction {
+interface DialogUpdateTransactionInput {
   data: Transaction;
   type: 'incomes' | 'expenses';
 }
@@ -38,7 +38,7 @@ interface DialogUpdateTransaction {
 export function DialogUpdateTransaction({
   data,
   type,
-}: DialogUpdateTransaction) {
+}: DialogUpdateTransactionInput) {
   const [showAlert, setShowAlert] = useState(false);
   const [disable, setDisable] = useState(false);
   const incomesCategories = useIncomeCategoriesStore((s) => s.categories);
@@ -76,12 +76,16 @@ export function DialogUpdateTransaction({
     toast.promise(
       apiUpdateTransaction[type](token, data.id, updateForm.watch()),
       {
-        loading: 'Actualizando transaccion...',
+        loading: 'Actualizando transacción...',
         success: () => {
           setShowAlert(() => false);
-          return 'Transacción actualizada con exito';
+          return 'Transacción actualizada con exito, recarge para ver los cambios';
         },
         error: (err) => err.message || 'No se ha realizado la actualización',
+        action: {
+          label: 'Recargar',
+          onClick: () => location.reload()
+        }
       }
     );
     setDisable(() => false);

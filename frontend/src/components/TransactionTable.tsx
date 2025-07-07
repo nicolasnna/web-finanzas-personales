@@ -10,9 +10,9 @@ import {
   SortingState,
   useReactTable,
 } from '@tanstack/react-table';
-import { Eraser } from 'lucide-react';
 import { useContext, useEffect, useState } from 'react';
 import { toast } from 'sonner';
+import { DialogDeleteTransaction } from './Dialog/DialogDeleteTransaction';
 import { DialogUpdateTransaction } from './Dialog/DialogUpdateTransaction';
 import { Button } from './ui/button';
 import {
@@ -96,10 +96,6 @@ export function TransactionTable({ type }: TransactionTableProps) {
     setTransaction((prev) => [...prev, ...res]);
   };
 
-  const handleDelete = (trans: Transaction) => {
-    console.log(trans)
-  }
-
   return (
     <article>
       <Table>
@@ -158,9 +154,9 @@ export function TransactionTable({ type }: TransactionTableProps) {
                     data={row.original}
                     type={type ?? 'incomes'}
                   />
-                  <Eraser 
-                    className='cursor-pointer hover:text-red-500'
-                    onClick={() => handleDelete(row.original)}
+                  <DialogDeleteTransaction
+                    data={row.original}
+                    type={type ?? 'incomes'}
                   />
                 </TableCell>
               </TableRow>
