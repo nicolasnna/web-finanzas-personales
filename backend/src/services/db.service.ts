@@ -15,6 +15,7 @@ import {
   Timestamp,
   QuerySnapshot,
   DocumentData,
+  getCountFromServer,
 } from "firebase/firestore";
 import { db } from "@/firebase/firebase";
 import { TransactionData } from "@/types/TransactionData.interface";
@@ -258,3 +259,10 @@ export const getFilterMostValueService = async (
     throw new Error(`Firestore failed: ${err.code}`);
   }
 };
+
+
+export const getTotalDocuments = async (uid: string, collectionName: CollectionName) : Promise<number> => {
+  const colRef = collection(db, 'users', uid, collectionName);
+  const snapshot = await getCountFromServer(colRef)
+  return snapshot.data().count
+}

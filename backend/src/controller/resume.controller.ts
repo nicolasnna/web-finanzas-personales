@@ -3,6 +3,7 @@ import {
   getResumeCategoryPerMonthService,
   getResumeCategoryService,
   getResumePerMonthService,
+  getTotalCountForUserService,
 } from "@/services/resume.service";
 import { CollectionName, TransactionName } from "@/types/CollectionName.type";
 import { GroupBy } from "@/types/GroupBy.type";
@@ -114,5 +115,20 @@ export const getTopTransactionController = async (
     return res.status(200).json(topResponse)
   } catch (error) {
     return res.status(500).json({ message: error.message })
+  }
+}
+
+export const getTotalCountController = async (
+  req: RequestUser,
+  res: Response
+) : Promise<any> => {
+  const uid = req.user?.uid;
+  if (!uid) return res.status(500).json({ message: "Usuario no identificado." });
+
+  try {
+    const counts = await getTotalCountForUserService(uid)
+    res.status(200).json(counts)
+  } catch (error: any) {
+    res.status(500).json({ message: error.message })
   }
 }

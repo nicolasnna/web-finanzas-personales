@@ -1,5 +1,5 @@
 import { CollectionName, TransactionName } from "@/types/CollectionName.type";
-import { getFilterYearMonthService } from "./db.service";
+import { getFilterYearMonthService, getTotalDocuments } from "./db.service";
 
 export const getResumeCategoryService = async (
   uid: string,
@@ -52,4 +52,22 @@ export const getResumePerMonthService = async (
   }
 
   return totalPerMonth
+}
+
+export const getTotalCountForUserService = async (uid: string) => {
+  const collections : CollectionName[] = [
+    'incomes',
+    'expenses',
+    'categoryIncomes',
+    'categoryExpenses'
+  ]
+  const results = await Promise.all(
+    collections.map(col => getTotalDocuments(uid, col))
+  )
+  return {
+    incomes: results[0],
+    expenses: results[1],
+    categoryIncomes: results[2],
+    categoryExpenses: results[3]
+  }
 }

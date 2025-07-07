@@ -178,3 +178,31 @@ paths:
           description: No autorizado
         '500':
           description: Error al buscar el top
+  /api/resume/total-counts:
+    get:
+      tags:
+        - Resumen
+      summary: Obtiene la cantidad de elementos guardados en la base de datos
+      description: Obtiene la cantidad de elementos guardados en la base de datos
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Devuelve la cantidad de elementos por grupo
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  incomes:
+                    type: number
+                  expenses:
+                    type: number
+                  categoryIncomes:
+                    type: number
+                  categoryExpenses:
+                    type: number
+        '401':
+          description: No autorizado
+        '500':
+          description: Error interno
