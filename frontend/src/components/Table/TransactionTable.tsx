@@ -86,13 +86,12 @@ export function TransactionTable({ type }: TransactionTableProps) {
       );
     }
     if (res instanceof Error) {
-      console.error('Error al obtener transacciones:', res.message);
+      // console.error('Error al obtener transacciones:', res.message);
       return; // o muestra un toast
     }
 
     if (res.length === 0) {
       toast.success('No existen más transacciones');
-      console.log(transaction)
       return;
     }
     toast.success('Se han cargado más transacciones');

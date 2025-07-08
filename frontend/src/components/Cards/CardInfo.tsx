@@ -33,7 +33,6 @@ const CardInfo = ({
   status,
 }: CardInfoProps) => {
   const [valueCount, setValueCount] = useState(0)
-  console.log(value)
   useEffect(() => {
     const increment = Math.round(value / 4)
     const interval = setInterval(() => {

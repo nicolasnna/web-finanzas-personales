@@ -18,3 +18,20 @@ export const getIncomeCategoryAPI = async (token: string) : Promise<Category[] |
     token
   })
 }
+
+export const updateIncomeCategoryAPI = async (token: string, id: string, data: Category) : Promise<Category> => {
+  const endpoint = URLS.API_URL + '/categories/incomes/' + id
+  return apiRequest<Category>(endpoint, {
+    method: 'PUT',
+    token,
+    body: data
+  })
+}
+
+export const deleteIncomeCategoryAPI = async (token: string, id: string) : Promise<Category> => {
+  const endpoint = URLS.API_URL + '/categories/incomes/' + id
+  return apiRequest<Category>(endpoint, {
+    method: 'DELETE',
+    token
+  })
+}

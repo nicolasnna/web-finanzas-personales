@@ -1,18 +1,21 @@
-import {
-  useExpenseCategoriesStore,
-  useIncomeCategoriesStore,
-} from '@/store/useCategoryStore';
+import { updateExpensesAPI } from '@/api/expenses';
+import { updateIncomesAPI } from '@/api/incomes';
+import { AuthContext } from '@/context/authContext';
+import { useTypeCategoryStore } from '@/hooks/useTypeCategoryStore';
+import { useTypeTransactionStore } from '@/hooks/useTypeTransactionStore';
 import { Transaction, TransactionSchema, TransactionTypeForm } from '@/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Pencil } from 'lucide-react';
 import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import {
   CategoryFormField,
   DateFormField,
   DetailsFormField,
   ValueFormField,
 } from '../FormField';
+import CurrencyFormField from '../FormField/CurrencyFormField';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -24,12 +27,6 @@ import {
   AlertDialogTitle,
 } from '../ui/alert-dialog';
 import { Form } from '../ui/form';
-import CurrencyFormField from '../FormField/CurrencyFormField';
-import { updateIncomesAPI } from '@/api/incomes';
-import { updateExpensesAPI } from '@/api/expenses';
-import { AuthContext } from '@/context/authContext';
-import { toast } from 'sonner';
-import { useTypeTransactionStore } from '@/hooks/useTypeTransactionStore';
 
 interface DialogUpdateTransactionInput {
   data: Transaction;
@@ -42,10 +39,8 @@ export function DialogUpdateTransaction({
 }: DialogUpdateTransactionInput) {
   const [showAlert, setShowAlert] = useState(false);
   const [disable, setDisable] = useState(false);
-  const incomesCategories = useIncomeCategoriesStore((s) => s.categories);
-  const expensesCategories = useExpenseCategoriesStore((s) => s.categories);
-  const categories =
-    type === 'incomes' ? incomesCategories : expensesCategories;
+
+  const categories = useTypeCategoryStore(type).categories
   const token = useContext(AuthContext).token;
   const updateStore = useTypeTransactionStore(type).updateTransaction
 

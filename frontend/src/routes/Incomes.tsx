@@ -3,6 +3,7 @@ import CardContainer from "@/components/Cards/CardContainer";
 import CardInfo from "@/components/Cards/CardInfo";
 import CategoryForm from "@/components/Form/CategoryForm";
 import TransactionForm from "@/components/Form/TransactionForm";
+import { CategoryTable } from "@/components/Table/CategoryTable";
 import { TransactionTable } from "@/components/Table/TransactionTable";
 import { AuthContext } from "@/context/authContext";
 import { useIncomesStore } from "@/store/useTransactionStore";
@@ -57,11 +58,20 @@ const Incomes = () => {
           classNameHeader="pb-4"
         />
       </section>
-      <CardContainer
-        classNameBody="p-4 pb-2"
-      >
-        <TransactionTable type="incomes"/>
-      </CardContainer>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-2">
+        <CardContainer
+          className="md:col-span-2"
+          classNameBody="p-4 pb-2"
+        >
+          <TransactionTable type="incomes"/>
+        </CardContainer>
+        <CardContainer
+          classNameBody="p-4 pb-2"
+        >
+          <CategoryTable type="incomes"/>
+        </CardContainer>
+      </div>
+
       <section className='grid md:grid-cols-3 z-10 gap-5'>
         <CardContainer
           title='Registrar nueva categoría'
