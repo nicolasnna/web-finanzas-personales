@@ -39,7 +39,7 @@ const Expenses = () => {
 
   return (
     <div className="mx-5 xl:mx-[250px] my-10 flex flex-col gap-5">
-      <section className='grid grid-cols-3 gap-5'>
+      <section className='grid sm:grid-cols-2 md:grid-cols-3 gap-5'>
         <CardInfo
           title='Registros existentes'
           value={totalCounts.expenses}

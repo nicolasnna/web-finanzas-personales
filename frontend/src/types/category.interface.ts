@@ -1,9 +1,14 @@
+import { ColumnDef } from "@tanstack/react-table";
 import { z } from "zod";
 
 export interface Category {
   id?: string;
   category: string
 }
+
+export const CategoryColumns: ColumnDef<Category>[] = [
+  {accessorKey: 'category', header: 'Categoría'}
+]
 
 export const CategorySchema = z.object({
   category: z

@@ -2,50 +2,56 @@ import { Category } from '@/types';
 import { create } from 'zustand';
 
 interface CategoryState {
-  categories: Category[]
+  categories: Category[];
 }
 
 interface CategoryActions {
-  addCategory: (cat: Category) => void
-  setCategories: (cats: Category[]) => void
-  deleteCategory: (cat: Category) => void
-  cleanCategories: () => void
+  addCategory: (cat: Category) => void;
+  updateCategory: (id: string, cat: Category) => void;
+  setCategories: (cats: Category[]) => void;
+  deleteCategory: (id: string) => void;
+  cleanCategories: () => void;
 }
 
-type CategoryStore = CategoryState & CategoryActions
+type CategoryStore = CategoryState & CategoryActions;
 
 export const createCategoryStore = () =>
   create<CategoryStore>((set, get) => ({
     categories: [],
 
     addCategory: (cat) => {
-      const existing = get().categories
+      const existing = get().categories;
       // Evita duplicados (case‑insensitive)
       if (
         existing.some(
           (c) => c.category.toLowerCase() === cat.category.toLowerCase()
         )
-      ) return
+      )
+        return;
 
-      set({ categories: [...existing, cat] })
+      set({ categories: [...existing, cat] });
+    },
+
+    updateCategory: (id, cat) => {
+      const updated = get().categories.map((c) =>
+        c.id === id ? { ...c, ...cat } : c
+      );
+      set({ categories: updated });
     },
 
     setCategories: (cats) => {
-      set({ categories: [...cats] })
+      set({ categories: [...cats] });
     },
 
-    deleteCategory: (cat) => {
-      const filtered = get().categories.filter(
-        (c) => c.category.toLowerCase() !== cat.category.toLowerCase()
-      )
-      set({ categories: filtered })
+    deleteCategory: (id) => {
+      const filtered = get().categories.filter((c) => c.id !== id);
+      set({ categories: filtered });
     },
 
     cleanCategories: () => {
-      set({ categories: [] })
+      set({ categories: [] });
     },
-  }))
+  }));
 
-
-export const useIncomeCategoriesStore = createCategoryStore()
-export const useExpenseCategoriesStore = createCategoryStore()
+export const useIncomeCategoriesStore = createCategoryStore();
+export const useExpenseCategoriesStore = createCategoryStore();
