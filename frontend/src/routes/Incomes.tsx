@@ -3,7 +3,7 @@ import CardContainer from "@/components/Cards/CardContainer";
 import CardInfo from "@/components/Cards/CardInfo";
 import CategoryForm from "@/components/Form/CategoryForm";
 import TransactionForm from "@/components/Form/TransactionForm";
-import { TransactionTable } from "@/components/TransactionTable";
+import { TransactionTable } from "@/components/Table/TransactionTable";
 import { AuthContext } from "@/context/authContext";
 import { useIncomesStore } from "@/store/useTransactionStore";
 import { TotalCountsAPI } from "@/types";
@@ -19,6 +19,7 @@ const Incomes = () => {
   })
   const transactionsIncomes = useIncomesStore(s => s.transactions)
   const totalAcumulative = useMemo(() => {
+    if (transactionsIncomes.length === 0) return 0
     const onlyValues = transactionsIncomes.map(t => t.value)
     return onlyValues.reduce((acc, currentTrans) => acc = acc + currentTrans)
   }, [transactionsIncomes])
@@ -52,7 +53,7 @@ const Incomes = () => {
         <CardInfo 
           title="Total acumulado"
           value={totalAcumulative}
-          currency={transactionsIncomes[0].currency ?? 'CLP'}
+          currency={transactionsIncomes.length > 0 ? transactionsIncomes[0].currency : 'CLP'}
           classNameHeader="pb-4"
         />
       </section>

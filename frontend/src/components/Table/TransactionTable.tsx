@@ -13,9 +13,9 @@ import {
 } from '@tanstack/react-table';
 import { useContext, useEffect, useState } from 'react';
 import { toast } from 'sonner';
-import { DialogDeleteTransaction } from './Dialog/DialogDeleteTransaction';
-import { DialogUpdateTransaction } from './Dialog/DialogUpdateTransaction';
-import { Button } from './ui/button';
+import { DialogDeleteTransaction } from '../Dialog/DialogDeleteTransaction';
+import { DialogUpdateTransaction } from '../Dialog/DialogUpdateTransaction';
+import { Button } from '../ui/button';
 import {
   Table,
   TableBody,
@@ -23,7 +23,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from './ui/table';
+} from '../ui/table';
 
 interface TransactionTableProps {
   type?: 'incomes' | 'expenses';

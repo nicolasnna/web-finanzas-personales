@@ -1,12 +1,62 @@
+import { getCountsTotalAPI } from "@/api/resumes";
 import CardContainer from "@/components/Cards/CardContainer";
+import CardInfo from "@/components/Cards/CardInfo";
 import CategoryForm from "@/components/Form/CategoryForm";
 import TransactionForm from "@/components/Form/TransactionForm";
-import { TransactionTable } from "@/components/TransactionTable";
+import { TransactionTable } from "@/components/Table/TransactionTable";
+import { AuthContext } from "@/context/authContext";
+import { useExpensesStore } from "@/store/useTransactionStore";
+import { TotalCountsAPI } from "@/types";
+import { useContext, useEffect, useMemo, useState } from "react";
 
 const Expenses = () => {
+  const token = useContext(AuthContext).token
+  const [totalCounts, setTotalCounts] = useState<TotalCountsAPI>({
+    incomes: 0,
+    expenses: 0,
+    categoryIncomes: 0,
+    categoryExpenses: 0
+  })
+  const transactionsExpenses = useExpensesStore(s => s.transactions)
+  const totalAccumulative = useMemo(() => {
+    if (transactionsExpenses.length === 0) return 0 
+    const onlyValues = transactionsExpenses.map(t => t.value)
+    return onlyValues.reduce((acc, current) => acc = acc + current)
+  }, [transactionsExpenses])
+
+  useEffect(() => {
+    const fetchCounts = async () => {
+      if (!token) return
+      const res = await getCountsTotalAPI(token)
+
+      if (res instanceof Error) return
+      console.log(res)
+      setTotalCounts(res)
+    }
+    fetchCounts()
+
+  }, [token])
 
   return (
     <div className="mx-5 xl:mx-[250px] my-10 flex flex-col gap-5">
+      <section className='grid grid-cols-3 gap-5'>
+        <CardInfo
+          title='Registros existentes'
+          value={totalCounts.expenses}
+          classNameHeader="pb-4"
+        />
+        <CardInfo
+          title='Categorías creadas'
+          value={totalCounts.categoryExpenses}
+          classNameHeader="pb-4"
+        />
+        <CardInfo
+          title='Total acumulado'
+          value={totalAccumulative}
+          currency={transactionsExpenses.length > 0 ? transactionsExpenses[0].currency : 'CLP'}
+          classNameHeader='pb-4'
+        />
+      </section>
       <CardContainer
         classNameBody="p-4 pb-2"
       >
