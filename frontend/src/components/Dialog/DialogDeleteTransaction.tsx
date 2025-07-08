@@ -26,7 +26,7 @@ export function DialogDeleteTransaction({
     expenses: deleteExpensesAPI
   }
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     if (!token || !data.id) return;
     setDisable(() => true);
     toast.promise(

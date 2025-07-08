@@ -70,7 +70,7 @@ export function DialogUpdateTransaction({
     expenses: updateExpensesAPI,
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     if (!token || !data.id) return;
     setDisable(() => true);
     toast.promise(
@@ -79,13 +79,9 @@ export function DialogUpdateTransaction({
         loading: 'Actualizando transacción...',
         success: () => {
           setShowAlert(() => false);
-          return 'Transacción actualizada con exito, recarge para ver los cambios';
+          return 'Transacción actualizada con exito';
         },
         error: (err) => err.message || 'No se ha realizado la actualización',
-        action: {
-          label: 'Recargar',
-          onClick: () => location.reload()
-        }
       }
     );
     setDisable(() => false);
