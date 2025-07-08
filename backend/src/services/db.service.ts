@@ -23,7 +23,7 @@ import { Category } from "@/types/category.interface";
 import { CollectionName, TransactionName } from "@/types/CollectionName.type";
 
 
-const transformDocumentToDataTransaction = (docSnapshot: QuerySnapshot<DocumentData, DocumentData>) => {
+export const transformDocumentToDataTransaction = (docSnapshot: QuerySnapshot<DocumentData, DocumentData>) => {
   return docSnapshot.docs.map((doc) => {
     const data = doc.data() as TransactionData;
     let date;
@@ -100,7 +100,7 @@ export const createService = async (
   const collectionRef = collection(db, "users", uid, collectionName);
   const dataRevised = {...data, date: Timestamp.fromDate(new Date(data.date))}
   const newDocRef = await addDoc(collectionRef, dataRevised);
-  return { id: newDocRef.id, ...dataRevised };
+  return { id: newDocRef.id, ...dataRevised, date: data.date };
 };
 
 export const createCategoryService = async (
@@ -146,13 +146,7 @@ export const updateService = async <T>(
 
   await updateDoc(documentRef, newData);
 
-  const newDocument = await getDoc(documentRef);
-
-  if (!newDocument.exists()) {
-    throw new Error("No existe el documento");
-  }
-
-  return { id: newDocument.id, ...newDocument.data() };
+  return { id, ...payload };
 };
 
 export const deleteService = async (

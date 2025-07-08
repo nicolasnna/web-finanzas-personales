@@ -7,6 +7,7 @@ import { useContext, useState } from "react"
 import { toast } from "sonner"
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "../ui/alert-dialog"
 import { formatNumber } from "@/utils/functions"
+import { useTypeTransactionStore } from "@/hooks/useTypeTransactionStore"
 
 interface DialogDeleteTransactionInput {
   data: Transaction,
@@ -20,6 +21,7 @@ export function DialogDeleteTransaction({
   const [showAlert, setShowAlert] = useState(false)
   const [disable, setDisable] = useState(false)
   const token = useContext(AuthContext).token
+  const deleteStore = useTypeTransactionStore(type).deleteTransaction
 
   const apiDeleteTransaction: Record<string, (token: string, id: string) => Promise<Transaction | Error>> = {
     incomes: deleteIncomesAPI,
@@ -35,6 +37,8 @@ export function DialogDeleteTransaction({
         loading: 'Eliminando transacción...',
         success: () => {
           setShowAlert(() => false)
+          if (data.id)
+            deleteStore(data.id)
           return 'Transacción eliminada con exito'
         },
         error: (err) => err.message || 'Error al intentar eliminar la transacción'

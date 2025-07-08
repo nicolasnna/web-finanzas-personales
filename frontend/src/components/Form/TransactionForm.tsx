@@ -21,6 +21,7 @@ import { addExpenseAPI } from '@/api/expenses';
 import { useContext, useState } from 'react';
 import { AuthContext } from '@/context/authContext';
 import { toast } from 'sonner';
+import { useExpensesStore, useIncomesStore } from '@/store/useTransactionStore';
 
 const dictAddTransaction: Record<string, (data: Transaction, token: string) => Promise<Transaction | Error>> = {
   incomes: addIncomeAPI,
@@ -48,6 +49,8 @@ function TransactionForm({typeDefault}: TransactionFormInput) {
   });
   const typeValue = form.watch('type');
   const token = useContext(AuthContext).token
+  const addIncomesStore = useIncomesStore(s => s.addTransaction)
+  const addExpensesStore = useExpensesStore(s => s.addTransaction)
 
   useLoadCategories(typeValue);
 
@@ -56,19 +59,20 @@ function TransactionForm({typeDefault}: TransactionFormInput) {
     setDisable(() => true)
     toast.promise(dictAddTransaction[values.type](values, token),{
       loading: 'Creando registro...',
-      success: () => {
+      success: (res) => {
         setDisable(() => false)
         handleClearForm()
+        // const dataToLoad = {...res, date: new Date(res.date)}
+        if (values.type === 'incomes') 
+          addIncomesStore(res as Transaction)
+        else if (values.type === 'expenses')
+          addExpensesStore(res as Transaction)
         return 'Registro creado con exito'
       },
       error: (err) => {
         setDisable(() => false)
         return err.message || 'No se ha podido crear el registro'
       },
-      action: {
-        label: 'Actualizar',
-        onClick: () => window.location.reload()
-      }
     })
   };
 

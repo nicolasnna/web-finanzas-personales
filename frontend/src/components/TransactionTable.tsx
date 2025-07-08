@@ -1,7 +1,8 @@
 import { getExpensesAPI } from '@/api/expenses';
 import { getIncomesAPI } from '@/api/incomes';
 import { AuthContext } from '@/context/authContext';
-import { Transaction, TransactionColumns } from '@/types';
+import { useTypeTransactionStore } from '@/hooks/useTypeTransactionStore';
+import { TransactionColumns } from '@/types';
 import {
   flexRender,
   getCoreRowModel,
@@ -29,7 +30,8 @@ interface TransactionTableProps {
 }
 
 export function TransactionTable({ type }: TransactionTableProps) {
-  const [transaction, setTransaction] = useState<Transaction[]>([]);
+  const { transaction, setTransaction, addTransactionArray} = useTypeTransactionStore(type ?? 'incomes')
+
   const [sorting, setSorting] = useState<SortingState>([]);
   const [pagination, setPagination] = useState({
     pageIndex: 0,
@@ -55,6 +57,7 @@ export function TransactionTable({ type }: TransactionTableProps) {
     };
 
     fetchData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [type, token]);
 
   const table = useReactTable({
@@ -93,7 +96,7 @@ export function TransactionTable({ type }: TransactionTableProps) {
       return;
     }
     toast.success('Se han cargado más transacciones');
-    setTransaction((prev) => [...prev, ...res]);
+    addTransactionArray(res)
   };
 
   return (

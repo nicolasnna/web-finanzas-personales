@@ -11,6 +11,7 @@ interface TransactionActions {
   deleteTransaction: (id: string) => void;
   setTransaction: (trans: Transaction[]) => void;
   cleanCategories: () => void;
+  updateTransaction: (id: string, trans: Transaction) => void;
 }
 
 type TransactionStore = TransactionState & TransactionActions;
@@ -25,13 +26,13 @@ const createTransactionStore = () =>
     },
 
     addTransactionsArray: (trans) => {
-      const existing = get().transactions
-      set({ transactions: [...existing, ...trans]})
+      const existing = get().transactions;
+      set({ transactions: [...existing, ...trans] });
     },
 
     deleteTransaction: (id) => {
-      const filterData = get().transactions.filter(t => t.id !== id)
-      set({ transactions: [...filterData]})
+      const filterData = get().transactions.filter((t) => t.id !== id);
+      set({ transactions: [...filterData] });
     },
 
     setTransaction: (trans) => {
@@ -39,9 +40,16 @@ const createTransactionStore = () =>
     },
 
     cleanCategories: () => {
-      set({ transactions: []})
+      set({ transactions: [] });
+    },
+
+    updateTransaction: (id, trans) => {
+      const updated = get().transactions.map((t) =>
+        t.id === id ? { ...t, ...trans } : t
+      );
+      set({ transactions: updated });
     },
   }));
 
-export const useIncomesStore = createTransactionStore()
-export const useExpensesStore = createTransactionStore()
+export const useIncomesStore = createTransactionStore();
+export const useExpensesStore = createTransactionStore();

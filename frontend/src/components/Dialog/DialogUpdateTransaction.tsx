@@ -29,6 +29,7 @@ import { updateIncomesAPI } from '@/api/incomes';
 import { updateExpensesAPI } from '@/api/expenses';
 import { AuthContext } from '@/context/authContext';
 import { toast } from 'sonner';
+import { useTypeTransactionStore } from '@/hooks/useTypeTransactionStore';
 
 interface DialogUpdateTransactionInput {
   data: Transaction;
@@ -46,6 +47,7 @@ export function DialogUpdateTransaction({
   const categories =
     type === 'incomes' ? incomesCategories : expensesCategories;
   const token = useContext(AuthContext).token;
+  const updateStore = useTypeTransactionStore(type).updateTransaction
 
   const updateForm = useForm<TransactionTypeForm>({
     resolver: zodResolver(TransactionSchema),
@@ -79,6 +81,8 @@ export function DialogUpdateTransaction({
         loading: 'Actualizando transacción...',
         success: () => {
           setShowAlert(() => false);
+          if (data.id)
+            updateStore(data.id, updateForm.watch())
           return 'Transacción actualizada con exito';
         },
         error: (err) => err.message || 'No se ha realizado la actualización',
