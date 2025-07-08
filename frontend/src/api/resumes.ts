@@ -1,10 +1,10 @@
 import { RawResumeTransactionByMonth } from '@/hooks/useAreaChartData';
 import { RawResumeTransaction } from '@/hooks/usePieChartData';
-import { RawResumeTransactionByMonthAPI, Transaction } from '@/types';
+import { RawResumeTransactionByMonthAPI, TotalCountsAPI, Transaction } from '@/types';
 import { apiRequest } from '@/utils/apiRequest';
 import { URLS } from '@/utils/constants';
 
-export const getResumeTransactionByCategory = async (
+export const getResumeTransactionByCategory = (
   token: string,
   type: 'incomes' | 'expenses',
   year: number,
@@ -24,7 +24,7 @@ export const getResumeTransactionByCategory = async (
   );
 };
 
-export const getResumeTransactionByMonth = async (
+export const getResumeTransactionByMonth = (
   token: string,
   type: 'incomes' | 'expenses',
   year: number
@@ -36,7 +36,7 @@ export const getResumeTransactionByMonth = async (
   });
 };
 
-export const getTopTransactionAPI = async (
+export const getTopTransactionAPI = (
   token: string,
   type: 'incomes' | 'expenses',
   year: number,
@@ -52,3 +52,13 @@ export const getTopTransactionAPI = async (
     token,
   });
 };
+
+export const getCountsTotalAPI = (
+  token: string
+) : Promise<TotalCountsAPI> => {
+  const endpoint = URLS.API_URL + '/resume/total-counts'
+  return apiRequest(endpoint, {
+    method: 'GET',
+    token
+  })
+}

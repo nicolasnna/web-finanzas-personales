@@ -11,3 +11,10 @@ export interface ErrorAPI {
 export interface RawResumeTransactionByMonthAPI {
   data: RawResumeTransactionByMonth
 }
+
+export interface TotalCountsAPI {
+  incomes: number,
+  expenses: number,
+  categoryIncomes: number,
+  categoryExpenses: number,
+}

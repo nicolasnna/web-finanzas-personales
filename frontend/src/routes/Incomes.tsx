@@ -1,12 +1,61 @@
+import { getCountsTotalAPI } from "@/api/resumes";
 import CardContainer from "@/components/Cards/CardContainer";
+import CardInfo from "@/components/Cards/CardInfo";
 import CategoryForm from "@/components/Form/CategoryForm";
 import TransactionForm from "@/components/Form/TransactionForm";
 import { TransactionTable } from "@/components/TransactionTable";
+import { AuthContext } from "@/context/authContext";
+import { useIncomesStore } from "@/store/useTransactionStore";
+import { TotalCountsAPI } from "@/types";
+import { useContext, useEffect, useMemo, useState } from "react";
 
 const Incomes = () => {
+  const token = useContext(AuthContext).token
+  const [totalCounts, setTotalCounts] = useState<TotalCountsAPI>({
+    incomes: 0,
+    expenses: 0,
+    categoryIncomes: 0,
+    categoryExpenses: 0
+  })
+  const transactionsIncomes = useIncomesStore(s => s.transactions)
+  const totalAcumulative = useMemo(() => {
+    const onlyValues = transactionsIncomes.map(t => t.value)
+    return onlyValues.reduce((acc, currentTrans) => acc = acc + currentTrans)
+  }, [transactionsIncomes])
+
+  useEffect(() => {
+    const fetchCounts = async () => {
+      if (!token) return
+      const res = await getCountsTotalAPI(token)
+
+      if (res instanceof Error) return
+      console.log(res)
+      setTotalCounts(res)
+    }
+    fetchCounts()
+
+  }, [token])
 
   return (
     <div className="mx-5 xl:mx-[250px] my-10 flex flex-col gap-5">
+      <section className="grid grid-cols-3 gap-5">
+        <CardInfo
+          title="Registros existentes"
+          value={totalCounts.incomes}
+          classNameHeader="pb-4"
+        />
+        <CardInfo 
+          title="Categorías creadas"
+          value={totalCounts.categoryIncomes}
+          classNameHeader="pb-4"
+        />
+        <CardInfo 
+          title="Total acumulado"
+          value={totalAcumulative}
+          currency={transactionsIncomes[0].currency ?? 'CLP'}
+          classNameHeader="pb-4"
+        />
+      </section>
       <CardContainer
         classNameBody="p-4 pb-2"
       >

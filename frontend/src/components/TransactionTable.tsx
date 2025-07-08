@@ -152,7 +152,7 @@ export function TransactionTable({ type }: TransactionTableProps) {
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
                 ))}
-                <TableCell className='p-2 flex items-center justify-center gap-4'>
+                <TableCell className='p-2 flex justify-center gap-4'>
                   <DialogUpdateTransaction
                     data={row.original}
                     type={type ?? 'incomes'}
