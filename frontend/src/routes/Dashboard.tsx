@@ -1,13 +1,13 @@
 import { getResumeTransactionByCategory, getResumeTransactionByMonth } from '@/api/resumes';
 import CardContainer from '@/components/Cards/CardContainer';
-import { NetTransactionCard } from '@/components/Cards/NetTransactionCard';
-import { TopTransactionCard } from '@/components/Cards/TopTransactionCard';
+import { CardNetTransaction } from '@/components/Cards/CardNetTransaction';
+import { CardTopTransaction } from '@/components/Cards/CardTopTransaction';
 import ChartArea from '@/components/ChartArea';
 import ChartPie from '@/components/ChartPie';
 import CategoryForm from '@/components/Form/CategoryForm';
 import TransactionForm from '@/components/Form/TransactionForm';
 import { AuthContext } from '@/context/authContext';
-import { RawResumeTransactionByMonth, UseAreaChartData } from '@/hooks/useAreaChartData';
+import { UseAreaChartData } from '@/hooks/useAreaChartData';
 import { RawResumeTransaction, usePieChartData } from '@/hooks/usePieChartData';
 import { months } from '@/utils/constants';
 import { useContext, useEffect, useState } from 'react';
@@ -56,8 +56,8 @@ function Dashboard() {
           getResumeTransactionByMonth(user.token, 'incomes', year),
           getResumeTransactionByMonth(user.token, 'expenses', year)
         ])
-        dataAreaChart.setRawIncome(resMonthInc.data as RawResumeTransactionByMonth)
-        dataAreaChart.setRawExpense(resMonthExp.data as RawResumeTransactionByMonth)
+        dataAreaChart.setRawIncome(resMonthInc.data)
+        dataAreaChart.setRawExpense(resMonthExp.data)
       } catch {
         user.updateToken()
       }
@@ -75,9 +75,9 @@ function Dashboard() {
   return (
     <div className="mx-5 xl:mx-[250px] my-10 flex flex-col gap-5">
       <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        <TopTransactionCard type='incomes' month={month} year={year}/>
-        <TopTransactionCard type='expenses' month={month} year={year}/>
-        <NetTransactionCard
+        <CardTopTransaction type='incomes' month={month} year={year}/>
+        <CardTopTransaction type='expenses' month={month} year={year}/>
+        <CardNetTransaction
           value={dataAreaChart.rawIncome[month] - dataAreaChart.rawExpense[month]}
           month={month}
         />

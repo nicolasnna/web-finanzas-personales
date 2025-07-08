@@ -1,6 +1,5 @@
 import { getTopTransactionAPI } from "@/api/resumes";
 import { AuthContext } from "@/context/authContext";
-import { Transaction } from "@/types";
 import { months } from "@/utils/constants";
 import { HTMLProps, useContext, useEffect, useState } from "react";
 import CardInfo from "./CardInfo";
@@ -31,7 +30,7 @@ const defaultValues: Record<string, CardInfo> = {
   }
 }
 
-export function TopTransactionCard({type, className, month, year}: TopTransactionCardProps) {
+export function CardTopTransaction({type, className, month, year}: TopTransactionCardProps) {
   const [topTransaction, setTopTransaction] = useState<CardInfo>(defaultValues[type])
   const token = useContext(AuthContext).token
   const title = type === 'incomes' ? 'Mayor ingreso del mes' : 'Mayor gasto del mes'
@@ -45,7 +44,7 @@ export function TopTransactionCard({type, className, month, year}: TopTransactio
       const dateNow = new Date(Date.now())
       try {
         const res = await getTopTransactionAPI(token, type, year ?? dateNow.getFullYear(), month ?? dateNow.getMonth(),1)
-        const data = res[0] as Transaction
+        const data = res[0]
         setTopTransaction({
           value: data.value,
           info: data.details || '',

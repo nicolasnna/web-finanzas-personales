@@ -22,7 +22,7 @@ interface NetTransactionCardProps {
   month?: number;
 }
 
-export function NetTransactionCard({
+export function CardNetTransaction({
   value,
   currency,
   info,

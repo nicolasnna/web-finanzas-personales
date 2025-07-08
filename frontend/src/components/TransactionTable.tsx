@@ -180,10 +180,10 @@ export function TransactionTable({ type }: TransactionTableProps) {
         {transaction.length !== 0 && (
           <div className="flex items-center gap-1 ">
             <strong className="text-sm">{transaction.length}</strong>
-            <span className="text-sm">Transacciones obtenidas</span>
+            <span className="text-sm">Transacciones mostradas</span>
             <Button
               variant="secondary"
-              className="my-0"
+              className="my-0 mx-1"
               disabled={!token}
               onClick={getNextValues}
             >

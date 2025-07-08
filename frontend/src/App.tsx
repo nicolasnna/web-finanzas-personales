@@ -5,6 +5,7 @@ import Incomes from "./routes/Incomes"
 import { URLS } from "./utils/constants"
 import { useContext, useEffect } from "react"
 import { AuthContext } from "./context/authContext"
+import Expenses from "./routes/Expenses"
 
 function App() {
   const user = useContext(AuthContext)
@@ -21,6 +22,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Dashboard />} />
         <Route path={URLS.INCOMES} element={<Incomes />} />
+        <Route path={URLS.EXPENSES} element={<Expenses />} />
       </Routes>
     </Layout>
   )

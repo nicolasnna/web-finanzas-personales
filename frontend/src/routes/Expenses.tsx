@@ -3,14 +3,14 @@ import CategoryForm from "@/components/Form/CategoryForm";
 import TransactionForm from "@/components/Form/TransactionForm";
 import { TransactionTable } from "@/components/TransactionTable";
 
-const Incomes = () => {
+const Expenses = () => {
 
   return (
     <div className="mx-5 xl:mx-[250px] my-10 flex flex-col gap-5">
       <CardContainer
         classNameBody="p-4 pb-2"
       >
-        <TransactionTable type="incomes"/>
+        <TransactionTable type="expenses"/>
       </CardContainer>
       <section className='grid md:grid-cols-3 z-10 gap-5'>
         <CardContainer
@@ -19,7 +19,7 @@ const Incomes = () => {
           classNameHeader='pt-4'
           classNameBody='pb-2'
         >
-          <CategoryForm typeDefault="incomes"/>
+          <CategoryForm typeDefault="expenses"/>
         </CardContainer>
         <CardContainer
           title='Registrar nueva transacción'
@@ -27,11 +27,11 @@ const Incomes = () => {
           classNameHeader='pt-4'
           classNameBody='pb-4'
         >
-          <TransactionForm typeDefault="incomes"/>
+          <TransactionForm typeDefault="expenses"/>
         </CardContainer>
       </section>
     </div>
   );
 };
 
-export default Incomes;
+export default Expenses;
