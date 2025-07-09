@@ -7,7 +7,6 @@ import {
   BadgeDollarSign,
   ChartLine,
   ShoppingCart,
-  UserRoundPen,
 } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router';
 
@@ -33,13 +32,13 @@ const views = [
     url: '/expenses',
     title: 'Mis gastos',
   },
-  {
-    id: 'perfil',
-    text: 'Perfil',
-    icon: UserRoundPen,
-    url: '/profile',
-    title: 'Mi perfil',
-  },
+  // {
+  //   id: 'perfil',
+  //   text: 'Perfil',
+  //   icon: UserRoundPen,
+  //   url: '/profile',
+  //   title: 'Mi perfil',
+  // },
 ];
 const selectedButtton = 'bg-blizzard-blue-200 text-secondary-950 font-bold';
 

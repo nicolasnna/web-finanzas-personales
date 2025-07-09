@@ -51,11 +51,12 @@ const RegisterForm = () => {
 
   const handleRegisterUser = async (email: string, password: string) => {
     try {
-      const result = await registerEmailUser(email, password);
-      console.log("Registro exitoso:", result);
+      await registerEmailUser(email, password);
+      toast.success('Usuario registrado con exito')
+      // console.log("Registro exitoso:", result);
       return true
-    } catch (error) {
-      console.error("Error al registrar:", error);
+    } catch {
+      // console.error("Error al registrar:", error);
       return false
     }
   }
@@ -74,28 +75,6 @@ const RegisterForm = () => {
           <Form {...form}>
             <form onSubmit={form.handleSubmit(() => {})}>
               <div className="space-y-4 px-5">
-
-              <FormField
-                  control={form.control}
-                  name="name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <Input
-                          type="text"
-                          placeholder="Nombre"
-                          {...field}
-                          className={
-                            form.formState.errors.email
-                              ? "border-red-500"
-                              : "border-blizzard-blue-950"
-                          }
-                        />
-                      </FormControl>
-                      <FormMessage/>
-                    </FormItem>
-                  )}
-                />
 
                 <FormField
                   control={form.control}
