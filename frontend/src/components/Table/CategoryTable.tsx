@@ -12,6 +12,7 @@ import { useState } from 'react';
 import { Button } from '../ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
 import { DialogUpdateCategory } from '../Dialog/DialogUpdateCategory';
+import { DialogDeleteCategory } from '../Dialog/DialogDeleteCategory';
 
 interface CategoryTableInput {
   type: 'incomes' | 'expenses';
@@ -86,6 +87,10 @@ export function CategoryTable({ type }: CategoryTableInput) {
                 </TableCell>))}
               <TableCell className='p-2 flex justify-center gap-4'>
                 <DialogUpdateCategory
+                  type={type ?? 'incomes'}
+                  data={row.original}
+                />
+                <DialogDeleteCategory 
                   type={type ?? 'incomes'}
                   data={row.original}
                 />

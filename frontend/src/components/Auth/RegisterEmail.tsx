@@ -27,7 +27,8 @@ const RegisterForm = () => {
     defaultValues: {
       name: '',
       email: '',
-      password: ''
+      password: '',
+      confirmPassword: ''
     }
   })
 
@@ -127,6 +128,28 @@ const RegisterForm = () => {
                         <Input
                           type="password"
                           placeholder="Contraseña"
+                          {...field}
+                          className={
+                            form.formState.errors.password
+                              ? "border-red-500"
+                              : "border-blizzard-blue-950"
+                          }
+                        />
+                      </FormControl>
+                      <FormMessage/>
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="confirmPassword"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input
+                          type="password"
+                          placeholder="Escribir contraseña nuevamente"
                           {...field}
                           className={
                             form.formState.errors.password
