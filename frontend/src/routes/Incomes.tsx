@@ -31,7 +31,7 @@ const Incomes = () => {
       const res = await getCountsTotalAPI(token)
 
       if (res instanceof Error) return
-      console.log(res)
+
       setTotalCounts(res)
     }
     fetchCounts()
