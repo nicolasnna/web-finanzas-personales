@@ -1,8 +1,10 @@
 import { getTopTransactionAPI } from "@/api/resumes";
 import { AuthContext } from "@/context/authContext";
 import { months } from "@/utils/constants";
-import { HTMLProps, useContext, useEffect, useState } from "react";
+import { HTMLProps, useCallback, useContext, useEffect, useState } from "react";
 import CardInfo from "./CardInfo";
+import { useTypeTransactionStore } from "@/hooks/useTypeTransactionStore";
+import { sortTransactions } from "@/utils/functions";
 
 interface TopTransactionCardProps {
   type: 'incomes' | 'expenses',
@@ -19,14 +21,14 @@ interface CardInfo {
 
 const defaultValues: Record<string, CardInfo> = {
   incomes: {
-    value: 800000,
+    value: 0,
     currency: 'CLP',
-    info: 'Sueldo mayo',
+    info: '',
   },
   expenses: {
-    value: 300000,
+    value: 0,
     currency: 'CLP',
-    info: 'Compra celular',
+    info: '',
   }
 }
 
@@ -34,6 +36,7 @@ export function CardTopTransaction({type, className, month, year}: TopTransactio
   const [topTransaction, setTopTransaction] = useState<CardInfo>(defaultValues[type])
   const token = useContext(AuthContext).token
   const title = type === 'incomes' ? 'Mayor ingreso del mes' : 'Mayor gasto del mes'
+  const transactions = useTypeTransactionStore(type).transaction
 
   useEffect(() => {
     const getTop = async () => {
@@ -61,6 +64,29 @@ export function CardTopTransaction({type, className, month, year}: TopTransactio
     getTop()
   }, [token, type, month, year])
 
+  const getTopTransactionLocal = useCallback(() => {
+    if (token) return
+    if (transactions.length === 0) {
+      setTopTransaction(defaultValues[type])
+      return
+    }
+    const filterDate = transactions.filter(t => new Date(t.date).getMonth()+1 === month && new Date(t.date).getFullYear() === year )
+    if (filterDate.length === 0){
+      setTopTransaction(defaultValues[type])
+      return
+    }
+    const sorted = [...filterDate].sort(sortTransactions)
+    console.log(sorted)
+    setTopTransaction({
+      value: sorted[0].value,
+      info: sorted[0].details ?? '',
+      currency: sorted[0].currency
+    })
+  }, [token, month, year, transactions, type])
+
+  useEffect(() => {
+    if (!token) getTopTransactionLocal()
+  }, [token, getTopTransactionLocal])
 
   return (
     <CardInfo
