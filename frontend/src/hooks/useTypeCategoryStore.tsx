@@ -6,7 +6,7 @@ import { useLocalStorage } from './useLocalStorage';
 import { Category } from '@/types';
 
 export function useTypeCategoryStore(type: 'incomes' | 'expenses') {
-  const localFunctions = useLocalStorage(type)
+  const localFunctions = useLocalStorage(type === 'incomes' ? 'categoryIncomes' : 'categoryExpenses')
 
   const categoriesIncomes = useIncomeCategoriesStore((s) => s.categories);
   const categoriesExpenses = useExpenseCategoriesStore((s) => s.categories);
