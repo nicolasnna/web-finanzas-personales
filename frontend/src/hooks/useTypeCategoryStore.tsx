@@ -2,8 +2,12 @@ import {
   useExpenseCategoriesStore,
   useIncomeCategoriesStore,
 } from '@/store/useCategoryStore';
+import { useLocalStorage } from './useLocalStorage';
+import { Category } from '@/types';
 
 export function useTypeCategoryStore(type: 'incomes' | 'expenses') {
+  const localFunctions = useLocalStorage(type)
+
   const categoriesIncomes = useIncomeCategoriesStore((s) => s.categories);
   const categoriesExpenses = useExpenseCategoriesStore((s) => s.categories);
 
@@ -40,11 +44,17 @@ export function useTypeCategoryStore(type: 'incomes' | 'expenses') {
   const deleteCategory =
     type === 'incomes' ? deleteCategoryIncomes : deleteCategoryExpenses;
 
+  const loadFromLocalStorage = () => {
+    const demoValues = localFunctions.getValues() as Category[]
+    setCategories(demoValues)
+  }
+
   return {
     categories,
     addCategory,
     updateCategory,
     setCategories,
     deleteCategory,
+    loadFromLocalStorage
   };
 }

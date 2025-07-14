@@ -1,0 +1,180 @@
+{
+  "categoryIncomes": [
+    { "id": "ci1", "category": "Sueldo" },
+    { "id": "ci2", "category": "Freelance" },
+    { "id": "ci3", "category": "Inversiones" },
+    { "id": "ci4", "category": "Intereses" },
+    { "id": "ci5", "category": "Regalos" }
+  ],
+  "categoryExpenses": [
+    { "id": "ce1", "category": "Alimentos" },
+    { "id": "ce2", "category": "Transporte" },
+    { "id": "ce3", "category": "Entretenimiento" },
+    { "id": "ce4", "category": "Servicios" },
+    { "id": "ce5", "category": "Salud" }
+  ],
+  "incomes": [
+    {
+      "id": "i1",
+      "category": "Sueldo",
+      "details": "Pago mensual",
+      "currency": "CLP",
+      "value": 1200000,
+      "date": "2025-01-05T08:30:00.000Z"
+    },
+    {
+      "id": "i2",
+      "category": "Freelance",
+      "details": "Proyecto diseño web",
+      "currency": "CLP",
+      "value": 250000,
+      "date": "2025-01-20T14:45:00.000Z"
+    },
+    {
+      "id": "i3",
+      "category": "Inversiones",
+      "details": "Dividendos trimestrales",
+      "currency": "CLP",
+      "value": 80000,
+      "date": "2025-02-10T10:00:00.000Z"
+    },
+    {
+      "id": "i4",
+      "category": "Sueldo",
+      "details": "Pago mensual",
+      "currency": "CLP",
+      "value": 1200000,
+      "date": "2025-02-05T08:30:00.000Z"
+    },
+    {
+      "id": "i5",
+      "category": "Intereses",
+      "details": "Cuenta de ahorros",
+      "currency": "CLP",
+      "value": 15000,
+      "date": "2025-02-28T16:20:00.000Z"
+    },
+    {
+      "id": "i6",
+      "category": "Regalos",
+      "details": "Reembolso cumpleaños",
+      "currency": "CLP",
+      "value": 50000,
+      "date": "2025-03-12T12:00:00.000Z"
+    },
+    {
+      "id": "i7",
+      "category": "Freelance",
+      "details": "Desarrollo app móvil",
+      "currency": "CLP",
+      "value": 300000,
+      "date": "2025-03-25T09:15:00.000Z"
+    },
+    {
+      "id": "i8",
+      "category": "Sueldo",
+      "details": "Pago mensual",
+      "currency": "CLP",
+      "value": 1200000,
+      "date": "2025-03-05T08:30:00.000Z"
+    },
+    {
+      "id": "i9",
+      "category": "Inversiones",
+      "details": "Venta de acciones",
+      "currency": "CLP",
+      "value": 200000,
+      "date": "2025-04-15T11:00:00.000Z"
+    },
+    {
+      "id": "i10",
+      "category": "Intereses",
+      "details": "Cuenta a plazo",
+      "currency": "CLP",
+      "value": 20000,
+      "date": "2025-04-30T17:45:00.000Z"
+    }
+  ],
+  "expenses": [
+    {
+      "id": "e1",
+      "category": "Alimentos",
+      "details": "Supermercado",
+      "currency": "CLP",
+      "value": 85000,
+      "date": "2025-01-08T19:00:00.000Z"
+    },
+    {
+      "id": "e2",
+      "category": "Transporte",
+      "details": "Abono Metro",
+      "currency": "CLP",
+      "value": 40000,
+      "date": "2025-01-10T08:00:00.000Z"
+    },
+    {
+      "id": "e3",
+      "category": "Entretenimiento",
+      "details": "Cine y cena",
+      "currency": "CLP",
+      "value": 30000,
+      "date": "2025-02-14T21:30:00.000Z"
+    },
+    {
+      "id": "e4",
+      "category": "Servicios",
+      "details": "Electricidad",
+      "currency": "CLP",
+      "value": 60000,
+      "date": "2025-02-20T10:00:00.000Z"
+    },
+    {
+      "id": "e5",
+      "category": "Salud",
+      "details": "Dentista",
+      "currency": "CLP",
+      "value": 120000,
+      "date": "2025-03-03T15:30:00.000Z"
+    },
+    {
+      "id": "e6",
+      "category": "Alimentos",
+      "details": "Comida rápida",
+      "currency": "CLP",
+      "value": 15000,
+      "date": "2025-03-12T13:45:00.000Z"
+    },
+    {
+      "id": "e7",
+      "category": "Transporte",
+      "details": "Taxi",
+      "currency": "CLP",
+      "value": 20000,
+      "date": "2025-03-22T23:10:00.000Z"
+    },
+    {
+      "id": "e8",
+      "category": "Entretenimiento",
+      "details": "Concierto",
+      "currency": "CLP",
+      "value": 75000,
+      "date": "2025-04-05T20:00:00.000Z"
+    },
+    {
+      "id": "e9",
+      "category": "Servicios",
+      "details": "Agua",
+      "currency": "CLP",
+      "value": 30000,
+      "date": "2025-04-18T11:15:00.000Z"
+    },
+    {
+      "id": "e10",
+      "category": "Salud",
+      "details": "Óptica",
+      "currency": "CLP",
+      "value": 90000,
+      "date": "2025-04-28T14:00:00.000Z"
+    }
+  ]
+}

@@ -1,4 +1,5 @@
 import { Category, Transaction } from "@/types"
+import { demoValues } from "@/utils/constants"
 
 type TypeCategories = 'categoryIncomes' | 'categoryExpenses'
 type TypeTransaction = 'incomes' | 'expenses'
@@ -32,10 +33,22 @@ export function useLocalStorage(type: TypeTransaction | TypeCategories) {
     }
   }
 
+  const cleanLocalValues = () => {
+    localStorage.removeItem(type)
+  }
+
+  const setupDemoValues = () => {
+    if (getValues() === null) {
+      localStorage.setItem(type, JSON.stringify(demoValues[type]))
+    }
+  }
+
   return {
     getValues,
     addValue,
     deleteValue,
-    updateValue
+    updateValue,
+    cleanLocalValues,
+    setupDemoValues
   }
 }

@@ -1,3 +1,14 @@
+import demoData from '@/utils/dataDemo.json'
+
+const {categoryIncomes, categoryExpenses, incomes, expenses } = demoData 
+
+export const demoValues = {
+  categoryIncomes,
+  categoryExpenses,
+  incomes,
+  expenses
+}
+
 export const URLS = {
   API_URL: import.meta.env.VITE_BACKEND_URL,
   HOME: '/',
@@ -8,7 +19,6 @@ export const URLS = {
   SERVER_ERROR: '/500',
   UNAUTHORIZED: '/401',
 };
-
 
 export const defaultCategoryExpense = [
   { category: 'Alquiler' },

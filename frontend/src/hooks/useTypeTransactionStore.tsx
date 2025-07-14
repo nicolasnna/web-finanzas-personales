@@ -1,6 +1,10 @@
 import { useExpensesStore, useIncomesStore } from '@/store/useTransactionStore';
+import { useLocalStorage } from './useLocalStorage';
+import { Transaction } from '@/types';
 
 export function useTypeTransactionStore(type: 'incomes' | 'expenses') {
+  const localFunctions = useLocalStorage(type)
+
   const incomesTransaction = useIncomesStore((s) => s.transactions);
   const expensesTransaction = useExpensesStore((s) => s.transactions);
 
@@ -29,12 +33,18 @@ export function useTypeTransactionStore(type: 'incomes' | 'expenses') {
   const deleteTransaction = type === 'incomes' ? deleteIncomes : deleteExpenses;
   const updateTransaction = type === 'incomes' ? updateIncomes : updateExpenses
 
+  const loadFromLocalStorage = () => {
+    const demoValues = localFunctions.getValues() as Transaction[]
+    setTransaction(demoValues)
+  }
+
   return {
     transaction,
     setTransaction,
     addTransaction,
     addTransactionArray,
     deleteTransaction,
-    updateTransaction
+    updateTransaction,
+    loadFromLocalStorage
   };
 }
