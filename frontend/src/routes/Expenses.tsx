@@ -6,9 +6,10 @@ import TransactionForm from "@/components/Form/TransactionForm";
 import { CategoryTable } from "@/components/Table/CategoryTable";
 import { TransactionTable } from "@/components/Table/TransactionTable";
 import { AuthContext } from "@/context/authContext";
+import { useExpenseCategoriesStore } from "@/store/useCategoryStore";
 import { useExpensesStore } from "@/store/useTransactionStore";
 import { TotalCountsAPI } from "@/types";
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 
 const Expenses = () => {
   const token = useContext(AuthContext).token
@@ -19,6 +20,8 @@ const Expenses = () => {
     categoryExpenses: 0
   })
   const transactionsExpenses = useExpensesStore(s => s.transactions)
+  const categoriesExpenses = useExpenseCategoriesStore(s => s.categories)
+
   const totalAccumulative = useMemo(() => {
     if (transactionsExpenses.length === 0) return 0 
     const onlyValues = transactionsExpenses.map(t => t.value)
@@ -29,14 +32,26 @@ const Expenses = () => {
     const fetchCounts = async () => {
       if (!token) return
       const res = await getCountsTotalAPI(token)
-
       if (res instanceof Error) return
-
       setTotalCounts(res)
     }
     fetchCounts()
 
   }, [token])
+
+  const checkCounts = useCallback(() => {
+    if (token) return
+    setTotalCounts({
+          incomes: 0,
+          expenses: transactionsExpenses.length,
+          categoryIncomes: 0,
+          categoryExpenses: categoriesExpenses.length
+        })
+  }, [token, transactionsExpenses, categoriesExpenses])
+
+  useEffect(() => {
+    if (!token) checkCounts()
+  }, [token, checkCounts])
 
   return (
     <div className="mx-5 xl:mx-[250px] my-10 flex flex-col gap-5">

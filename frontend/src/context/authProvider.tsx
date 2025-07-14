@@ -55,6 +55,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     sessionStorage.removeItem("auth")
     cleanValuesStore()
     setToken(null)
+    location.reload()
   }
 
   return (
