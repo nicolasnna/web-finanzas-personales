@@ -27,7 +27,7 @@ app.use(cors({
   credentials: true,
 }))
 
-app.use("/api/auth", authRouter)
+// app.use("/api/auth", authRouter)
 
 // app.use("/api", categoryRouter)
 // app.use("/api", transactionRouter)
