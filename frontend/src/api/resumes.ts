@@ -1,6 +1,7 @@
 import { RawResumeTransactionByMonth } from '@/hooks/useAreaChartData';
 import { RawResumeTransaction } from '@/hooks/usePieChartData';
-import { RawResumeTransactionByMonthAPI, TotalCountsAPI, Transaction } from '@/types';
+import { RawResumeTransactionByMonthAPI, TotalCountsAPI } from '@/types/Promises.interface';
+import { Transaction } from '@/types/Transaction.interface';
 import { apiRequest } from '@/utils/apiRequest';
 import { URLS } from '@/utils/constants';
 

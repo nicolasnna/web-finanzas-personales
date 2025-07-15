@@ -4,7 +4,7 @@ import { AuthContext } from '@/context/authContext';
 import { useLoadCategories } from '@/hooks/useLoadCategories';
 import { useTypeCategoryStore } from '@/hooks/useTypeCategoryStore';
 import { useTypeTransactionStore } from '@/hooks/useTypeTransactionStore';
-import { Transaction, TransactionSchema, TransactionTypeForm, TypeTransaction } from '@/types';
+import { Transaction, TransactionSchema, TransactionTypeForm } from '@/types/Transaction.interface';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -21,6 +21,7 @@ import { Button } from '../ui/button';
 import { Form } from '../ui/form';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { generateId } from '@/utils/functions';
+import { TypeTransaction } from '@/types/Type.interface';
 
 const dictAddTransaction: Record<string, (data: Transaction, token: string) => Promise<Transaction | Error>> = {
   incomes: addIncomeAPI,

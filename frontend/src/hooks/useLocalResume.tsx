@@ -2,7 +2,7 @@ import { useExpensesStore, useIncomesStore } from '@/store/useTransactionStore';
 import { useMemo } from 'react';
 import { RawResumeTransactionByMonth } from './useAreaChartData';
 import { RawResumeTransaction } from './usePieChartData';
-import { Transaction } from '@/types';
+import { Transaction } from '@/types/Transaction.interface';
 
 export function useLocalResume(year: number, month: number) {
   const incomes = useIncomesStore((s) => s.transactions);

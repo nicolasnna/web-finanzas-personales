@@ -1,7 +1,7 @@
 import { deleteExpensesAPI } from "@/api/expenses"
 import { deleteIncomesAPI } from "@/api/incomes"
 import { AuthContext } from "@/context/authContext"
-import { Transaction } from "@/types"
+import { Transaction } from "@/types/Transaction.interface"
 import { Eraser } from "lucide-react"
 import { useContext, useState } from "react"
 import { toast } from "sonner"

@@ -1,4 +1,4 @@
-import { Category } from "@/types"
+import { Category } from "@/types/Category.interface"
 import { Eraser } from "lucide-react"
 import { useContext, useState } from "react"
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "../ui/alert-dialog"

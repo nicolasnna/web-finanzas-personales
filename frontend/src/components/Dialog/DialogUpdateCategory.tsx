@@ -1,4 +1,4 @@
-import { Category, CategorySchema, CategoryTypeForm } from "@/types";
+import { Category, CategorySchema, CategoryTypeForm } from "@/types/Category.interface";
 import { Pencil } from "lucide-react";
 import { useContext, useState } from "react";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "../ui/alert-dialog";

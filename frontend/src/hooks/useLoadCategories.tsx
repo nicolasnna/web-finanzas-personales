@@ -2,7 +2,7 @@ import { getExpenseCategoryAPI } from "@/api/expenseCategories";
 import { getIncomeCategoryAPI } from "@/api/incomeCategories";
 import { AuthContext } from "@/context/authContext";
 import { useExpenseCategoriesStore, useIncomeCategoriesStore } from "@/store/useCategoryStore";
-import { Category } from "@/types";
+import { Category } from "@/types/Category.interface";
 import { useCallback, useContext, useEffect } from "react";
 import { toast } from "sonner";
 

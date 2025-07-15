@@ -1,4 +1,4 @@
-import { Category } from '@/types';
+import { Category } from '@/types/Category.interface';
 import { create } from 'zustand';
 
 interface CategoryState {

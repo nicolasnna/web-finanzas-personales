@@ -2,7 +2,7 @@ import { addExpenseCategoryAPI } from '@/api/expenseCategories';
 import { addIncomeCategoryAPI } from '@/api/incomeCategories';
 import { AuthContext } from '@/context/authContext';
 import { useTypeCategoryStore } from '@/hooks/useTypeCategoryStore';
-import { Category, CategorySchema, CategoryTypeForm } from '@/types';
+import { Category, CategorySchema, CategoryTypeForm } from '@/types/Category.interface';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';

@@ -1,6 +1,6 @@
 import { useExpensesStore, useIncomesStore } from '@/store/useTransactionStore';
 import { useLocalStorage } from './useLocalStorage';
-import { Transaction } from '@/types';
+import { Transaction } from '@/types/Transaction.interface';
 
 export function useTypeTransactionStore(type: 'incomes' | 'expenses') {
   const localFunctions = useLocalStorage(type)

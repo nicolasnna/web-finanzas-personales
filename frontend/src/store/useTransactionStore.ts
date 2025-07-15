@@ -1,4 +1,4 @@
-import { Transaction } from '@/types';
+import { Transaction } from '@/types/Transaction.interface';
 import { create } from 'zustand';
 
 interface TransactionState {

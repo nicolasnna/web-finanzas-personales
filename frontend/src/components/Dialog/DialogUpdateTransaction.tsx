@@ -3,7 +3,7 @@ import { updateIncomesAPI } from '@/api/incomes';
 import { AuthContext } from '@/context/authContext';
 import { useTypeCategoryStore } from '@/hooks/useTypeCategoryStore';
 import { useTypeTransactionStore } from '@/hooks/useTypeTransactionStore';
-import { Transaction, TransactionSchema, TransactionTypeForm } from '@/types';
+import { Transaction, TransactionSchema, TransactionTypeForm } from '@/types/Transaction.interface';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Pencil } from 'lucide-react';
 import { useContext, useState } from 'react';

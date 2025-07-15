@@ -1,4 +1,4 @@
-import { Transaction } from '@/types';
+import { Transaction } from '@/types/Transaction.interface';
 import { apiRequest } from '@/utils/apiRequest';
 import { URLS } from '@/utils/constants';
 

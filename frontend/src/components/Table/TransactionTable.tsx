@@ -2,7 +2,7 @@ import { getExpensesAPI } from '@/api/expenses';
 import { getIncomesAPI } from '@/api/incomes';
 import { AuthContext } from '@/context/authContext';
 import { useTypeTransactionStore } from '@/hooks/useTypeTransactionStore';
-import { TransactionColumns } from '@/types';
+import { TransactionColumns } from '@/types/Transaction.interface';
 import {
   flexRender,
   getCoreRowModel,

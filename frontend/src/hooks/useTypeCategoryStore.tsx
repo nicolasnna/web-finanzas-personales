@@ -3,7 +3,7 @@ import {
   useIncomeCategoriesStore,
 } from '@/store/useCategoryStore';
 import { useLocalStorage } from './useLocalStorage';
-import { Category } from '@/types';
+import { Category } from '@/types/Category.interface';
 
 export function useTypeCategoryStore(type: 'incomes' | 'expenses') {
   const localFunctions = useLocalStorage(

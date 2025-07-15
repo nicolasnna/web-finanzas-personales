@@ -1,4 +1,6 @@
-import { Category, Transaction, TypeCategories, TypeTransaction } from "@/types"
+import { Category } from "@/types/Category.interface"
+import { Transaction } from "@/types/Transaction.interface"
+import { TypeCategories, TypeTransaction } from "@/types/Type.interface"
 import { demoValues } from "@/utils/constants"
 
 export function useLocalStorage(type: TypeTransaction | TypeCategories) {
@@ -36,7 +38,7 @@ export function useLocalStorage(type: TypeTransaction | TypeCategories) {
 
   const setupDemoValues = () => {
     if (getValues() === null) {
-      localStorage.setItem(type, JSON.stringify(demoValues[type]))
+      localStorage.setItem(type, JSON.stringify(demoValues[type]) as string);
     }
   }
 

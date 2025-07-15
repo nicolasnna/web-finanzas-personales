@@ -1,5 +1,5 @@
 import { useTypeCategoryStore } from '@/hooks/useTypeCategoryStore';
-import { CategoryColumns } from '@/types';
+import { CategoryColumns } from '@/types/Category.interface';
 import {
   flexRender,
   getCoreRowModel,

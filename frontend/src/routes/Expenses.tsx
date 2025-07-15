@@ -8,7 +8,7 @@ import { TransactionTable } from "@/components/Table/TransactionTable";
 import { AuthContext } from "@/context/authContext";
 import { useExpenseCategoriesStore } from "@/store/useCategoryStore";
 import { useExpensesStore } from "@/store/useTransactionStore";
-import { TotalCountsAPI } from "@/types";
+import { TotalCountsAPI } from "@/types/Promises.interface";
 import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 
 const Expenses = () => {
