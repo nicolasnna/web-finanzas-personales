@@ -3,7 +3,7 @@ import authRouter from "./routes/auth.routes"
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import swaggerUi from 'swagger-ui-express'
-import swaggerSpec from '@/swagger'
+import swaggerSpec from './swagger'
 import transactionRouter from "./routes/transaction.routes"
 import categoryRouter from "./routes/category.routes"
 import resumeRouter from "./routes/resume.routes"
@@ -20,11 +20,11 @@ app.use(cors({
   credentials: true,
 }))
 
-app.use("/api/auth", authRouter)
+// app.use("/api/auth", authRouter)
 
-app.use("/api", categoryRouter)
-app.use("/api", transactionRouter)
-app.use('/api', resumeRouter)
+// app.use("/api", categoryRouter)
+// app.use("/api", transactionRouter)
+// app.use('/api', resumeRouter)
 
 app.get("/", (_, res) => {
   res.status(200).send("API funcionando")

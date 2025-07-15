@@ -20,7 +20,7 @@ import {
 import { db } from "@/firebase/firebase";
 import { TransactionData } from "@/types/TransactionData.interface";
 import { Category } from "@/types/category.interface";
-import { CollectionName, TransactionName } from "@/types/CollectionName.type";
+import { CollectionName } from "@/types/CollectionName.type";
 
 
 export const transformDocumentToDataTransaction = (docSnapshot: QuerySnapshot<DocumentData, DocumentData>) => {
