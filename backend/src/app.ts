@@ -14,7 +14,6 @@ app.use(cookieParser())
 app.use(express.json())
 
 const CSS_URL = "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.min.css";
-
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec, { customCssUrl: CSS_URL }))
 app.use(cors({
   origin: 'http://localhost:5173',
@@ -23,7 +22,7 @@ app.use(cors({
   credentials: true,
 }))
 
-app.use("/api/auth", authRouter)
+// app.use("/api/auth", authRouter)
 
 // app.use("/api", categoryRouter)
 // app.use("/api", transactionRouter)
