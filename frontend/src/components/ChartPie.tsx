@@ -49,7 +49,7 @@ function ChartPie({className, title, month, year, chartConfig, chartData} : Char
   const token = useContext(AuthContext).token
   const chartDataToUse = useMemo(() => {
     if (token) return chartData ?? [] // En caso de estar el usuario logeado
-    return chartData?.length ? chartData : exampleChartData
+    return chartData?.length ? chartData : []
   }, [chartData, token])
   const configToUse = useMemo(() => {
     return chartConfig && Object.keys(chartConfig).length > 1 ? chartConfig : exampleChartConfig

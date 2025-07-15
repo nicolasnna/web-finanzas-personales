@@ -76,7 +76,6 @@ export function CardTopTransaction({type, className, month, year}: TopTransactio
       return
     }
     const sorted = [...filterDate].sort(sortTransactions)
-    console.log(sorted)
     setTopTransaction({
       value: sorted[0].value,
       info: sorted[0].details ?? '',

@@ -23,7 +23,7 @@ function Dashboard() {
   const dataPieExpenses = usePieChartData()
   const dataAreaChart = UseAreaChartData()
   const user = useContext(AuthContext)
-  const localResumes = useLocalResume(year)
+  const localResumes = useLocalResume(year, month)
 
   useEffect(() => {
     const fetchAllSummary = async () => {
@@ -72,8 +72,10 @@ function Dashboard() {
     if (user.token) return
     dataAreaChart.setRawIncome(localResumes.rawIncomeByMonth)
     dataAreaChart.setRawExpense(localResumes.rawExpenseByMonth)
+    dataPieIncomes.setDataRaw(localResumes.rawIncomeByCategory)
+    dataPieExpenses.setDataRaw(localResumes.rawExpenseByCategory)
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user.token, localResumes.rawExpenseByMonth, localResumes.rawIncomeByMonth])
+  }, [user.token, localResumes])
 
   const handleClickAreaChart = (e: {activeTooltipIndex: number}) => {
     if (Object.keys(e).length === 0) return 
