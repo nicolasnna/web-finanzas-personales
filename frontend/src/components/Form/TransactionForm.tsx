@@ -1,11 +1,14 @@
+import { addExpenseAPI } from '@/api/expenses';
+import { addIncomeAPI } from '@/api/incomes';
+import { AuthContext } from '@/context/authContext';
 import { useLoadCategories } from '@/hooks/useLoadCategories';
-import {
-  useExpenseCategoriesStore,
-  useIncomeCategoriesStore,
-} from '@/store/useCategoryStore';
-import { Transaction, TransactionSchema, TransactionTypeForm } from '@/types';
+import { useTypeCategoryStore } from '@/hooks/useTypeCategoryStore';
+import { useTypeTransactionStore } from '@/hooks/useTypeTransactionStore';
+import { Transaction, TransactionSchema, TransactionTypeForm, TypeTransaction } from '@/types';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import {
   CategoryFormField,
   DateFormField,
@@ -16,12 +19,8 @@ import {
 import CurrencyFormField from '../FormField/CurrencyFormField';
 import { Button } from '../ui/button';
 import { Form } from '../ui/form';
-import { addIncomeAPI } from '@/api/incomes';
-import { addExpenseAPI } from '@/api/expenses';
-import { useContext, useState } from 'react';
-import { AuthContext } from '@/context/authContext';
-import { toast } from 'sonner';
-import { useExpensesStore, useIncomesStore } from '@/store/useTransactionStore';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
+import { generateId } from '@/utils/functions';
 
 const dictAddTransaction: Record<string, (data: Transaction, token: string) => Promise<Transaction | Error>> = {
   incomes: addIncomeAPI,
@@ -34,8 +33,6 @@ interface TransactionFormInput {
 
 function TransactionForm({typeDefault}: TransactionFormInput) {
   const [disable, setDisable] = useState<boolean>(false)
-  const incomeCategories = useIncomeCategoriesStore((s) => s.categories);
-  const expenseCategories = useExpenseCategoriesStore((s) => s.categories);
   const form = useForm<TransactionTypeForm>({
     resolver: zodResolver(TransactionSchema),
     defaultValues: {
@@ -49,13 +46,28 @@ function TransactionForm({typeDefault}: TransactionFormInput) {
   });
   const typeValue = form.watch('type');
   const token = useContext(AuthContext).token
-  const addIncomesStore = useIncomesStore(s => s.addTransaction)
-  const addExpensesStore = useExpensesStore(s => s.addTransaction)
+  const categories = useTypeCategoryStore(typeValue as TypeTransaction).categories
+  const addTransaction = useTypeTransactionStore(typeValue as TypeTransaction).addTransaction
+  const localManage = useLocalStorage(typeValue as TypeTransaction)
 
   useLoadCategories(typeValue);
 
   const handleSubmitForm = (values: TransactionTypeForm) => {
-    if (!token) return;
+    if (!token) {
+      const newTrans: Transaction = {
+        id: generateId(),
+        category: values.category,
+        details: values.details,
+        currency: values.currency,
+        value: values.value,
+        date: values.date
+      }
+      addTransaction(newTrans)
+      localManage.addValue(newTrans)
+      handleClearForm()
+      toast.success('Se ha creado la transacción ' + values.details)
+      return
+    };
     setDisable(() => true)
     toast.promise(dictAddTransaction[values.type](values, token),{
       loading: 'Creando registro...',
@@ -63,10 +75,7 @@ function TransactionForm({typeDefault}: TransactionFormInput) {
         setDisable(() => false)
         handleClearForm()
         // const dataToLoad = {...res, date: new Date(res.date)}
-        if (values.type === 'incomes') 
-          addIncomesStore(res as Transaction)
-        else if (values.type === 'expenses')
-          addExpensesStore(res as Transaction)
+        addTransaction(res as Transaction)
         return 'Registro creado con exito'
       },
       error: (err) => {
@@ -87,12 +96,6 @@ function TransactionForm({typeDefault}: TransactionFormInput) {
     });
   };
 
-  const categoriesToShow = (typeValue === 'incomes' && incomeCategories) ||
-    (typeValue === 'expenses' && expenseCategories) || [
-      { category: 'example1' },
-      { category: 'example2' },
-    ];
-
   return (
     <Form {...form}>
       <form
@@ -104,7 +107,7 @@ function TransactionForm({typeDefault}: TransactionFormInput) {
         <DateFormField className="col-span-2 lg:col-span-1" form={form} />
         <CategoryFormField
           form={form}
-          categories={categoriesToShow.map((c) => c.category)}
+          categories={categories.map((c) => c.category)}
           disable={!(typeValue === 'incomes' || typeValue === 'expenses')}
         />
         <ValueFormField form={form} />

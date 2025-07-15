@@ -28,7 +28,7 @@ function DetailsFormField<T extends { details: string }>({
             Detalle
           </FormLabel>
           <FormControl>
-            <Input placeholder="(Opcional)" {...field} />
+            <Input placeholder="Contexto de la transacción" {...field} />
           </FormControl>
           <FormMessage />
         </FormItem>

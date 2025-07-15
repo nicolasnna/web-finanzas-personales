@@ -35,7 +35,7 @@ export function TransactionTable({ type }: TransactionTableProps) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [pagination, setPagination] = useState({
     pageIndex: 0,
-    pageSize: 10,
+    pageSize: 8,
   });
   const token = useContext(AuthContext).token;
 

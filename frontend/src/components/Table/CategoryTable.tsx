@@ -24,7 +24,7 @@ export function CategoryTable({ type }: CategoryTableInput) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [pagination, setPagination] = useState({
     pageIndex: 0,
-    pageSize: 5,
+    pageSize: 8,
   });
   // const token = useContext(AuthContext).token;
 

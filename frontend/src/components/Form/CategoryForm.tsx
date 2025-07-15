@@ -11,6 +11,7 @@ import { NewCategoryFormField, TypeFormField } from '../FormField';
 import { Button } from '../ui/button';
 import { Form } from '../ui/form';
 import { generateId } from '@/utils/functions';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
 
 interface CategoryFormInput {
   typeDefault?: 'incomes' | 'expenses'
@@ -26,7 +27,7 @@ function CategoryForm({typeDefault}: CategoryFormInput) {
       type: typeDefault ?? '',
     },
   });
-
+  const localManage = useLocalStorage(form.watch().type === 'expenses' ? 'categoryExpenses' : 'categoryIncomes')
   const cleanCategories = useTypeCategoryStore(form.watch().type as 'incomes' | 'expenses' ?? 'incomes').cleanCategory
   const addCategory = useTypeCategoryStore(form.watch().type as 'incomes' | 'expenses' ?? 'incomes').addCategory
 
@@ -35,13 +36,16 @@ function CategoryForm({typeDefault}: CategoryFormInput) {
     expenses: addExpenseCategoryAPI
   }
 
-
   const handleSubmitForm = (values: CategoryTypeForm) => {
     if (!token) {
-      addCategory({
+      const newCat = {
+        id: generateId(),
         category: values.category,
-        id: generateId()
-      })
+      }
+      addCategory(newCat)
+      localManage.addValue(newCat)
+      form.reset({ category: '', type: ''})
+      toast.success('Se ha creado la categoría ' + values.category )
       return
     };
     setDisable(() => true)

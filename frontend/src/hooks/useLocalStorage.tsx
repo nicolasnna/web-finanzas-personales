@@ -1,8 +1,5 @@
-import { Category, Transaction } from "@/types"
+import { Category, Transaction, TypeCategories, TypeTransaction } from "@/types"
 import { demoValues } from "@/utils/constants"
-
-type TypeCategories = 'categoryIncomes' | 'categoryExpenses'
-type TypeTransaction = 'incomes' | 'expenses'
 
 export function useLocalStorage(type: TypeTransaction | TypeCategories) {
 
