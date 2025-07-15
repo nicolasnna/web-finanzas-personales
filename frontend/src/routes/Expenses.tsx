@@ -81,6 +81,7 @@ const Expenses = () => {
           <TransactionTable type="expenses"/>
         </CardContainer>
         <CardContainer
+          className="h-max"
           classNameBody="p-4 pb-2"
         >
           <CategoryTable type="expenses"/>
