@@ -27,6 +27,7 @@ import {
   AlertDialogTitle,
 } from '../ui/alert-dialog';
 import { Form } from '../ui/form';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
 
 interface DialogUpdateTransactionInput {
   data: Transaction;
@@ -43,6 +44,7 @@ export function DialogUpdateTransaction({
   const categories = useTypeCategoryStore(type).categories
   const token = useContext(AuthContext).token;
   const updateStore = useTypeTransactionStore(type).updateTransaction
+  const updateLocal = useLocalStorage(type).updateValue
 
   const updateForm = useForm<TransactionTypeForm>({
     resolver: zodResolver(TransactionSchema),
@@ -68,7 +70,15 @@ export function DialogUpdateTransaction({
   };
 
   const handleSubmit = () => {
-    if (!token || !data.id) return;
+    if (!data.id) return
+    const newData = {...updateForm.watch()}
+    if (!token) {
+      updateStore(data.id, newData)
+      updateLocal(data.id, newData)
+      toast.success('Se ha actualizado la transacción '+ newData.details)
+      setShowAlert(() => false)
+      return
+    };
     setDisable(() => true);
     toast.promise(
       apiUpdateTransaction[type](token, data.id, updateForm.watch()),

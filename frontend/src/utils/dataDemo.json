@@ -93,6 +93,110 @@
       "currency": "CLP",
       "value": 20000,
       "date": "2025-04-30T17:45:00.000Z"
+    },
+    {
+      "id": "i11",
+      "category": "Sueldo",
+      "details": "Pago mensual",
+      "currency": "CLP",
+      "value": 1200000,
+      "date": "2025-05-05T08:30:00.000Z"
+    },
+    {
+      "id": "i12",
+      "category": "Freelance",
+      "details": "Consultoría marketing",
+      "currency": "CLP",
+      "value": 180000,
+      "date": "2025-05-22T10:15:00.000Z"
+    },
+    {
+      "id": "i13",
+      "category": "Inversiones",
+      "details": "Intereses bonos",
+      "currency": "CLP",
+      "value": 50000,
+      "date": "2025-06-12T09:00:00.000Z"
+    },
+    {
+      "id": "i14",
+      "category": "Sueldo",
+      "details": "Pago mensual",
+      "currency": "CLP",
+      "value": 1200000,
+      "date": "2025-06-05T08:30:00.000Z"
+    },
+    {
+      "id": "i15",
+      "category": "Regalos",
+      "details": "Reembolso evento",
+      "currency": "CLP",
+      "value": 75000,
+      "date": "2025-07-10T14:00:00.000Z"
+    },
+    {
+      "id": "i16",
+      "category": "Freelance",
+      "details": "Desarrollo plugin",
+      "currency": "CLP",
+      "value": 220000,
+      "date": "2025-07-25T11:45:00.000Z"
+    },
+    {
+      "id": "i17",
+      "category": "Sueldo",
+      "details": "Pago mensual",
+      "currency": "CLP",
+      "value": 1200000,
+      "date": "2025-07-05T08:30:00.000Z"
+    },
+    {
+      "id": "i18",
+      "category": "Intereses",
+      "details": "Cuenta a plazo fijo",
+      "currency": "CLP",
+      "value": 30000,
+      "date": "2025-08-28T16:20:00.000Z"
+    },
+    {
+      "id": "i19",
+      "category": "Inversiones",
+      "details": "Dividendo anual",
+      "currency": "CLP",
+      "value": 120000,
+      "date": "2025-09-15T10:00:00.000Z"
+    },
+    {
+      "id": "i20",
+      "category": "Sueldo",
+      "details": "Pago mensual",
+      "currency": "CLP",
+      "value": 1200000,
+      "date": "2025-09-05T08:30:00.000Z"
+    },
+    {
+      "id": "i21",
+      "category": "Freelance",
+      "details": "Proyecto e‑commerce",
+      "currency": "CLP",
+      "value": 350000,
+      "date": "2025-10-20T13:00:00.000Z"
+    },
+    {
+      "id": "i22",
+      "category": "Regalos",
+      "details": "Bonificación empresa",
+      "currency": "CLP",
+      "value": 100000,
+      "date": "2025-11-30T09:30:00.000Z"
+    },
+    {
+      "id": "i23",
+      "category": "Sueldo",
+      "details": "Pago mensual",
+      "currency": "CLP",
+      "value": 1200000,
+      "date": "2025-12-05T08:30:00.000Z"
     }
   ],
   "expenses": [
@@ -175,6 +279,134 @@
       "currency": "CLP",
       "value": 90000,
       "date": "2025-04-28T14:00:00.000Z"
+    },
+    {
+      "id": "e11",
+      "category": "Alimentos",
+      "details": "Restaurante",
+      "currency": "CLP",
+      "value": 65000,
+      "date": "2025-05-15T19:30:00.000Z"
+    },
+    {
+      "id": "e12",
+      "category": "Transporte",
+      "details": "Gasolina",
+      "currency": "CLP",
+      "value": 50000,
+      "date": "2025-05-02T07:45:00.000Z"
+    },
+    {
+      "id": "e13",
+      "category": "Servicios",
+      "details": "Internet",
+      "currency": "CLP",
+      "value": 35000,
+      "date": "2025-06-10T12:00:00.000Z"
+    },
+    {
+      "id": "e14",
+      "category": "Alimentos",
+      "details": "Mercado local",
+      "currency": "CLP",
+      "value": 72000,
+      "date": "2025-06-22T18:15:00.000Z"
+    },
+    {
+      "id": "e15",
+      "category": "Salud",
+      "details": "Óptica",
+      "currency": "CLP",
+      "value": 88000,
+      "date": "2025-07-11T09:20:00.000Z"
+    },
+    {
+      "id": "e16",
+      "category": "Entretenimiento",
+      "details": "Obra de teatro",
+      "currency": "CLP",
+      "value": 45000,
+      "date": "2025-07-28T20:00:00.000Z"
+    },
+    {
+      "id": "e17",
+      "category": "Transporte",
+      "details": "Taller auto",
+      "currency": "CLP",
+      "value": 120000,
+      "date": "2025-08-05T11:30:00.000Z"
+    },
+    {
+      "id": "e18",
+      "category": "Servicios",
+      "details": "Gas",
+      "currency": "CLP",
+      "value": 30000,
+      "date": "2025-08-20T08:00:00.000Z"
+    },
+    {
+      "id": "e19",
+      "category": "Alimentos",
+      "details": "Café y snacks",
+      "currency": "CLP",
+      "value": 18000,
+      "date": "2025-09-09T15:45:00.000Z"
+    },
+    {
+      "id": "e20",
+      "category": "Salud",
+      "details": "Medicamentos",
+      "currency": "CLP",
+      "value": 40000,
+      "date": "2025-09-30T10:15:00.000Z"
+    },
+    {
+      "id": "e21",
+      "category": "Entretenimiento",
+      "details": "Streaming anual",
+      "currency": "CLP",
+      "value": 50000,
+      "date": "2025-10-12T21:00:00.000Z"
+    },
+    {
+      "id": "e22",
+      "category": "Transporte",
+      "details": "Abono autobús",
+      "currency": "CLP",
+      "value": 30000,
+      "date": "2025-10-03T07:00:00.000Z"
+    },
+    {
+      "id": "e23",
+      "category": "Servicios",
+      "details": "Cuenta cable",
+      "currency": "CLP",
+      "value": 55000,
+      "date": "2025-11-20T18:40:00.000Z"
+    },
+    {
+      "id": "e24",
+      "category": "Alimentos",
+      "details": "Cena familiar",
+      "currency": "CLP",
+      "value": 95000,
+      "date": "2025-11-07T20:30:00.000Z"
+    },
+    {
+      "id": "e25",
+      "category": "Salud",
+      "details": "Chequeo médico",
+      "currency": "CLP",
+      "value": 110000,
+      "date": "2025-12-02T16:00:00.000Z"
+    },
+    {
+      "id": "e26",
+      "category": "Transporte",
+      "details": "Taxi aeropuerto",
+      "currency": "CLP",
+      "value": 45000,
+      "date": "2025-12-18T23:15:00.000Z"
     }
   ]
 }

@@ -7,6 +7,7 @@ import { deleteIncomeCategoryAPI } from "@/api/incomeCategories"
 import { deleteExpenseCategoryAPI } from "@/api/expenseCategories"
 import { useTypeCategoryStore } from "@/hooks/useTypeCategoryStore"
 import { toast } from "sonner"
+import { useLocalStorage } from "@/hooks/useLocalStorage"
 
 interface DialogDeleteCategoryInput {
   data: Category,
@@ -21,6 +22,7 @@ export function DialogDeleteCategory({
   const [disable, setDisable] = useState(false)
   const token = useContext(AuthContext).token
   const deleteStore = useTypeCategoryStore(type).deleteCategory
+  const deleteLocal = useLocalStorage(type === 'incomes' ? 'categoryIncomes' : 'categoryExpenses').deleteValue
 
   const apiDeleteCategory: Record<string, (token:string, id: string) => Promise<Category>> = {
     incomes: deleteIncomeCategoryAPI,
@@ -28,7 +30,14 @@ export function DialogDeleteCategory({
   }
 
   const handleSubmit = () => {
-    if (!token || !data.id) return;
+    if (!data.id) return
+    if (!token) {
+      deleteStore(data.id)
+      deleteLocal(data.id)
+      toast.success('Se ha eliminado la categoría ' + data.category)
+      setShowAlert(() => false)
+      return
+    };
     setDisable(() => true)
     toast.promise(
       apiDeleteCategory[type](token, data.id),

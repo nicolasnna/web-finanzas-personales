@@ -26,7 +26,6 @@ export function CategoryTable({ type }: CategoryTableInput) {
     pageIndex: 0,
     pageSize: 8,
   });
-  // const token = useContext(AuthContext).token;
 
   const table = useReactTable({
     data: categories,

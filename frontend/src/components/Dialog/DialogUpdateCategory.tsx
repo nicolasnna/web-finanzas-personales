@@ -11,6 +11,7 @@ import { updateIncomeCategoryAPI } from "@/api/incomeCategories";
 import { updateExpenseCategoryAPI } from "@/api/expenseCategories";
 import { toast } from "sonner";
 import { useTypeCategoryStore } from "@/hooks/useTypeCategoryStore";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 interface DialogUpdateCategoryInput {
   data: Category,
@@ -25,6 +26,8 @@ export function DialogUpdateCategory({
   const [disable, setDisable] = useState(false)
   const token = useContext(AuthContext).token
   const updateStore = useTypeCategoryStore(type).updateCategory
+  const updateLocal = useLocalStorage(type === 'incomes' ? 'categoryIncomes' : 'categoryExpenses').updateValue
+
   const updateCategoryForm = useForm<CategoryTypeForm>({
     resolver: zodResolver(CategorySchema),
     defaultValues: {
@@ -38,16 +41,24 @@ export function DialogUpdateCategory({
   }
 
   const handleSubmit = () => {
-    if (!token || !data.id) return;
+    if (!data.id) return
+    const newData = { category: updateCategoryForm.watch().category}
+    if (!token) {
+      updateStore(data.id, newData)
+      updateLocal(data.id, newData)
+      toast.success('Se ha actualizado la categoría ' + newData.category)
+      setShow(() => false)
+      return
+    };
     setDisable(() => true)
     toast.promise(
-      apiUpdateTransaction[type](token, data.id, updateCategoryForm.watch()),
+      apiUpdateTransaction[type](token, data.id, newData),
       {
         loading: 'Actualizando categoría...',
         success: () => {
           setShow(() => false)
           if (data.id)
-            updateStore(data.id, updateCategoryForm.watch())
+            updateStore(data.id, newData)
           return 'Categoría actualizada con exito'
         },
         error: (err) => err.message || 'No se ha realizado la actualización'
