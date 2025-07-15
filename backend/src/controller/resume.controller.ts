@@ -1,13 +1,13 @@
-import { getFilterMostValueService } from "@/services/db.service";
+import { getFilterMostValueService } from "../services/db.service";
 import {
   getResumeCategoryPerMonthService,
   getResumeCategoryService,
   getResumePerMonthService,
   getTotalCountForUserService,
-} from "@/services/resume.service";
-import { CollectionName, TransactionName } from "@/types/CollectionName.type";
-import { GroupBy } from "@/types/GroupBy.type";
-import { RequestUser } from "@/types/RequestUser.interface";
+} from "../services/resume.service";
+import { CollectionName, TransactionName } from "../types/CollectionName.type";
+import { GroupBy } from "../types/GroupBy.type";
+import { RequestUser } from "../types/RequestUser.interface";
 import { Response } from "express";
 
 export const getResumeTransactionController = async (

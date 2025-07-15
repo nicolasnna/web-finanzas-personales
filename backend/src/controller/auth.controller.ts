@@ -2,7 +2,7 @@ import {
   loginUserWithEmailService,
   refreshTokenService,
   registerUserWithEmailService,
-} from "@/services/auth.service";
+} from "../services/auth.service";
 import { Request, Response } from "express";
 
 interface RegisterUserRequest {

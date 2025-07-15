@@ -3,11 +3,11 @@ import {
   deleteService,
   getTransactionService,
   updateService
-} from "@/services/db.service";
-import { RequestUser } from "@/types/RequestUser.interface";
-import { isTransactionData, TransactionData } from "@/types/TransactionData.interface";
+} from "../services/db.service";
+import { RequestUser } from "../types/RequestUser.interface";
+import { isTransactionData, TransactionData } from "../types/TransactionData.interface";
 import { Response } from "express";
-import { CollectionName } from "@/types/CollectionName.type";
+import { CollectionName } from "../types/CollectionName.type";
 
 const getCollectionName = (req: RequestUser): CollectionName | null => {
   const { path } = req;

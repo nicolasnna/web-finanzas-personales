@@ -1,7 +1,7 @@
-import { createCategoryService, deleteService, getService, updateService } from "@/services/db.service";
-import { Category, isCategory } from "@/types/category.interface";
-import { CollectionName } from "@/types/CollectionName.type";
-import { RequestUser } from "@/types/RequestUser.interface";
+import { createCategoryService, deleteService, getService, updateService } from "../services/db.service";
+import { Category, isCategory } from "../types/category.interface";
+import { CollectionName } from "../types/CollectionName.type";
+import { RequestUser } from "../types/RequestUser.interface";
 import { Response } from "express";
 
 const getCollectionName = (req: RequestUser): CollectionName | null => {
