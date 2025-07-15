@@ -29,9 +29,9 @@ app.use(cors({
 
 app.use("/api/auth", authRouter)
 
-app.use("/api", categoryRouter)
-app.use("/api", transactionRouter)
-app.use('/api', resumeRouter)
+// app.use("/api", categoryRouter)
+// app.use("/api", transactionRouter)
+// app.use('/api', resumeRouter)
 
 app.get("/", (_, res) => {
   res.status(200).send("API funcionando")
