@@ -8,6 +8,7 @@ import CategoryForm from '@/components/Form/CategoryForm';
 import TransactionForm from '@/components/Form/TransactionForm';
 import { AuthContext } from '@/context/authContext';
 import { UseAreaChartData } from '@/hooks/useAreaChartData';
+import { useLocalResume } from '@/hooks/useLocalResume';
 import { RawResumeTransaction, usePieChartData } from '@/hooks/usePieChartData';
 import { months } from '@/utils/constants';
 import { useContext, useEffect, useState } from 'react';
@@ -22,6 +23,7 @@ function Dashboard() {
   const dataPieExpenses = usePieChartData()
   const dataAreaChart = UseAreaChartData()
   const user = useContext(AuthContext)
+  const localResumes = useLocalResume(year)
 
   useEffect(() => {
     const fetchAllSummary = async () => {
@@ -46,7 +48,6 @@ function Dashboard() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user.token, month, year])
   
-
   useEffect(() => {
     const fetchArea = async () => {
       if (!user.token) return
@@ -66,6 +67,13 @@ function Dashboard() {
     fetchArea()
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user.token, year])
+
+  useEffect(() => {
+    if (user.token) return
+    dataAreaChart.setRawIncome(localResumes.rawIncomeByMonth)
+    dataAreaChart.setRawExpense(localResumes.rawExpenseByMonth)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user.token, localResumes.rawExpenseByMonth, localResumes.rawIncomeByMonth])
 
   const handleClickAreaChart = (e: {activeTooltipIndex: number}) => {
     if (Object.keys(e).length === 0) return 

@@ -10,9 +10,9 @@ interface infoValues {
 }
 
 const defaultValue: infoValues = {
-  value: 500000,
+  value: 0,
   currency: 'CLP',
-  info: 'Gasto neto',
+  info: '',
 };
 
 interface NetTransactionCardProps {
