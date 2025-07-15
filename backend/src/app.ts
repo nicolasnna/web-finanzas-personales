@@ -26,11 +26,11 @@ app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
 //   credentials: true,
 // }))
 
-// app.use("/api/auth", authRouter)
+app.use("/api/auth", authRouter)
 
-// app.use("/api", categoryRouter)
+app.use("/api", categoryRouter)
 app.use("/api", transactionRouter)
-// app.use('/api', resumeRouter)
+app.use('/api', resumeRouter)
 
 app.get("/", (_, res) => {
   res.status(200).send("API funcionando")

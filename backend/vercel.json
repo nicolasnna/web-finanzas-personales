@@ -1,5 +1,10 @@
 {
   "version": 2,
+  "functions": {
+    "api/server.ts": {
+      "includeFiles": "src/docs/*.yml"
+    }
+  },
   "rewrites": [
     { "source": "/(.*)", "destination": "/api/server.ts" }
   ]
