@@ -37,13 +37,6 @@ const exampleChartConfig = {
   },
 } satisfies ChartConfig;
 
-const exampleChartData = [
-  { category: "categoria1", value: 50000, fill: "hsl(var(--chart-1))" },
-  { category: "categoria2", value: 5000, fill: "hsl(var(--chart-2))" },
-  { category: "categoria3", value: 15000, fill: "hsl(var(--chart-3))" },
-  { category: "categoria4", value: 32000, fill: "hsl(var(--chart-4))" },
-  { category: "categoria5", value: 55000, fill: "hsl(var(--chart-5))" },
-] 
 
 function ChartPie({className, title, month, year, chartConfig, chartData} : ChartPieProps) {
   const token = useContext(AuthContext).token

@@ -10,7 +10,8 @@
       "@/*": ["./src/*"],  
       "@components/*": ["./src/components/*"],
       "@store/*": ["./src/store/*"],
-      "@styles/*": ["./src/styles/*"]
+      "@styles/*": ["./src/styles/*"],
+      "@type/*": ["./src/type/*"],
     },
   }
 }
