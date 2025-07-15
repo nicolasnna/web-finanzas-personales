@@ -2,11 +2,11 @@
   "name": "backend-finanzas-personales",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "cross-env NODE_ENV=test npx jest --runInBand",
-    "dev": "cross-env NODE_ENV=dev ts-node-dev --respawn  -r tsconfig-paths/register src/server.ts",
-    "start": "ts-node -r tsconfig-paths/register src/server.ts"
+    "dev": "cross-env NODE_ENV=dev ts-node-dev --respawn  -r tsconfig-paths/register server.ts",
+    "start": "ts-node -r tsconfig-paths/register server.ts"
   },
   "keywords": [],
   "author": "",
