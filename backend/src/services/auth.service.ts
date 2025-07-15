@@ -2,10 +2,10 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { auth } from '@/firebase/firebase';
+import { auth } from '../firebase/firebase';
 import { sign, verify } from "jsonwebtoken"
-import { infoTokenProps, uidTokenProps } from "@/types/GenerateToken.interface";
-import { User } from "@/types/User.interface";
+import { infoTokenProps, uidTokenProps } from "../types/GenerateToken.interface";
+import { User } from "../types/User.interface";
 
 const JWT_SECRET = process.env.JWT_SECRET || "FINANZA_PERSONAL"
 const JWT_EXPIRATION = process.env.JWT_EXPIRE || "10m"

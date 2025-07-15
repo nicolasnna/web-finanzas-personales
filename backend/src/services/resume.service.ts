@@ -1,4 +1,4 @@
-import { CollectionName, TransactionName } from "@/types/CollectionName.type";
+import { CollectionName, TransactionName } from "../types/CollectionName.type";
 import { getFilterYearMonthService, getTotalDocuments } from "./db.service";
 
 export const getResumeCategoryService = async (

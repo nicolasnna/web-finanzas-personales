@@ -1,5 +1,5 @@
-import { createCategoryController, deleteCategoryController, getCategoryController, updateCategoryController } from "@/controller/category.controller";
-import { authenticateToken } from "@/middleware/authenticateToken";
+import { createCategoryController, deleteCategoryController, getCategoryController, updateCategoryController } from "../controller/category.controller";
+import { authenticateToken } from "../middleware/authenticateToken";
 import { Router } from "express";
 
 const categoryRouter = Router();

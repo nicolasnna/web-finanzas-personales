@@ -17,10 +17,10 @@ import {
   DocumentData,
   getCountFromServer,
 } from "firebase/firestore";
-import { db } from "@/firebase/firebase";
-import { TransactionData } from "@/types/TransactionData.interface";
-import { Category } from "@/types/category.interface";
-import { CollectionName } from "@/types/CollectionName.type";
+import { db } from "../firebase/firebase";
+import { TransactionData } from "../types/TransactionData.interface";
+import { Category } from "../types/category.interface";
+import { CollectionName } from "../types/CollectionName.type";
 
 
 export const transformDocumentToDataTransaction = (docSnapshot: QuerySnapshot<DocumentData, DocumentData>) => {

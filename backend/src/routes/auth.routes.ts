@@ -1,4 +1,4 @@
-import { loginUserWithEmailController, refreshTokenController, registerUserWithEmailController } from "@/controller/auth.controller";
+import { loginUserWithEmailController, refreshTokenController, registerUserWithEmailController } from "../controller/auth.controller";
 import { Router } from "express";
 
 const authRouter = Router()

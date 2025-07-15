@@ -3,8 +3,8 @@ import {
   getResumeTransactionPerMonth,
   getTopTransactionController,
   getTotalCountController,
-} from "@/controller/resume.controller";
-import { authenticateToken } from "@/middleware/authenticateToken";
+} from "../controller/resume.controller";
+import { authenticateToken } from "../middleware/authenticateToken";
 import { Router } from "express";
 
 const resumeRouter = Router();

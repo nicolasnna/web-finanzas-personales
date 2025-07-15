@@ -3,8 +3,8 @@ import {
   deleteTransactionController,
   getTransactionsQueryController,
   updateTransactionController,
-} from "@/controller/transaction.controller";
-import { authenticateToken } from "@/middleware/authenticateToken";
+} from "../controller/transaction.controller";
+import { authenticateToken } from "../middleware/authenticateToken";
 import { Router } from "express";
 
 const transactionRouter = Router();
