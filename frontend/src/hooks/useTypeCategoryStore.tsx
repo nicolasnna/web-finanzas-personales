@@ -6,7 +6,9 @@ import { useLocalStorage } from './useLocalStorage';
 import { Category } from '@/types';
 
 export function useTypeCategoryStore(type: 'incomes' | 'expenses') {
-  const localFunctions = useLocalStorage(type === 'incomes' ? 'categoryIncomes' : 'categoryExpenses')
+  const localFunctions = useLocalStorage(
+    type === 'incomes' ? 'categoryIncomes' : 'categoryExpenses'
+  );
 
   const categoriesIncomes = useIncomeCategoriesStore((s) => s.categories);
   const categoriesExpenses = useExpenseCategoriesStore((s) => s.categories);
@@ -33,6 +35,9 @@ export function useTypeCategoryStore(type: 'incomes' | 'expenses') {
     (s) => s.deleteCategory
   );
 
+  const cleanIncomes = useIncomeCategoriesStore((s) => s.cleanCategories);
+  const cleanExpenses = useExpenseCategoriesStore((s) => s.cleanCategories);
+
   const categories =
     type === 'incomes' ? categoriesIncomes : categoriesExpenses;
   const addCategory =
@@ -43,11 +48,12 @@ export function useTypeCategoryStore(type: 'incomes' | 'expenses') {
     type === 'incomes' ? setCategoriesIncomes : setCategoriesExpenses;
   const deleteCategory =
     type === 'incomes' ? deleteCategoryIncomes : deleteCategoryExpenses;
+  const cleanCategory = type === 'incomes' ? cleanIncomes : cleanExpenses;
 
   const loadFromLocalStorage = () => {
-    const demoValues = localFunctions.getValues() as Category[]
-    setCategories(demoValues)
-  }
+    const demoValues = localFunctions.getValues() as Category[];
+    setCategories(demoValues);
+  };
 
   return {
     categories,
@@ -55,6 +61,7 @@ export function useTypeCategoryStore(type: 'incomes' | 'expenses') {
     updateCategory,
     setCategories,
     deleteCategory,
-    loadFromLocalStorage
+    loadFromLocalStorage,
+    cleanCategory
   };
 }

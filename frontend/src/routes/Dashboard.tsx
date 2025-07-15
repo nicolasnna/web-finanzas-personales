@@ -26,56 +26,42 @@ function Dashboard() {
   const localResumes = useLocalResume(year, month)
 
   useEffect(() => {
-    const fetchAllSummary = async () => {
-      if (!user.token) return
-      try {
-        setDisable(() => true)
-        const [resInc, resExp] = await Promise.all([
-          getResumeTransactionByCategory(user.token, 'incomes', year, 'category', month),
-          getResumeTransactionByCategory(user.token, 'expenses', year, 'category', month),
-        ])
-        dataPieIncomes.setDataRaw(resInc as RawResumeTransaction)
-        dataPieExpenses.setDataRaw(resExp as RawResumeTransaction)
-        toast.success('Resumenes cargados')
-        setDisable(() => false)
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } catch (err: any) {
-        toast.error(err.message || 'Error al cargar el resumen')
-        user.updateToken()
-      }
+    if (!user.token) {
+      dataAreaChart.setRawIncome(localResumes.rawIncomeByMonth);
+      dataAreaChart.setRawExpense(localResumes.rawExpenseByMonth);
+      dataPieIncomes.setDataRaw(localResumes.rawIncomeByCategory);
+      dataPieExpenses.setDataRaw(localResumes.rawExpenseByCategory);
+      return;
     }
-    fetchAllSummary()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user.token, month, year])
-  
-  useEffect(() => {
-    const fetchArea = async () => {
-      if (!user.token) return
+
+    const fetchAll = async () => {
+      setDisable(true);
       try {
         setDisableArea(() => true)
-        const [resMonthInc, resMonthExp] = await Promise.all([
-          getResumeTransactionByMonth(user.token, 'incomes', year),
-          getResumeTransactionByMonth(user.token, 'expenses', year)
-        ])
-        dataAreaChart.setRawIncome(resMonthInc.data)
-        dataAreaChart.setRawExpense(resMonthExp.data)
-      } catch {
-        user.updateToken()
+        const [catInc, catExp, monthInc, monthExp] = await Promise.all([
+          getResumeTransactionByCategory(user.token as string, 'incomes', year, 'category', month),
+          getResumeTransactionByCategory(user.token as string, 'expenses', year, 'category', month),
+          getResumeTransactionByMonth(user.token as string, 'incomes', year),
+          getResumeTransactionByMonth(user.token as string, 'expenses', year),
+        ]);
+        dataPieIncomes.setDataRaw(catInc as RawResumeTransaction);
+        dataPieExpenses.setDataRaw(catExp as RawResumeTransaction);
+        dataAreaChart.setRawIncome(monthInc.data);
+        dataAreaChart.setRawExpense(monthExp.data);
+        toast.success('Datos cargados correctamente');
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (err: any) {
+        toast.error(err.message || 'Error al cargar el resumen');
+        user.updateToken();
+      } finally {
+        setDisable(false);
+        setDisableArea(() => false)
       }
-      setDisableArea(() => false)
-    }
-    fetchArea()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user.token, year])
+    };
 
-  useEffect(() => {
-    if (user.token) return
-    dataAreaChart.setRawIncome(localResumes.rawIncomeByMonth)
-    dataAreaChart.setRawExpense(localResumes.rawExpenseByMonth)
-    dataPieIncomes.setDataRaw(localResumes.rawIncomeByCategory)
-    dataPieExpenses.setDataRaw(localResumes.rawExpenseByCategory)
+    fetchAll();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user.token, localResumes])
+  }, [user.token, month, year, localResumes.rawExpenseByCategory]);
 
   const handleClickAreaChart = (e: {activeTooltipIndex: number}) => {
     if (Object.keys(e).length === 0) return 

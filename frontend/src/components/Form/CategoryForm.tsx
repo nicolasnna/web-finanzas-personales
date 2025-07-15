@@ -1,15 +1,16 @@
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { Button } from '../ui/button';
-import { Category, CategorySchema, CategoryTypeForm } from '@/types';
-import { Form } from '../ui/form';
-import { NewCategoryFormField, TypeFormField } from '../FormField';
-import { useContext, useState } from 'react';
-import { AuthContext } from '@/context/authContext';
-import { addIncomeCategoryAPI } from '@/api/incomeCategories';
 import { addExpenseCategoryAPI } from '@/api/expenseCategories';
+import { addIncomeCategoryAPI } from '@/api/incomeCategories';
+import { AuthContext } from '@/context/authContext';
+import { useTypeCategoryStore } from '@/hooks/useTypeCategoryStore';
+import { Category, CategorySchema, CategoryTypeForm } from '@/types';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useContext, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import { useExpenseCategoriesStore, useIncomeCategoriesStore } from '@/store/useCategoryStore';
+import { NewCategoryFormField, TypeFormField } from '../FormField';
+import { Button } from '../ui/button';
+import { Form } from '../ui/form';
+import { generateId } from '@/utils/functions';
 
 interface CategoryFormInput {
   typeDefault?: 'incomes' | 'expenses'
@@ -25,28 +26,31 @@ function CategoryForm({typeDefault}: CategoryFormInput) {
       type: typeDefault ?? '',
     },
   });
-  const cleanIncomes = useIncomeCategoriesStore(s => s.cleanCategories)
-  const cleanExpenses = useExpenseCategoriesStore(s => s.cleanCategories)
+
+  const cleanCategories = useTypeCategoryStore(form.watch().type as 'incomes' | 'expenses' ?? 'incomes').cleanCategory
+  const addCategory = useTypeCategoryStore(form.watch().type as 'incomes' | 'expenses' ?? 'incomes').addCategory
 
   const apiTransaction: Record<string, (category: Category, token: string) => Promise<Category | Error>> = {
     incomes: addIncomeCategoryAPI,
     expenses: addExpenseCategoryAPI
   }
 
-  const cleanCategories: Record<string, () => void> = {
-    incomes: cleanIncomes,
-    expenses: cleanExpenses
-  }
 
   const handleSubmitForm = (values: CategoryTypeForm) => {
-    if (!token) return;
+    if (!token) {
+      addCategory({
+        category: values.category,
+        id: generateId()
+      })
+      return
+    };
     setDisable(() => true)
     toast.promise(apiTransaction[values.type]({ category: values.category }, token), {
       loading: 'Creando categoria...',
       success: () => {
         setDisable(() => false)
         form.reset({ category: '', type: ''})
-        cleanCategories[values.type]()
+        cleanCategories()
         return 'Categoría creada'
       },
       error: (err) => {
