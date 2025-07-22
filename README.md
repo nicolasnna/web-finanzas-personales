@@ -110,7 +110,8 @@ JWT_EXPIRE=30m
 URL_CORS_PERMIT=http://localhost:5173 # Dirección del frontend
 ```
 
-> [!note] Requiere crear un proyecto en firebase y configurar la API key con el proyecto.
+> [!note]
+> Requiere crear un proyecto en firebase y configurar la API key con el proyecto.
 
 Por último, se instala las dependencias y se ejecuta:
 
